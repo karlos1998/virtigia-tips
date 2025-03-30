@@ -1,11 +1,4 @@
-import { App } from "vue"
-import {createPinia} from "pinia";
 import ToolTipDirective from "@/tooltips/module";
+import RockTip from "@/RockTip/components/rockTip.vue";
 
-export default {
-    install: (app: App) => {
-        const pinia = createPinia()
-        app.use(pinia);
-        app.directive('tip', ToolTipDirective)
-    }
-}
+export { ToolTipDirective, RockTip };
