@@ -1,0 +1,34 @@
+{
+  "name": "virtigia-tips",
+  "version": "1.0.0",
+  "description": "Paczka z komponentem Vue 3 + TypeScript",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "pinia": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.0",
+    "vite-plugin-dts": "*"
+  }
+}
