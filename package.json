@@ -1,7 +1,7 @@
 {
   "name": "virtigia-tips",
   "version": "1.0.0",
-  "description": "Paczka z komponentem Vue 3 + TypeScript",
+  "description": "Virtigia Game TIPS",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
