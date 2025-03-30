@@ -20,6 +20,8 @@
     "preview": "vite preview",
     "prepublishOnly": "npm run build"
   },
+  "author": "Let's Code It",
+  "license": "MIT",
   "peerDependencies": {
     "vue": "^3.0.0",
     "pinia": "^3.0.1"
