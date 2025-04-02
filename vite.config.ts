@@ -21,7 +21,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': '/src'
+            // '@': '/src' //niee, bo bedzie przeskzac w paczce
         }
     }
 })

@@ -1,6 +1,6 @@
 import {DirectiveBinding, nextTick, ref} from 'vue'
 import {HtmlPayload, ItemPayload, NpcPayload, OtherPayload} from '../RockTip/typings/payloads';
-import {useHeroStore} from "../stores/hero.store";
+// import {useHeroStore} from "../stores/hero.store";
 
 type TipDirection = 'top' | 'bottom' | 'left' | 'right'
 
@@ -139,7 +139,7 @@ const getTipPositionByDirection = (direction: TipDirection) => {
 
 
 const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
-    const heroStore = useHeroStore();
+    // const heroStore = useHeroStore();
     // console.log('binding', heroStore.getLvl(), binding.modifiers, binding.value)
     // if (binding.modifiers.npc) {
     //     el.dataset.npc = JSON.stringify(binding.value)
@@ -155,8 +155,10 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
         schema: {
             inner: binding.value,
             hero: {
-                level: heroStore.getLvl(),
-                profession: heroStore.getProfession(),
+                // level: heroStore.getLvl(),
+                // profession: heroStore.getProfession(),
+                level: 1,
+                profession: 'w',
             },
             showId: binding.modifiers['show-id'],
         }

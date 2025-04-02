@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import RockTip from "@/RockTip/components/rockTip.vue";
+import RockTip from "./RockTip/components/rockTip.vue";
 
 // @ts-ignore
 import chainsaw from "@/assets/chainsaw2.gif?url";
