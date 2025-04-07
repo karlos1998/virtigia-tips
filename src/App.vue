@@ -2,11 +2,13 @@
 
 import RockTip from "./RockTip/components/rockTip.vue";
 
-// @ts-ignore
-import chainsaw from "@/assets/chainsaw2.gif?url";
+// import './RockTip/styles/style.css'
 
 // @ts-ignore
-import smokczarny from "@/assets/smokczarny.gif?url";
+import chainsaw from "./assets/chainsaw2.gif?url";
+
+// @ts-ignore
+import smokczarny from "./assets/smokczarny.gif?url";
 import {ref} from "vue";
 
 
@@ -45,6 +47,10 @@ const kroliczaLapka = ref({
     <RockTip />
 
     <span v-tip="'TEST'">Zwykly tip tekstowy</span>
+
+    <hr>
+    <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
+    <hr>
 
     <img v-tip.npc="{
       name: 'Smok',

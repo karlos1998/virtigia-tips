@@ -1,19 +1,19 @@
 {
   "name": "virtigia-tips",
-  "version": "1.0.3",
-  "description": "Virtigia Game TIPS",
+  "version": "1.0.19",
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "main": "./dist/virtigia-tips.cjs.js",
+  "module": "./dist/virtigia-tips.es.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.ts"
-    }
+      "import": "./dist/virtigia-tips.es.js",
+      "require": "./dist/virtigia-tips.cjs.js"
+    },
+    "./style.css": "./dist/virtigia-tips.css"
   },
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,8 +23,7 @@
   "author": "Let's Code It",
   "license": "MIT",
   "peerDependencies": {
-    "vue": "^3.0.0",
-    "pinia": "^3.0.1"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.14",

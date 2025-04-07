@@ -170,7 +170,6 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
     delete el.dataset.html;
 
     if (binding.modifiers.npc) {
-        console.log(' npc tip ', data)
         el.dataset.npc = JSON.stringify(data)
     } else if (binding.modifiers.item) {
         el.dataset.item = JSON.stringify(data)
@@ -178,6 +177,7 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
         el.dataset.other = JSON.stringify(data)
     } else {
         el.dataset.html = binding.value
+        el.dataset.color = binding.modifiers.green ? 'green' : '';
     }
 }
 

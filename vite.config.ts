@@ -10,6 +10,7 @@ export default defineConfig({
             name: "VirtigiaTips",
             fileName: (format) => `virtigia-tips.${format}.js`
         },
+        cssCodeSplit: false,
         rollupOptions: {
             external: ["vue"],
             output: {
@@ -23,5 +24,6 @@ export default defineConfig({
         alias: {
             // '@': '/src' //niee, bo bedzie przeskzac w paczce
         }
-    }
+    },
+
 })
