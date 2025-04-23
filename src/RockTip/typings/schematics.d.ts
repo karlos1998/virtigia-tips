@@ -77,6 +77,8 @@ ShO9KukHxab7dzwZ2ngYldAZQrLCDLE1xTCXtrd1xkqiO1Y=
 */
 import { Translations } from "../constants/translations";
 
+export declare type Profession = "w" | "p" | "h" | "t" | "b" | "m"
+
 export declare type ItemSchema = {
     position: {
         y: number,
@@ -92,15 +94,15 @@ export declare type ItemSchema = {
         name: string,
         id: number
     },
-    hero: {
-        profession: keyof typeof Translations.professions,
-        level: number
-    },
+    // hero: {
+    //     profession: keyof typeof Translations.professions,
+    //     level: number
+    // },
     showId: boolean,
 };
 export declare type OtherSchema = {
     inner: {
-        profession: "w" | "p" | "h" | "t" | "b" | "m",
+        profession: Profession,
         level?: number,
         bless?: boolean,
         clan?: string,
@@ -120,7 +122,12 @@ export declare type NpcSchema = {
         name: string
         inGroup: boolean
     },
-    hero: {
-        level: number
-    }
+    // hero: {
+    //     level: number
+    // }
 };
+
+export declare type TipProps = {
+    heroProfession: Profession | null,
+    heroLvl: number
+}

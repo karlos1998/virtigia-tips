@@ -5,6 +5,7 @@ import { priceFormatter } from '../utilities/priceFormatter';
 import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
 import {useToolTip} from "../../tooltips/module";
+import {TipProps} from "../typings/schematics";
 
 const { state, setToolTipElement } = useToolTip();
 
@@ -24,6 +25,11 @@ onMounted(() => {
 const selfProperties = state;
 
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
+
+withDefaults(defineProps<TipProps>(), {
+  heroLvl: 500,
+  heroProfession: null,
+})
 
 </script>
 
@@ -154,10 +160,10 @@ const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrders
                                     class="attribute" :data-stat="currentStat" :data-fulfilling="(() => {
                                 switch(currentStat) {
                                     case 'needLevel': {
-                                        return selfProperties.itemPayload.schema.hero.level >= Number(selfProperties.itemPayload.schema.inner.attributes.needLevel);
+                                        return heroLvl >= Number(selfProperties.itemPayload.schema.inner.attributes.needLevel);
                                     }
                                     case 'needProfessions': {
-                                        return selfProperties.itemPayload.schema.inner.attributes.needProfessions.indexOf(selfProperties.itemPayload.schema.hero.profession) > -1;
+                                        return heroProfession == null ||  selfProperties.itemPayload.schema.inner.attributes.needProfessions.indexOf(heroProfession) > -1;
                                     }
                                     case 'cooldownTime': {
 
@@ -215,7 +221,7 @@ const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrders
                         </div>
                     </template>
                     <div class="level" :advantage="(() => {
-                    const differenceLevel = selfProperties.npcPayload.schema.hero.level - selfProperties.npcPayload.schema.inner.lvl;
+                    const differenceLevel = heroLvl - selfProperties.npcPayload.schema.inner.lvl;
                     if(differenceLevel > 13) {
                         return 'high';
                     }

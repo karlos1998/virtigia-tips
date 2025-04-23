@@ -154,12 +154,12 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
     const data = {
         schema: {
             inner: binding.value,
-            hero: {
-                // level: heroStore.getLvl(),
-                // profession: heroStore.getProfession(),
-                level: 1,
-                profession: 'w',
-            },
+            // hero: {
+            //     // level: heroStore.getLvl(),
+            //     // profession: heroStore.getProfession(),
+            //     level: 1,
+            //     profession: 'w',
+            // },
             showId: binding.modifiers['show-id'],
         }
     };

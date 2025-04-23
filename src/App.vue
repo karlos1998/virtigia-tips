@@ -25,7 +25,8 @@ const kroliczaLapka = ref({
   "attributes": {
     "isUnidentified": true,
     "needLevel": 110,
-    "description": "Ten przedmiot nosił przy sobie szalony miś.Ta łapka przynosiła mu szczęście,może i tobie przyniesie?"
+    "description": "Ten przedmiot nosił przy sobie szalony miś.Ta łapka przynosiła mu szczęście,może i tobie przyniesie?",
+    "needProfessions": ['p', 'h']
   },
   "category": "necklaces",
   "currency": "gold",
@@ -34,7 +35,7 @@ const kroliczaLapka = ref({
   "edited_manually": false,
   "deleted_at": null,
   "category_name": "Naszyjniki",
-  "need_professions": [],
+  // "need_professions": ['w', 'h'],
   "need_level": 110,
   "in_use": false,
   "shops": [],
