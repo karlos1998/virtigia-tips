@@ -1,6 +1,6 @@
 {
   "name": "virtigia-tips",
-  "version": "1.0.21",
+  "version": "1.0.23",
   "type": "module",
   "main": "./dist/virtigia-tips.cjs.js",
   "module": "./dist/virtigia-tips.es.js",
