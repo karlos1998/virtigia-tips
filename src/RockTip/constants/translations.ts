@@ -315,29 +315,32 @@ export namespace Translations {
             switch(bonusName) {
                 case "angelTouchHealingChance": {
                     return `Dotyk anioła: podczas ataku ${attrBox(attrPercent(attrNumber(bonusChance)))} szansy na leczenie ran w ciągu trzech najbliższych tur`;
-                };
+                }
                 case "superCriticalHitChance": {
                     return `Cios bardzo krytyczny: ${attrBox(attrPercent(attrNumber(bonusChance)))} szans na podwojenie mocy krytyka podczas ataku`;
-                };
+                }
                 case "superHealOnLowHealth": {
                     return `Ostatni ratunek: kiedy po otrzymanym ataku zostanie graczowi mniej niż ${attrBox(attrPercent(attrNumber(bonusChance)))} życia, zostaje jednorazowo znacznie uleczony.`;
-                };
+                }
                 case "superCriticalReduction": {
                     return `Krytyczna osłona: przyjmowane ciosy krytyczne są o ${attrBox(attrPercent(attrNumber(bonusChance)))} słabsze.`;
-                };
+                }
                 case "superMagicalReduction": {
                     return `Ochrona żywiołów: ${attrBox(attrPercent(attrNumber(bonusChance)))} szans na podniesienie wszystkich odporności do maksimum ${attrBox(`(${attrPercent(attrNumber(90))})`)} przy przyjmowaniu ciosu magicznego.`;
-                };
+                }
                 case "superPhysicalReduction": {
                     return `Fizyczna osłona: przyjmowane obrażenia fizyczne zmniejszone o ${attrBox(attrPercent(attrNumber(bonusChance)))}.`;
-                };
+                }
                 case "glareChanceAfterGetHit": {
                     return `Oślepienie: podczas przyjmowania ataku ${attrBox(attrPercent(attrNumber(bonusChance)))} szansy na oślepienie przeciwnika i zablokowanie jego najbliższej akcji.`;
-                };
+                }
                 case "curseChanceAfterDoHit": {
                     return `Klątwa: podczas udanego ataku ${attrBox(attrPercent(attrNumber(bonusChance)))} szans na aktywację klątwy, która zablokuje najbliższą wykonywaną przez przeciwnika akcję.`;
-                };
-            };
+                }
+                case "pushBack": {
+                    return `Odrzut: ${attrBox(attrPercent(attrNumber(bonusChance)))} szans na cofnięcie przeciwnika o krok do tyłu. Dotyczy wyłącznie profesji dystansowych.`;
+                }
+            }
         },
         // "lootedWith": ([looterName, __looterSex__, groupInfo, lootTs, npcName]: (string[]|string)[]) => {
         "lootedWith": (data: {looterName: string, looterGender: string, groupInfo: string[], timestamp: number, npcName: string}) => {
