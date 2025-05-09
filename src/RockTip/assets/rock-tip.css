@@ -157,7 +157,7 @@ HTML
     --rockTip-item--rarity-heroic: hsl(200deg, 100%, 65%);
     --rockTip-item--rarity-unique: hsl(60deg, 100%, 45%);
     --rockTip-item--rarity-common: hsl(200deg, 5%, 70%);
-
+    --rockTip-item--outfit-border: hsl(50deg, 35%, 50%);
 }
 
 .rockTip[data-type='item'] {
@@ -214,6 +214,14 @@ HTML
 
 .rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .rarity[data-type='common'] {
     color: var(--rockTip-item--rarity-common);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .outfit-image {
+    border: 0.15rem double var(--rockTip-item--outfit-border);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.25rem;
 }
 
 .rockTip[data-type='item'] > .tip-wrapper > .inner > .struct .attribute [data-role='value'] {

@@ -29,6 +29,7 @@ const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrders
 withDefaults(defineProps<TipProps>(), {
   heroLvl: 500,
   heroProfession: null,
+  baseSrc: ''
 })
 
 </script>
@@ -104,6 +105,18 @@ withDefaults(defineProps<TipProps>(), {
                             {{ `${Translations.rarities[selfProperties.itemPayload.schema.inner.rarity]}` }}
                         </span>
                             <span> *</span>
+                        </div>
+                        <!-- Display outfit image if useOutfit attribute exists -->
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
+                             class="outfit-image" 
+                             :style="{
+                                backgroundImage: `url(${baseSrc}/img/outfits/${selfProperties.itemPayload.schema.inner.attributes.useOutfit.src})`,
+                                backgroundPosition: '0 0',
+                                width: '32px',
+                                height: '48px',
+                                margin: '5px auto',
+                                display: 'block'
+                             }">
                         </div>
                     </div>
                     <div class="struct">
