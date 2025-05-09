@@ -69,7 +69,7 @@ const kroliczaLapka = ref({
     <img v-tip.item='{
       name: "Piła",
       price: 777,
-      currency: "gold",
+      currency: "dragonTear",
       rarity: "artefact",
       category: "twoHanded",
       attributes: {"allBaseAttributes":10000,"physicalDamage":[160000,200000],"fireDamage":199998,"health":160000,"needLevel":100,"description":" 1000 do wycinania drzew","attackSpeed":2000,"upgradePercent":100}

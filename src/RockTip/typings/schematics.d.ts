@@ -87,7 +87,7 @@ export declare type ItemSchema = {
     inner: {
         attributes: Record<keyof typeof Translations.attributes | string, any>,
         category: keyof typeof Translations.categories,
-        currency: "draconite" | "honor" | "gold",
+        currency: "dragonTear" | "honor" | "gold",
         rarity: keyof typeof Translations.rarities,
         price: number,
         src: string,
