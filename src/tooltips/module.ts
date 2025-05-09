@@ -1,8 +1,11 @@
-import {DirectiveBinding, nextTick, ref} from 'vue'
+import {DirectiveBinding, nextTick, ref, onMounted, onUnmounted} from 'vue'
 import {HtmlPayload, ItemPayload, NpcPayload, OtherPayload} from '../RockTip/typings/payloads';
 // import {useHeroStore} from "../stores/hero.store";
 
 type TipDirection = 'top' | 'bottom' | 'left' | 'right'
+
+// Track if mouse button is pressed globally
+const isMouseButtonPressed = ref(false)
 
 interface ToolTipState {
     opened: boolean
@@ -182,6 +185,11 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
 }
 
 const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
+    // Don't show tooltip if mouse button is pressed
+    if (isMouseButtonPressed.value) {
+        return
+    }
+
     state.value.target = el
     state.value.opened = true
 
@@ -236,6 +244,8 @@ const ToolTipDirective = {
         el.addEventListener('mouseout', (event: Event) => {
             triggerOut(el, event)
         })
+        // We don't need element-specific mousedown and mouseup handlers anymore
+        // as they're handled globally
     },
     updated(el: HTMLElement, binding: DirectiveBinding) {
         updateDataset(el, binding)
@@ -247,6 +257,60 @@ const setToolTipElement = (el: HTMLElement) => {
 }
 
 export default ToolTipDirective
+// Set up global event listeners for mouse button press
+const setupGlobalMouseListeners = () => {
+    const handleMouseDown = () => {
+        isMouseButtonPressed.value = true
+        // Hide any visible tooltip
+        if (state.value.opened) {
+            state.value.opened = false
+            state.value.positionX = -9999
+            state.value.positionY = -9999
+            state.value.target = null
+        }
+    }
+
+    const handleMouseUp = (event: MouseEvent) => {
+        isMouseButtonPressed.value = false
+
+        // Use a small timeout to ensure the DOM has settled after drag operations
+        setTimeout(() => {
+            // Check if mouse is over an element with a tooltip
+            const elementUnderMouse = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement
+            if (elementUnderMouse) {
+                // Find the closest element with a tooltip (v-tip directive)
+                let currentElement: HTMLElement | null = elementUnderMouse
+                while (currentElement) {
+                    if (currentElement.dataset.npc || currentElement.dataset.item || 
+                        currentElement.dataset.other || currentElement.dataset.html) {
+                        // Found an element with a tooltip, trigger it
+                        triggerEnter(currentElement)
+                        break
+                    }
+                    currentElement = currentElement.parentElement
+                }
+            }
+        }, 10); // Small delay to ensure DOM is updated after drag
+    }
+
+    // Add event listeners to document
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
+    document.addEventListener('dragend', handleMouseUp)
+    document.addEventListener('drop', handleMouseUp)
+
+    // Clean up function to remove event listeners
+    return () => {
+        document.removeEventListener('mousedown', handleMouseDown)
+        document.removeEventListener('mouseup', handleMouseUp)
+        document.addEventListener('dragend', handleMouseUp)
+        document.addEventListener('drop', handleMouseUp)
+    }
+}
+
+// Set up global listeners when module is imported
+setupGlobalMouseListeners()
+
 export const useToolTip = () => {
     return {
         state,

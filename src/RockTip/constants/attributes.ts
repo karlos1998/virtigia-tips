@@ -175,6 +175,7 @@ export namespace Attributes {
             {"priority": 0, "name": "upgradePercent"},
             {"priority": 0, "name": "lootedAt"},
             {"priority": 3, "name": "isUnidentified"},
+            {"priority": 3, "name": "useOutfit"},
         ],
         "limits": [
             {"priority": 1, "name": "needProfessions"},
