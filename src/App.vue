@@ -26,7 +26,8 @@ const kroliczaLapka = ref({
     "isUnidentified": true,
     "needLevel": 110,
     "description": "Ten przedmiot nosił przy sobie szalony miś.Ta łapka przynosiła mu szczęście,może i tobie przyniesie?",
-    "needProfessions": ['p', 'h']
+    "needProfessions": ['p', 'h'],
+    "chanceToCounter": 80
   },
   "category": "necklaces",
   "currency": "gold",

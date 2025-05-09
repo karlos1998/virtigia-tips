@@ -242,7 +242,7 @@ export namespace Translations {
             return `Głęboka rana, ${attrBox(attrPercent(woundChance))} szans na ${attrBox(attrPositive(woundDamage))} obrażeń`;
         },
         "chanceToCounter": (percentData: string) => {
-            return `${attrBox(attrPositive(attrPercent(attrNumber(percentData))))} szans na kontratak po ciosie krytycznym`;
+            return `${attrPercent(attrBox(attrPositive(attrNumber(percentData))))} szans na kontratak po ciosie krytycznym`;
         },
         "lightResistance": (percentData: string) => {
             return `Odporność na błyskawice ${attrBox(attrPercent(attrSigner(percentData)))}`;
