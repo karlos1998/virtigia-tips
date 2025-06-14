@@ -350,7 +350,7 @@ export namespace Translations {
 
             const lootDate = new Date(+timestamp * 1000);
             const lootHumanDate = `${lootDate.getDate()}/${lootDate.getMonth() + 1}/${lootDate.getFullYear()}`;
-            return `W dniu ${lootHumanDate} został(a) pokonany(a) ${npcName} przez ${looterName} ${(typeof groupInfo == 'string' ? attrNumber(groupInfo) > 1 : groupInfo.length > 0) ? "wraz z drużyną" : ""}`;
+            return `W dniu ${lootHumanDate} został(a) pokonany(a) ${npcName} przez ${looterName} ${(typeof groupInfo == 'string' ? attrNumber(groupInfo) > 1 : groupInfo.length > 0) ? ( groupInfo.length == 2 ? "wraz z kompanem" : "wraz z drużyną") : ""}`;
         },
         "teleportTo": ([__mapId__, posX, posY, mapName]: string[]) => {
             return `Teleportuje gracza na mape:<br>${mapName} (${posX},${posY})`
