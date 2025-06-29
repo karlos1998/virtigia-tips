@@ -107,7 +107,7 @@ export namespace Attributes {
             {"priority": 1, "name": "playAudio"},
             {"priority": 1, "name": "openBook"},
             {"priority": 1, "name": "openMail"},
-            {"priority": 1, "name": "usePet"}
+            {"priority": 1, "name": "usePet"},
         ],
         "bonuses": [
             {"priority": 12, "name": "maxQuantity"},
@@ -186,7 +186,7 @@ export namespace Attributes {
             {"priority": 1, "name": "expirationAt"},
             {"priority": 1, "name": "needInQuest"},
             {"priority": 1, "name": "needAgility"},
-            {"priority": 1, "name": "needLevel"}
+            {"priority": 1, "name": "needLevel"},
         ],
         "tags": [
             {"priority": 2, "name": "isNonStoreableInClanDeposit"},
@@ -203,6 +203,7 @@ export namespace Attributes {
             {"priority": 2, "name": "isUndoScroll"},
             {"priority": 2, "name": "isRecovered"},
             {"priority": 2, "name": "isCursed"},
+            {"priority": 4, "name": "upgradedByPercent"},
         ]
     };
 
