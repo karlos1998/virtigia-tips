@@ -190,9 +190,9 @@ export namespace Attributes {
         ],
         "tags": [
             {"priority": 2, "name": "isNonStoreableInClanDeposit"},
-            {"priority": 1, "name": "isBindPermamentlyAfterBuy"},
+            {"priority": 1, "name": "isBindPermanentlyAfterBuy"},
             {"priority": 2, "name": "isNonStoreableInDeposit"},
-            {"priority": 1, "name": "isPermamentlyBounded"},
+            {"priority": 1, "name": "isPermanentlyBounded"},
             {"priority": 2, "name": "isLowerLevelScroll"},
             {"priority": 1, "name": "isBindsAfterEquip"},
             {"priority": 2, "name": "isUnbindingScroll"},

@@ -438,13 +438,13 @@ export namespace Translations {
         "isNonStoreableInClanDeposit": () => {
             return "Przedmiotu nie można przechowywać w depozycie klanowym";
         },
-        "isBindPermamentlyAfterBuy": () => {
+        "isBindPermanentlyAfterBuy": () => {
             return "Wiąże na stałe po kupieniu";
         },
         "isNonStoreableInDeposit": () => {
             return "Przedmiotu nie można przechowywać w depozycie";
         },
-        "isPermamentlyBounded": () => {
+        "isPermanentlyBounded": () => {
             return "Związany z właścicielem na stałe";
         },
         "isBindsAfterEquip": () => {
