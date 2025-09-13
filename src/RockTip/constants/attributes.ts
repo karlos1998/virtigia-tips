@@ -204,6 +204,7 @@ export namespace Attributes {
             {"priority": 2, "name": "isRecovered"},
             {"priority": 2, "name": "isCursed"},
             {"priority": 4, "name": "upgradedByPercent"},
+            {"priority": 1, "name": "timeToDisappear"},
         ]
     };
 

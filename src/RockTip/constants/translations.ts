@@ -465,6 +465,9 @@ export namespace Translations {
         "useOutfit": ({time, src}: {time: number, src: string}) => {
             return `Zmienia Twój wygląd postaci na ${time > 0 ? `${time} minut` : `stałe`}`;
         },
+        "timeToDisappear": (seconds: number) => {
+            return `Zniknie za ${Math.round(seconds / 60)} minut`
+        },
     };
 
     export const rarities = {
