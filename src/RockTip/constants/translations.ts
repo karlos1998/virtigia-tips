@@ -162,7 +162,7 @@ export namespace Translations {
             return `Przywraca ${attrBox(pointsData)} punktów życia podczas walki`;
         },
         "addEnchancementPoints": (percentData: string) => {
-            return `Dodaje ${attrBox(attrPercent(percentData))} punktów wymaganych do ulepszenia przedmiotu`;
+            return `Dodaje ${attrBox(attrPercent(attrNumber(percentData)))} punktów wymaganych do ulepszenia przedmiotu`;
         },
         "combatHealthReduction": (pointsData: string) => {
             return `Obniża właścicielowi ${attrBox(pointsData)} punktów przywracania życia podczas walki`;
@@ -467,6 +467,22 @@ export namespace Translations {
         },
         "timeToDisappear": (seconds: number) => {
             return `Zniknie za ${Math.round(seconds / 60)} minut`
+        },
+        "expiresOn": (unixTime: number) => {
+            const now = Math.floor(Date.now() / 1000);
+            const seconds = Math.max(0, Math.floor(unixTime - now));
+            if (unixTime <= now) {
+                return "Przedmiot stracił swoje właściwości";
+            }
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            let parts: string[] = [];
+            if (days > 0) parts.push(`${days}d`);
+            if (hours > 0) parts.push(`${hours}h`);
+            if (minutes > 0) parts.push(`${minutes}m`);
+            if (parts.length === 0) parts.push("0m");
+            return `Wygasa za: ${parts.join(' ')}`;
         },
     };
 
