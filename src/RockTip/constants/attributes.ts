@@ -136,6 +136,7 @@ export namespace Attributes {
             {"priority": 7, "name": "health"},
             {"priority": 7, "name": "energy"},
             {"priority": 7, "name": "mana"},
+            {"priority": 7, "name": "stamina"},
             {"priority": 6, "name": "energyDestroy"},
             {"priority": 5, "name": "allBaseAttributes"},
             {"priority": 5, "name": "intellect"},

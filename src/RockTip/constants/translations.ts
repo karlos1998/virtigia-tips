@@ -424,6 +424,14 @@ export namespace Translations {
         "mana": (pointsData: string) => {
             return `Mana ${attrBox(attrPositive(attrNumber(pointsData)))}`;
         },
+        "stamina": (pointsData: string) => {
+            const minuty = Math.abs(attrNumber(pointsData));
+            if (attrNumber(pointsData) >= 0) {
+                return `Dodaje ${attrBox(minuty)} min do wyczerpania`;
+            } else {
+                return `Odejmuje ${attrBox(minuty)} min od wyczerpania`;
+            }
+        },
         "physicalDamageAbsorption": (value: number) => {
             return `Absorbuje do ${attrBox(value)} obrażeń fizycznych`
         },
