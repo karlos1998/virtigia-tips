@@ -110,7 +110,7 @@ withDefaults(defineProps<TipProps>(), {
                         <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
                              class="outfit-image" 
                              :style="{
-                                backgroundImage: `url(${baseSrc}/img/outfits/${selfProperties.itemPayload.schema.inner.attributes.useOutfit.src})`,
+                                backgroundImage: `url(${selfProperties.itemPayload.schema.inner.attributes.useOutfit.src})`,
                                 backgroundPosition: '0 0',
                                 width: '32px',
                                 height: '48px',
