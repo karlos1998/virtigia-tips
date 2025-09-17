@@ -116,7 +116,11 @@ export namespace Translations {
         "staffs": "Laski"
     };
 
-    const attrPositive = (value: string | number) => `+${attrNumber(value)}`;
+    // const attrPositive = (value: string | number) => `+${attrNumber(value)}`;
+    const attrPositive = (value: string | number) => {
+        const num = attrNumber(value);
+        return num > 0 ? `+${num}` : `${num}`;
+    };
     const attrPercent = (value: string | number) => `${value}%`;
     const attrSigner = (value: string | number) => Math.sign(attrNumber(value)) === 1 ? attrPositive(value) : `${attrNumber(value)}`;
     const attrNumber = (value: string | number | boolean | object) => Number(value);
@@ -296,7 +300,7 @@ export namespace Translations {
             textarea.innerHTML = descriptionData;
             return textarea.value.replaceAll('[br]', '<br>');
         },
-        "evadePoints": (pointsData: string) => {
+        "evadePoints": (pointsData: number) => {
             return `Unik ${attrBox(attrPositive(attrNumber(pointsData)))}`;
         },
         // "lightDamage": ([minimumDamage, maximumDamage]: string[]) => {
