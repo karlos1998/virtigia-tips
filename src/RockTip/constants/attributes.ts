@@ -207,6 +207,7 @@ export namespace Attributes {
             {"priority": 4, "name": "upgradedByPercent"},
             {"priority": 1, "name": "timeToDisappear"},
             {"priority": 1, "name": "expiresOn"},
+            {"priority": 1, "name": "impossibleToRemove"}
         ]
     };
 

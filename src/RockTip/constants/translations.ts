@@ -470,6 +470,9 @@ export namespace Translations {
         "isUnidentified": () => {
             return "Przedmiot niezidentyfikowany";
         },
+        "impossibleToRemove": () => {
+            return "Czar niemożliwy do zdjęcia";
+        },
         "useOutfit": ({time, src}: {time: number, src: string}) => {
             return `Zmienia Twój wygląd postaci na ${time > 0 ? `${time} minut` : `stałe`}`;
         },
