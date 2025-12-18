@@ -106,6 +106,13 @@ withDefaults(defineProps<TipProps>(), {
                         </span>
                             <span> *</span>
                         </div>
+                      <div
+                          v-if="selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent"
+                          class="upgrade-percent"
+                      >
+                        <span
+                            v-html="Translations.attributes.upgradedByPercent(selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent)"></span>
+                      </div>
                         <!-- Display outfit image if useOutfit attribute exists -->
                         <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
                              class="outfit-image" 

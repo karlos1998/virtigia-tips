@@ -204,7 +204,7 @@ export namespace Attributes {
             {"priority": 2, "name": "isUndoScroll"},
             {"priority": 2, "name": "isRecovered"},
             {"priority": 2, "name": "isCursed"},
-            {"priority": 4, "name": "upgradedByPercent"},
+            {"priority": 0, "name": "upgradedByPercent"},
             {"priority": 1, "name": "timeToDisappear"},
             {"priority": 1, "name": "expiresOn"},
             {"priority": 1, "name": "impossibleToRemove"}

@@ -226,15 +226,7 @@ export namespace Translations {
             return `Maksimum ${attrBox(attrNumber(maximumCount))} sztuk razem`;
         },
         "upgradedByPercent": (currentLevel: string) => {
-            const greekLetters = {
-                "1": "I",
-                "2": "II",
-                "3": "III",
-                "4": "IV",
-                "5": "V",
-                "6": "VI"
-            };
-            return `stopień ulepszenia ${greekLetters[currentLevel]}`;
+            return `* ulepszono ${attrBox(attrNumber(currentLevel))}% *`;
         },
         "poisonResistance": (percentData: string) => {
             return `Odporność na truciznę ${attrBox(attrPercent(attrSigner(percentData)))}`
