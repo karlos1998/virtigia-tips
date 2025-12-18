@@ -152,6 +152,7 @@ export namespace Attributes {
             {"priority": 3, "name": "percentageUpgradeUnique"},
             {"priority": 3, "name": "percentageUpgradeHeroic"},
             {"priority": 3, "name": "percentageUpgradeLegendary"},
+            {"priority": 3, "name": "upgradeableCategories"},
             {"priority": 2, "name": "poisonResistance"},
             {"priority": 2, "name": "lightResistance"},
             {"priority": 2, "name": "frostResistance"},

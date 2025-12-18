@@ -449,6 +449,10 @@ export namespace Translations {
         "percentageUpgradeLegendary": (value: number) => {
             return `Ulepszenie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
         },
+        "upgradeableCategories": (categoryList: (keyof typeof categories)[]) => {
+            const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
+            return `Ulepsza: ${categoryNames}`;
+        },
 
         /* Tags */
         "isNonStoreableInClanDeposit": () => {
