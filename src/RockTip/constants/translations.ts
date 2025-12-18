@@ -437,6 +437,18 @@ export namespace Translations {
         "incrementGold": (value: number) => {
             return `Złoto: +${attrBox(value)}`
         },
+        "percentageUpgradeCommon": (value: number) => {
+            return `Ulepszenie przedmiotu zwykłego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "percentageUpgradeUnique": (value: number) => {
+            return `Ulepszenie przedmiotu unikatowego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "percentageUpgradeHeroic": (value: number) => {
+            return `Ulepszenie przedmiotu heroicznego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "percentageUpgradeLegendary": (value: number) => {
+            return `Ulepszenie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
 
         /* Tags */
         "isNonStoreableInClanDeposit": () => {

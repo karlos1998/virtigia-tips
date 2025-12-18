@@ -285,6 +285,26 @@ HTML
     color: var(--rockTip-item--rarity-legendary);
 }
 
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeCommon'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeCommon'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-common);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeUnique'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeUnique'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-unique);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeHeroic'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeHeroic'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-heroic);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeLegendary'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeLegendary'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-legendary);
+}
+
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='keyDescription'],
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='unidentified'],
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='description'],
