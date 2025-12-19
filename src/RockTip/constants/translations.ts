@@ -453,6 +453,18 @@ export namespace Translations {
             const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
             return `Ulepsza: ${categoryNames}`;
         },
+        "reduceLevelRequirementCommon": (value: number) => {
+            return `Obniża wymagania zwykłego o ${attrBox(attrNumber(value))}`
+        },
+        "reduceLevelRequirementUnique": (value: number) => {
+            return `Obniża wymagania unikatowego o ${attrBox(attrNumber(value))}`
+        },
+        "reduceLevelRequirementHeroic": (value: number) => {
+            return `Obniża wymagania heroicznego o ${attrBox(attrNumber(value))}`
+        },
+        "reduceLevelRequirementLegendary": (value: number) => {
+            return `Obniża wymagania legendarnego o ${attrBox(attrNumber(value))}`
+        },
 
         /* Tags */
         "isNonStoreableInClanDeposit": () => {
@@ -484,6 +496,9 @@ export namespace Translations {
         },
         "impossibleToRemove": () => {
             return "Czar niemożliwy do zdjęcia";
+        },
+        "reducedLevelRequirement": (value: number) => {
+            return `* obniżono wymagany lvl o ${attrBox(attrNumber(value))} *`;
         },
         "useOutfit": ({time, src}: {time: number, src: string}) => {
             return `Zmienia Twój wygląd postaci na ${time > 0 ? `${time} minut` : `stałe`}`;

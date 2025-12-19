@@ -153,6 +153,10 @@ export namespace Attributes {
             {"priority": 3, "name": "percentageUpgradeHeroic"},
             {"priority": 3, "name": "percentageUpgradeLegendary"},
             {"priority": 3, "name": "upgradeableCategories"},
+            {"priority": 3, "name": "reduceLevelRequirementCommon"},
+            {"priority": 3, "name": "reduceLevelRequirementUnique"},
+            {"priority": 3, "name": "reduceLevelRequirementHeroic"},
+            {"priority": 3, "name": "reduceLevelRequirementLegendary"},
             {"priority": 2, "name": "poisonResistance"},
             {"priority": 2, "name": "lightResistance"},
             {"priority": 2, "name": "frostResistance"},
@@ -210,6 +214,7 @@ export namespace Attributes {
             {"priority": 2, "name": "isRecovered"},
             {"priority": 2, "name": "isCursed"},
             {"priority": 0, "name": "upgradedByPercent"},
+            {"priority": 0, "name": "reducedLevelRequirement"},
             {"priority": 1, "name": "timeToDisappear"},
             {"priority": 1, "name": "expiresOn"},
             {"priority": 1, "name": "impossibleToRemove"}

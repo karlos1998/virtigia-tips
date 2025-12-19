@@ -200,6 +200,17 @@ HTML
     color: hsl(45deg, 100%, 50%) !important;
 }
 
+.rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .reduced-level-requirement {
+    color: hsl(45deg, 100%, 50%) !important;
+    font-size: 0.9em;
+    margin-top: 2px;
+    text-align: center;
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .reduced-level-requirement span {
+    color: hsl(45deg, 100%, 50%) !important;
+}
+
 .rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .rarity[data-type='legendary'] > .inner {
     background-image: var(--rockTip-item--legendary-effect);
 }
@@ -302,6 +313,26 @@ HTML
 
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeLegendary'],
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='percentageUpgradeLegendary'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-legendary);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementCommon'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementCommon'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-common);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementUnique'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementUnique'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-unique);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementHeroic'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementHeroic'] [data-role='value'] {
+    color: var(--rockTip-item--rarity-heroic);
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementLegendary'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='reduceLevelRequirementLegendary'] [data-role='value'] {
     color: var(--rockTip-item--rarity-legendary);
 }
 

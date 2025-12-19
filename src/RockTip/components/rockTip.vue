@@ -113,6 +113,13 @@ withDefaults(defineProps<TipProps>(), {
                         <span
                             v-html="Translations.attributes.upgradedByPercent(selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent)"></span>
                       </div>
+                      <div
+                          v-if="selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement"
+                          class="reduced-level-requirement"
+                      >
+                        <span
+                            v-html="Translations.attributes.reducedLevelRequirement(selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement)"></span>
+                      </div>
                         <!-- Display outfit image if useOutfit attribute exists -->
                         <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
                              class="outfit-image" 
