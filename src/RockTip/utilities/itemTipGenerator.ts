@@ -9,7 +9,7 @@ export interface CreateItemTipOptions {
   baseSrc?: string;
 }
 
-export function generateItemTipHtml(item: ItemPayload, options: CreateItemTipOptions = {}): string {
+export function createItemTip(item: ItemPayload, options: CreateItemTipOptions = {}): string {
   const { heroLvl = 500, heroProfession = null, baseSrc = '' } = options;
 
   const itemOrders = Attributes.getOrdersList(item);
@@ -183,8 +183,4 @@ export function generateItemTipHtml(item: ItemPayload, options: CreateItemTipOpt
   html += '</div>'; // End inner
 
   return html;
-}
-
-export function createItemTip(item: ItemPayload, options: CreateItemTipOptions = {}): string {
-  return generateItemTipHtml(item, options);
 }

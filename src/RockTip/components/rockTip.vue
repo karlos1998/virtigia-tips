@@ -6,7 +6,6 @@ import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
 import {useToolTip} from "../../tooltips/module";
 import {TipProps} from "../typings/schematics";
-import { generateItemTipHtml } from '../utilities/itemTipGenerator';
 
 const { state, setToolTipElement } = useToolTip();
 
@@ -25,22 +24,13 @@ onMounted(() => {
 
 const selfProperties = state;
 
-const props = withDefaults(defineProps<TipProps>(), {
+const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
+
+withDefaults(defineProps<TipProps>(), {
   heroLvl: 500,
   heroProfession: null,
   baseSrc: ''
 })
-
-const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
-
-const itemTipHtml = computed(() => {
-    if (!selfProperties.value.itemPayload) return '';
-    return generateItemTipHtml(selfProperties.value.itemPayload, {
-        heroLvl: props.heroLvl,
-        heroProfession: props.heroProfession,
-        baseSrc: props.baseSrc
-    });
-});
 
 </script>
 
@@ -97,7 +87,156 @@ const itemTipHtml = computed(() => {
                 <div class="inner text-sharpen" v-html="selfProperties.htmlPayload.schema.inner.content" />
             </template>
             <template v-if="selfProperties.itemPayload">
-                <div class="inner text-sharpen" v-html="itemTipHtml" />
+                <div class="inner text-sharpen">
+                    <div class="header">
+                        <div v-if="selfProperties.itemPayload.schema.showId">
+                            <i>ID: {{ selfProperties.itemPayload.schema.inner.id }}</i>
+                        </div>
+                        <div class="name">
+                            <span>{{ selfProperties.itemPayload.schema.inner.name }}</span>
+                        </div>
+                        <div
+                            v-if="selfProperties.itemPayload.schema.inner.rarity && selfProperties.itemPayload.schema.inner.rarity != 'common'"
+                            class="rarity"
+                            :data-type="selfProperties.itemPayload.schema.inner.rarity"
+                        >
+                            <span>* </span>
+                            <span class="inner">
+                            {{ `${Translations.rarities[selfProperties.itemPayload.schema.inner.rarity]}` }}
+                        </span>
+                            <span> *</span>
+                        </div>
+                      <div
+                          v-if="selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent"
+                          class="upgrade-percent"
+                      >
+                        <span
+                            v-html="Translations.attributes.upgradedByPercent(selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent)"></span>
+                      </div>
+                      <div
+                          v-if="selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement"
+                          class="reduced-level-requirement"
+                      >
+                        <span
+                            v-html="Translations.attributes.reducedLevelRequirement(selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement)"></span>
+                      </div>
+                        <!-- Display outfit image if useOutfit attribute exists -->
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
+                             class="outfit-image" 
+                             :style="{
+                                backgroundImage: `url(${selfProperties.itemPayload.schema.inner.attributes.useOutfit.src})`,
+                                backgroundPosition: '0 0',
+                                width: '32px',
+                                height: '48px',
+                                margin: '5px auto',
+                                display: 'block'
+                             }">
+                        </div>
+                    </div>
+                    <div class="struct">
+                        <div class="category">
+                        <span
+                            v-if="selfProperties.itemPayload.schema.inner.category && Translations.categories[selfProperties.itemPayload.schema.inner.category]">{{ `Typ: ${Translations.categories[selfProperties.itemPayload.schema.inner.category]}`
+                            }}</span>
+                            <b v-else>{{ `Nieznany typ: ${selfProperties.itemPayload.schema.inner.category || '-'}`
+                                }}</b>
+                        </div>
+                        <div class="bonuses">
+<!--                            <template v-if="itemOrders?.tags.isUnidentified">-->
+<!--                                <div class="attribute text-center" :data-stat="'unidentified'">-->
+<!--                                    Przedmiot niezidentyfikowany-->
+<!--                                </div>-->
+<!--                            </template>-->
+                            <template v-for="currentStat of itemOrders?.bonuses">
+                                <div class="attribute" :data-stat="currentStat">
+                                <span
+                                    v-if="Translations.attributes[currentStat] && currentStat !== 'petSrc'"
+                                    v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
+                                />
+                                <span
+                                    v-else-if="currentStat === 'petSrc'"
+                                    v-html="Translations.attributes.petSrc(selfProperties.itemPayload.schema.inner.attributes[currentStat], selfProperties.itemPayload.schema.inner.attributes)"
+                                />
+                                    <div v-else><b>Nieznany stat: {{ currentStat }}</b></div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="actions">
+                            <template v-for="currentStat of itemOrders?.actions">
+                                <div class="attribute" :data-stat="currentStat">
+                                <span
+                                    v-if="Translations.attributes[currentStat]"
+                                    v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
+                                />
+                                    <div v-else><b>Nieznana akcja: {{ currentStat }}</b></div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="tags">
+                            <template v-for="currentStat of itemOrders?.tags">
+                                <div class="attribute" :data-stat="currentStat">
+                                <span
+                                    v-if="Translations.attributes[currentStat]"
+                                    v-html="Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])"
+                                />
+                                    <div v-else><b>Nieznany tag: {{ currentStat }}</b></div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="requires">
+                            <template v-for="currentStat of itemOrders?.limits">
+                                <div
+                                    v-if="(() => {
+                                      switch(currentStat) {
+                                        case 'needProfessions': {
+                                            return selfProperties.itemPayload.schema.inner.attributes.needProfessions.length != 6 && selfProperties.itemPayload.schema.inner.attributes.needProfessions.length != 0;
+                                        }
+                                        case 'needLevel': {
+                                            return selfProperties.itemPayload.schema.inner.attributes.needLevel > 1;
+                                        }
+                                        default: {
+                                            return true;
+                                        }
+                                      }
+                                    })()"
+                                    class="attribute" :data-stat="currentStat" :data-fulfilling="(() => {
+                                switch(currentStat) {
+                                    case 'needLevel': {
+                                        return heroLvl >= Number(selfProperties.itemPayload.schema.inner.attributes.needLevel);
+                                    }
+                                    case 'needProfessions': {
+                                        return heroProfession == null ||  selfProperties.itemPayload.schema.inner.attributes.needProfessions.indexOf(heroProfession) > -1;
+                                    }
+                                    case 'cooldownTime': {
+
+                                        return selfProperties.itemPayload.schema.inner.attributes.cooldownTime.length == 1 || selfProperties.itemPayload.schema.inner.attributes.cooldownTime[1] <= (new Date().getTime() / 1000);
+                                    }
+                                    default: {
+                                        return false;
+                                    }
+                                }
+                            })()">
+                                <span
+                                    v-if="Translations.attributes[currentStat]"
+                                    v-html="Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])"
+                                />
+<!--                                    <span-->
+<!--                                        v-else-->
+<!--                                    >-->
+<!--                                        Problem z: {{Translations.attributes[currentStat]}}-->
+<!--                                    </span>-->
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="price" v-if="priceFormatter(selfProperties.itemPayload.schema.inner.price) != '0'">
+                            <span>{{ `Wartość: ${priceFormatter(selfProperties.itemPayload.schema.inner.price)}`
+                                }}</span>
+                            <div :data-type="selfProperties.itemPayload.schema.inner.currency" />
+                        </div>
+                    </div>
+                </div>
             </template>
             <template v-if="selfProperties.npcPayload">
                 <div class="inner text-sharpen">
@@ -124,7 +263,7 @@ const itemTipHtml = computed(() => {
                         </div>
                     </template>
                     <div class="level" :advantage="(() => {
-                    const differenceLevel = props.heroLvl - selfProperties.npcPayload.schema.inner.lvl;
+                    const differenceLevel = heroLvl - selfProperties.npcPayload.schema.inner.lvl;
                     if(differenceLevel > 13) {
                         return 'high';
                     }
