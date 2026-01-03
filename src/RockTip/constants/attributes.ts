@@ -119,7 +119,6 @@ export namespace Attributes {
             {"priority": 11, "name": "description"},
             {"priority": 11, "name": "petSrc"},
             {"priority": 10, "name": "petActions"},
-            {"priority": 10, "name": "teleportTo"},
             {"priority": 10, "name": "attackSpeed"},
             {"priority": 10, "name": "heal2TurnsReduction"},
             {"priority": 10, "name": "enemyAttackSpeedReduction"},
