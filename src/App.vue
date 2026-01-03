@@ -10,8 +10,7 @@ import chainsaw from "./assets/chainsaw2.gif?url";
 // @ts-ignore
 import smokczarny from "./assets/smokczarny.gif?url";
 import {ref} from "vue";
-
-
+import { createItemTip } from './RockTip/utilities/itemTipGenerator';
 
 const kroliczaLapka = ref({
   "id": 2816,
@@ -46,6 +45,57 @@ const kroliczaLapka = ref({
   "shops": [],
   "baseNpcs": []
 })
+
+// Example usage of createItemTip function
+const chainsawItem = {
+  schema: {
+    showId: false,
+    position: { x: 0, y: 0 },
+    inner: {
+      name: "Piła",
+      price: 777,
+      currency: "honor",
+      rarity: "artefact",
+      category: "twoHanded" as any,
+      attributes: {
+        "allBaseAttributes":10000,
+        "physicalDamage":[160000,200000],
+        "fireDamage":199998,
+        "health":160000,
+        "needLevel":100,
+        "description":" 1000 do wycinania drzew",
+        "attackSpeed":2000,
+        "upgradePercent":100,
+        "upgradedByPercent": 5,
+        "reducedLevelRequirement": 3,
+        "timeToDisappear": 300,
+        "expiresOn": 1757766959,
+        "stamina": 60,
+        "impossibleToRemove": true,
+        "percentageUpgradeCommon": 5,
+        "percentageUpgradeUnique": 10,
+        "percentageUpgradeHeroic": 15,
+        "percentageUpgradeLegendary": 20,
+        "upgradeableCategories": ["boots", "armors", "helmets"],
+        "reduceLevelRequirementCommon": 1,
+        "reduceLevelRequirementUnique": 2,
+        "reduceLevelRequirementHeroic": 3,
+        "reduceLevelRequirementLegendary": 4,
+        "unbindsOwnerBound": true,
+        "unbindsPermanentlyBound": true,
+        "combatFlee": true,
+        "openMail": true,
+        "openAuction": true
+      },
+      id: 12345,
+      src: ""
+    }
+  }
+}
+
+const tooltipHtml = createItemTip(chainsawItem, { heroLvl: 500, heroProfession: 'w' });
+console.log('Generated tooltip HTML:', tooltipHtml);
+
 </script>
 
 <template>
