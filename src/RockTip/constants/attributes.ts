@@ -108,6 +108,8 @@ export namespace Attributes {
             {"priority": 1, "name": "openBook"},
             {"priority": 1, "name": "openMail"},
             {"priority": 1, "name": "usePet"},
+            {"priority": 1, "name": "unbindsOwnerBound"},
+            {"priority": 1, "name": "unbindsPermanentlyBound"},
         ],
         "bonuses": [
             {"priority": 12, "name": "maxQuantity"},
@@ -224,12 +226,9 @@ export namespace Attributes {
     };
 
     export function getOrdersList(itemData: ItemPayload): {
-        actions: Typings.OrderEntry[][];
-        // bonuses: Typings.OrderEntry[][];
+        actions: string[];
         bonuses: string[];
-        // limits: Typings.OrderEntry[][];
         limits: string[];
-        // tags: Typings.OrderEntry[][];
         tags: string[];
     } {
         function getOrdersByCategory(target: keyof typeof orderDataset): Attributes.Typings.OrderEntry[][] {
@@ -254,7 +253,7 @@ export namespace Attributes {
         };
 
         const result: {
-            actions: Attributes.Typings.OrderEntry[][]
+            actions: string[]
             bonuses: string[]
             limits: string[]
             tags: string[]

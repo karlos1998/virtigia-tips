@@ -206,7 +206,7 @@ export namespace Translations {
             return `Dodaje ${attrBox(attrPositive(attrPercent(attrNumber(percentData))))} punktów wymaganych do ulepszenia przedmiotu`;
         },
         "enemyManaReduction": (pointsData: string) => {
-            return `Podczas obrony redukuje mane przeciwnika o ${attrBox(attrNumber(attrSigner(pointsData)))} punkty`;
+            return `Podczas obrony redukuje mane przeciwnika o ${attrBox(attrSigner(pointsData))} punkty`;
         },
         "physicalAbsorption": (pointsData: string) => {
             return `Absorbuje do ${attrBox(attrNumber(pointsData))} obrażeń fizycznych`;
@@ -497,6 +497,23 @@ export namespace Translations {
                     title="Podgląd zwierzaka">
                 </div>
             </div>`;
+        },
+
+        /* Actions */
+        "unbindsOwnerBound": () => {
+            return "Odwiązuje przedmiot związany z właścicielem";
+        },
+        "unbindsPermanentlyBound": () => {
+            return "Odwiązuje przedmiot związany z właścicielem na stałe";
+        },
+        "combatFlee": () => {
+            return "Pozwala na ucieczkę z walki";
+        },
+        "openMail": () => {
+            return "Wywołuje pocztę";
+        },
+        "openAuction": () => {
+            return "Wywołuje aukcję";
         },
 
         /* Tags */

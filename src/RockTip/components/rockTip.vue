@@ -161,6 +161,17 @@ withDefaults(defineProps<TipProps>(), {
                                 </div>
                             </template>
                         </div>
+                        <div class="actions">
+                            <template v-for="currentStat of itemOrders?.actions">
+                                <div class="attribute" :data-stat="currentStat">
+                                <span
+                                    v-if="Translations.attributes[currentStat]"
+                                    v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
+                                />
+                                    <div v-else><b>Nieznana akcja: {{ currentStat }}</b></div>
+                                </div>
+                            </template>
+                        </div>
                         <div class="tags">
                             <template v-for="currentStat of itemOrders?.tags">
                                 <div class="attribute" :data-stat="currentStat">
