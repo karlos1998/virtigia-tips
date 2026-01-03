@@ -150,8 +150,12 @@ withDefaults(defineProps<TipProps>(), {
                             <template v-for="currentStat of itemOrders?.bonuses">
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
-                                    v-if="Translations.attributes[currentStat]"
+                                    v-if="Translations.attributes[currentStat] && currentStat !== 'petSrc'"
                                     v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
+                                />
+                                <span
+                                    v-else-if="currentStat === 'petSrc'"
+                                    v-html="Translations.attributes.petSrc(selfProperties.itemPayload.schema.inner.attributes[currentStat], selfProperties.itemPayload.schema.inner.attributes)"
                                 />
                                     <div v-else><b>Nieznany stat: {{ currentStat }}</b></div>
                                 </div>

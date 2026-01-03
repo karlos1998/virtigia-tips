@@ -75,8 +75,15 @@ const kroliczaLapka = ref({
       attributes: {"allBaseAttributes":10000,"physicalDamage":[160000,200000],"fireDamage":199998,"health":160000,"needLevel":100,"description":" 1000 do wycinania drzew","attackSpeed":2000,"upgradePercent":100, "upgradedByPercent": 5, "reducedLevelRequirement": 3, "timeToDisappear": 300, "expiresOn": 1757766959, "stamina": 60, "impossibleToRemove": true, "percentageUpgradeCommon": 5, "percentageUpgradeUnique": 10, "percentageUpgradeHeroic": 15, "percentageUpgradeLegendary": 20, "upgradeableCategories": ["boots", "armors", "helmets"], "reduceLevelRequirementCommon": 1, "reduceLevelRequirementUnique": 2, "reduceLevelRequirementHeroic": 3, "reduceLevelRequirementLegendary": 4}
     }' :src="chainsaw" />
 
+    <img v-tip.item='{
+      name: "Testowy kotek",
+      price: 100,
+      currency: "gold",
+      rarity: "common",
+      category: "pet",
+      attributes: {"petSrc": "https://micc.garmory-cdn.cloud/obrazki/pets/premium/kot01-1.gif", "petActions": ["Miaucz"], "description": "Testowy zwierzak do celów demonstracyjnych"}
+    }' :src="chainsaw" />
 
-<!--    <img v-tip.item="kroliczaLapka" :src="chainsaw" />-->
   </div>
 </template>
 

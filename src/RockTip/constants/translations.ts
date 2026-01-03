@@ -113,7 +113,8 @@ export namespace Translations {
         "keys": "Klucze",
         "bags": "Torby",
         "backpacks": "Torby", //todo - udandaryzowac, raczej uzyc bags
-        "staffs": "Laski"
+        "staffs": "Laski",
+        "pet": "Zwierzaki"
     };
 
     // const attrPositive = (value: string | number) => `+${attrNumber(value)}`;
@@ -464,6 +465,38 @@ export namespace Translations {
         },
         "reduceLevelRequirementLegendary": (value: number) => {
             return `Obniża wymagania legendarnego o ${attrBox(attrNumber(value))}`
+        },
+        "petActions": (actions: string[]) => {
+            return `<div style="text-align: center; font-style: italic; font-size: 0.9em; color: #F5F5DC; margin: 8px 0;">
+                <div style="font-weight: bold; margin-bottom: 4px;">Wykonuje akcje:</div>
+                <ul style="margin: 0; padding-left: 20px; text-align: left; display: inline-block;">
+                    <li>${actions.join('</li><li>')}</li>
+                </ul>
+            </div>`;
+        },
+        "petSrc": (src: string, itemData: any) => {
+            // Calculate horizontal divisions: 4 perspectives + number of petActions
+            const petActions = itemData.petActions || [];
+            const horizontalDivisions = 4 + petActions.length;
+            const verticalDivisions = 4;
+            
+            const horizontalPercent = 100 / horizontalDivisions;
+            const verticalPercent = 100 / verticalDivisions;
+            
+            return `<div style="text-align: center; margin: 10px 0;">
+                <div style="
+                    width: 48px; 
+                    height: 48px; 
+                    background-image: url('${src}'); 
+                    background-size: ${horizontalDivisions * 100}% ${verticalDivisions * 100}%; 
+                    background-position: 0% 0%; 
+                    background-repeat: no-repeat;
+                    border: 1px solid #8B4513; 
+                    border-radius: 4px; 
+                    display: inline-block;" 
+                    title="Podgląd zwierzaka">
+                </div>
+            </div>`;
         },
 
         /* Tags */
