@@ -148,7 +148,6 @@ export namespace Attributes {
             {"priority": 4, "name": "blockPoints"},
             {"priority": 3, "name": "physicalDamageAbsorption"},
             {"priority": 3, "name": "magicalDamageAbsorption"},
-            {"priority": 3, "name": "incrementGold"},
             {"priority": 3, "name": "physicalCritPower"},
             {"priority": 3, "name": "magicalCritPower"},
             {"priority": 3, "name": "percentageUpgradeCommon"},
@@ -188,7 +187,6 @@ export namespace Attributes {
             {"priority": 0, "name": "upgradePercent"},
             {"priority": 0, "name": "lootedAt"},
             {"priority": 3, "name": "isUnidentified"},
-            {"priority": 3, "name": "useOutfit"},
         ],
         "limits": [
             {"priority": 1, "name": "needProfessions"},
