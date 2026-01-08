@@ -121,6 +121,7 @@ export declare type NpcSchema = {
         rank?: "ELITE" | "ELITE_II" | "ELITE_III" | "TITAN" | "HERO",
         name: string
         inGroup: boolean
+        isAggressive?: boolean
     },
     // hero: {
     //     level: number

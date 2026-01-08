@@ -61,9 +61,17 @@ const kroliczaLapka = ref({
     <hr>
 
     <img v-tip.npc="{
-      name: 'Smok',
+      name: 'Potulny Smok',
       lvl: 666,
       rank: 'TITAN',
+      isAggressive: false,
+    }" :src="smokczarny" />
+
+    <img v-tip.npc="{
+      name: 'Agresywny Smok',
+      lvl: 666,
+      rank: 'TITAN',
+      isAggressive: true,
     }" :src="smokczarny" />
 
     <img v-tip.item='{

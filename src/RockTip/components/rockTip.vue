@@ -264,13 +264,19 @@ withDefaults(defineProps<TipProps>(), {
                     </template>
                     <div class="level" :advantage="(() => {
                     const differenceLevel = heroLvl - selfProperties.npcPayload.schema.inner.lvl;
-                    if(differenceLevel > 13) {
-                        return 'high';
+                    // Only apply level-based coloring if NPC is aggressive
+                    if (selfProperties.npcPayload.schema.inner.isAggressive) {
+                        if(differenceLevel > 13) {
+                            return 'high';
+                        }
+                        if(differenceLevel < -13) {
+                            return 'low';
+                        }
+                        return 'equal';
+                    } else {
+                        // For non-aggressive NPCs, always show yellow (equal)
+                        return 'equal';
                     }
-                    if(differenceLevel < -13) {
-                        return 'low';
-                    }
-                    return 'equal';
                 })()">
                         <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl` }}</span>
                     </div>
