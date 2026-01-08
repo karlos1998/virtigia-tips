@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import RockTip from "./RockTip/components/rockTip.vue";
+import { renderRockTipToHtml } from "./index";
 
 // import './RockTip/styles/style.css'
 
@@ -11,41 +12,40 @@ import chainsaw from "./assets/chainsaw2.gif?url";
 import smokczarny from "./assets/smokczarny.gif?url";
 import {ref} from "vue";
 
-
-
-const kroliczaLapka = ref({
-  "id": 2816,
-  "name": "Królicza łapka",
-  "stats": "nodesc;heroic;lvl=110;opis=Ten przedmiot nosił przy sobie szalony miś.<br>Ta łapka przynosiła mu szczęście,<br>może i tobie przyniesie?",
-  "pr": "74079",
-  "cl": "13",
-  "src": "https://map-editor.margatron.ovh/s3/img/items/nas/naszyjnik26.gif?1734542316",
-  "created_at": "2024-12-18T17:18:36.000000Z",
-  "updated_at": "2024-12-18T17:18:36.000000Z",
-  "attributes": {
-    "isUnidentified": true,
-    "needLevel": 110,
-    "description": "Ten przedmiot nosił przy sobie szalony miś.Ta łapka przynosiła mu szczęście,może i tobie przyniesie?",
-    "needProfessions": ['p', 'h'],
-    "chanceToCounter": 80,
-    "useOutfit": {
-      "time": 0,
-      "src": "private/clan/135.gif"
+const npcPayload = {
+  schema: {
+    inner: {
+      name: 'Potulny Smok',
+      lvl: 666,
+      rank: 'TITAN',
+      isAggressive: false,
     }
-  },
-  "category": "necklaces",
-  "currency": "gold",
-  "price": 74079,
-  "rarity": "heroic",
-  "edited_manually": false,
-  "deleted_at": null,
-  "category_name": "Naszyjniki",
-  // "need_professions": ['w', 'h'],
-  "need_level": 110,
-  "in_use": false,
-  "shops": [],
-  "baseNpcs": []
-})
+  }
+}
+
+console.log('Rendered HTML:', renderRockTipToHtml(npcPayload, 500, 'w', '', true));
+
+// Test with different hero levels to see level color changes
+const aggressiveNpcPayload = {
+  schema: {
+    inner: {
+      name: 'Agresywny Smok',
+      lvl: 666,
+      rank: 'TITAN',
+      isAggressive: true,
+    }
+  }
+}
+
+// Test with hero level much higher than NPC (should be green for aggressive)
+console.log('High level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true));
+
+// Test with hero level much lower than NPC (should be red for aggressive)
+console.log('Low level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 300, 'w', '', true));
+
+// Test with hero level close to NPC (should be yellow for aggressive)
+console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 660, 'w', '', true));
+
 </script>
 
 <template>
@@ -93,6 +93,14 @@ const kroliczaLapka = ref({
     }' :src="chainsaw" />
 
   </div>
+
+  <hr>
+  <div>
+    <span>Test render tip html</span>
+    <span v-html="renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true)" />
+    koniec.
+  </div>
+
 </template>
 
 <style>
