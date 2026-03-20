@@ -70,6 +70,10 @@
     background-image: var(--rockTip-other--background-mask);
 }
 
+.rockTip[data-type='other'][data-color='friend'] {
+    background-image: var(--rockTip-color-green--background-mask) !important;
+}
+
 .rockTip[data-type='other'] > .tip-wrapper > .corners > .leftTop {
     background-image: var(--rockTip-other--corner-left);
 }

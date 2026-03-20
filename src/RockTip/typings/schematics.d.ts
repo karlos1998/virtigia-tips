@@ -106,6 +106,7 @@ export declare type OtherSchema = {
         level?: number,
         blessing?: boolean,
         clan?: string,
+        relation?: "friend" | "enemy" | "neutral",
         role?: "Administrator" | "Mistrz Gry",
         name: string
     }

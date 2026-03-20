@@ -52,7 +52,12 @@ withDefaults(defineProps<TipProps>(), {
             return 'npc';
         }
     })()"
-         :data-color="selfProperties.target?.dataset.color"
+         :data-color="(() => {
+           if (selfProperties.otherPayload?.schema?.inner?.relation === 'friend') {
+             return 'friend';
+           }
+           return selfProperties.target?.dataset.color;
+         })()"
          ref="element">
         <div class="tip-wrapper">
             <div class="corners">

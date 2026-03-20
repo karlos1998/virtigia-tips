@@ -115,6 +115,19 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       </span>
     </div>
 
+    <div>
+      <span>Tip przyjaciela (other friend):</span>
+      <span v-tip.other="{
+        name: 'Przyjazny_Gracz',
+        level: 100,
+        profession: 'm',
+        clan: 'Virtigia Team',
+        relation: 'friend'
+      }" style="cursor: pointer; color: #00ff00; font-weight: bold;">
+        Przyjazny_Gracz (100m)
+      </span>
+    </div>
+
   </div>
 
   <hr>
