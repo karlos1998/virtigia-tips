@@ -105,6 +105,7 @@ export declare type OtherSchema = {
         profession: Profession,
         level?: number,
         blessing?: boolean,
+        brotherhoodMember?: boolean,
         clan?: string,
         relation?: "friend" | "enemy" | "neutral",
         role?: "Administrator" | "Mistrz Gry",

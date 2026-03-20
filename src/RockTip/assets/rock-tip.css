@@ -82,6 +82,10 @@
     background-image: var(--rockTip-other--corner-right);
 }
 
+.rockTip[data-type='other'] > .tip-wrapper > .inner > .nickname.crimson-brotherhood {
+    color: #f63;
+}
+
 .rockTip[data-type='other'] > .tip-wrapper > .inner > .nickname,
 .rockTip[data-type='other'] > .tip-wrapper > .inner > .blessing,
 .rockTip[data-type='other'] > .tip-wrapper > .inner > .clan,

@@ -128,6 +128,19 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       </span>
     </div>
 
+    <div>
+      <span>Tip Karmazynowe Bractwo (other):</span>
+      <span v-tip.other="{
+        name: 'Karmazynowy_Msciciel',
+        level: 250,
+        profession: 'b',
+        clan: 'Karmazynyn',
+        brotherhoodMember: true
+      }" style="cursor: pointer; color: #ff0000; font-weight: bold;">
+        Karmazynowy_Msciciel (250b)
+      </span>
+    </div>
+
   </div>
 
   <hr>

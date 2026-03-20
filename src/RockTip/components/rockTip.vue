@@ -66,7 +66,7 @@ withDefaults(defineProps<TipProps>(), {
             </div>
             <template v-if="selfProperties.otherPayload">
                 <div class="inner text-sharpen">
-                    <div class="nickname">
+                    <div class="nickname" :class="{ 'crimson-brotherhood': selfProperties.otherPayload.schema.inner.brotherhoodMember }">
                         <b>{{ selfProperties.otherPayload.schema.inner.name }}
                             {{ `(${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession})`
                             }}</b>
