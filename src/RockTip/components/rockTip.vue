@@ -66,9 +66,9 @@ withDefaults(defineProps<TipProps>(), {
                             {{ `(${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession})`
                             }}</b>
                     </div>
-                    <template v-if="selfProperties.otherPayload.schema.inner.bless">
-                        <div class="bless">
-                            <b>Błogosławieństwo</b>
+                    <template v-if="selfProperties.otherPayload.schema.inner.blessing">
+                        <div class="blessing">
+                            <span>Błogosławieństwo</span>
                         </div>
                     </template>
                     <template v-if="selfProperties.otherPayload.schema.inner.clan">

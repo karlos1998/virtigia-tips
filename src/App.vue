@@ -11,6 +11,14 @@ import chainsaw from "./assets/chainsaw2.gif?url";
 // @ts-ignore
 import smokczarny from "./assets/smokczarny.gif?url";
 import {ref} from "vue";
+import type { Profession } from "./RockTip/typings/schematics";
+
+const staticPlayer = {
+  name: 'Hrabia_Kamien',
+  level: 288,
+  profession: 'w' as Profession,
+  clan: 'Virtigia Team',
+};
 
 const npcPayload = {
   schema: {
@@ -91,6 +99,21 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       category: "pet",
       attributes: {"petSrc": "https://micc.garmory-cdn.cloud/obrazki/pets/premium/kot01-1.gif", "petActions": ["Miaucz"], "description": "Testowy zwierzak do celów demonstracyjnych"}
     }' :src="chainsaw" />
+
+    <hr>
+    <div>
+      <span>Tip gracza (other):</span>
+      <span v-tip.other="{
+        name: staticPlayer.name,
+        level: staticPlayer.level,
+        profession: staticPlayer.profession,
+        clan: staticPlayer.clan,
+        blessing: true,
+        role: 'Mistrz Gry'
+      }" style="cursor: pointer; color: #00ff00; font-weight: bold;">
+        {{ staticPlayer.name }} ({{ staticPlayer.level }}{{ staticPlayer.profession }})
+      </span>
+    </div>
 
   </div>
 

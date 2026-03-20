@@ -104,7 +104,7 @@ export declare type OtherSchema = {
     inner: {
         profession: Profession,
         level?: number,
-        bless?: boolean,
+        blessing?: boolean,
         clan?: string,
         role?: "Administrator" | "Mistrz Gry",
         name: string
