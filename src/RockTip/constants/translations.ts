@@ -114,7 +114,7 @@ export namespace Translations {
         "bags": "Torby",
         "backpacks": "Torby", //todo - udandaryzowac, raczej uzyc bags
         "staffs": "Laski",
-        "pet": "Zwierzaki"
+        "pets": "Zwierzaki"
     };
 
     // const attrPositive = (value: string | number) => `+${attrNumber(value)}`;
