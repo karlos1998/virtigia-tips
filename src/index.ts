@@ -1,9 +1,9 @@
 import ToolTipDirective, { useToolTip } from "./tooltips/module";
 import RockTip from "./RockTip/components/rockTip.vue";
-import type {HtmlPayload, ItemPayload, NpcPayload, OtherPayload} from './RockTip/typings/payloads';
+import type {HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from './RockTip/typings/payloads';
 import { createApp } from 'vue';
 
-export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPayload, OtherPayload };
+export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload };
 
 /**
  * Renders a RockTip component to HTML for testing purposes
@@ -15,7 +15,7 @@ export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPay
  * @returns HTML string of the rendered tooltip
  */
 export function renderRockTipToHtml(
-  payload: NpcPayload | ItemPayload | HtmlPayload | OtherPayload,
+  payload: NpcPayload | ItemPayload | HtmlPayload | OtherPayload | RipPayload | PetPayload,
   heroLvl: number = 500,
   heroProfession: string | null = null,
   baseSrc: string = '',
@@ -44,6 +44,8 @@ export function renderRockTipToHtml(
     state.value.itemPayload = false;
     state.value.htmlPayload = false;
     state.value.otherPayload = false;
+    state.value.ripPayload = false;
+    state.value.petPayload = false;
 
     // Set the appropriate payload based on type
     if (
@@ -67,6 +69,21 @@ export function renderRockTipToHtml(
     ) {
       // This is an HTML payload
       state.value.htmlPayload = payload as HtmlPayload;
+    } else if (
+      'schema' in payload &&
+      'inner' in payload.schema &&
+      'nick' in payload.schema.inner &&
+      'lvl' in payload.schema.inner
+    ) {
+      // This is a RIP payload
+      state.value.ripPayload = payload as RipPayload;
+    } else if (
+      'schema' in payload &&
+      'inner' in payload.schema &&
+      'ownerName' in payload.schema.inner
+    ) {
+      // This is a pet payload
+      state.value.petPayload = payload as PetPayload;
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&

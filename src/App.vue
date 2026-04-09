@@ -2,6 +2,7 @@
 
 import RockTip from "./RockTip/components/rockTip.vue";
 import { renderRockTipToHtml } from "./index";
+import type { NpcPayload } from "./RockTip/typings/payloads";
 
 // import './RockTip/styles/style.css'
 
@@ -20,11 +21,12 @@ const staticPlayer = {
   clan: 'Virtigia Team',
 };
 
-const npcPayload = {
+const npcPayload: NpcPayload = {
   schema: {
     inner: {
       name: 'Potulny Smok',
       lvl: 666,
+      inGroup: false,
       rank: 'TITAN',
       isAggressive: false,
     }
@@ -34,11 +36,12 @@ const npcPayload = {
 console.log('Rendered HTML:', renderRockTipToHtml(npcPayload, 500, 'w', '', true));
 
 // Test with different hero levels to see level color changes
-const aggressiveNpcPayload = {
+const aggressiveNpcPayload: NpcPayload = {
   schema: {
     inner: {
       name: 'Agresywny Smok',
       lvl: 666,
+      inGroup: false,
       rank: 'TITAN',
       isAggressive: true,
     }
@@ -59,6 +62,8 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
 <template>
   <div id="app">
     <RockTip
+        :hero-lvl="500"
+        :hero-profession="'w'"
         base-src='https://margatron.ovh/s3/eyJpdiI6ImdManJnVjMxZmFacU5JRnp6K0FjQmc9PSIsInZhbHVlIjoiTGpBb1hvSkU0aytRRjU2TmdXYjRLM0t1UEJmUk1nT2lQUmc4c05jUkNBd04veTRwS3k2S0hMd3RkTjJ2ZXM3bzMwK0dIa2VpdkJUT0VJZlNNelNpMEdYcHU4SlZ4cXZ1VER3eEYrODRHYjRQdUJwZU1SWFdLbmd6Q1czaGJvUEp3ZXpUWWpRcE1UMURRdE9DMUdqeW5NWnBweDJHYWlLQUVDZmZEOFZhdkk5eXZvcnRLai9kWktpM0d4My8rQzBJZHZWbHdHWDFOejQ0eGR4SFBpdWU1bWkwQzVvVTBDNjA4bVhOYzNLZklqcGloYi9TcTFFTHBOTlJXWUt1QjBtRXdrOFAza3dVUHRZU3VKc05tM1I0d0M2dEV0ZVVseXdsaWVDS2JBb1loOThOVDRTOUZ4d3ZITy9qSFcwT1VwS0RtS3dQZXhmN0lpaHN3UUt4c3dEQU11Q1BCVTNROTBrWVFTaHVmSHBiR2cyOXhTcDFLUTk5dXJYbEdkQklNS1NrblJQbHNxVU4rWFhpN2MxZzhOeFp0M1RnNGFMN1V5bVg5aFlzNlMrckl6Ty9Md2U4VXFZOENDK1JNQ0lVTmExYSIsIm1hYyI6IjczZTFkMmY0MjU2Y2E2ZDY3ZWUyYzg3NTVkYjBjN2Q4NThiZTg3MGFhY2ZmZTI1Y2M5Y2Y4NmQ4MWIxYTc5ZDUiLCJ0YWciOiIifQ=='
     />
 
@@ -138,6 +143,31 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
         brotherhoodMember: true
       }" style="cursor: pointer; color: #ff0000; font-weight: bold;">
         Karmazynowy_Msciciel (250b)
+      </span>
+    </div>
+
+    <hr>
+    <div>
+      <span>Tip nagrobka (rip):</span>
+      <span v-tip.rip="{
+        nick: 'Zlomiarz',
+        lvl: 100,
+        profession: 'w',
+        gender: 'm',
+        reason: 'Smok Cienia',
+        description: 'Prawi ludzie giną młodo'
+      }" style="cursor: pointer; color: #ddd; font-weight: bold;">
+        RIP Zlomiarz
+      </span>
+    </div>
+
+    <div>
+      <span>Tip peta (pet):</span>
+      <span v-tip.pet="{
+        name: 'Mruczek',
+        ownerName: 'Hrabia_Kamien'
+      }" style="cursor: pointer; color: #8ff; font-weight: bold;">
+        Pet Mruczek
       </span>
     </div>
 

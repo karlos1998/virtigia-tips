@@ -42,6 +42,12 @@ withDefaults(defineProps<TipProps>(), {
         if(selfProperties.otherPayload) {
             return 'other';
         }
+        if(selfProperties.ripPayload) {
+            return 'rip';
+        }
+        if(selfProperties.petPayload) {
+            return 'pet';
+        }
         if(selfProperties.itemPayload) {
             return 'item';
         }
@@ -53,7 +59,7 @@ withDefaults(defineProps<TipProps>(), {
         }
     })()"
          :data-color="(() => {
-           if (selfProperties.otherPayload?.schema?.inner?.relation === 'friend') {
+           if (selfProperties.otherPayload && selfProperties.otherPayload.schema.inner.relation === 'friend') {
              return 'friend';
            }
            return selfProperties.target?.dataset.color;
@@ -86,6 +92,32 @@ withDefaults(defineProps<TipProps>(), {
                             <span>{{ selfProperties.otherPayload.schema.inner.role }}</span>
                         </div>
                     </template>
+                </div>
+            </template>
+            <template v-if="selfProperties.ripPayload">
+                <div class="inner text-sharpen">
+                    <div class="rip-title">
+                        <b>{{ `Ś.p. ${selfProperties.ripPayload.schema.inner.nick}` }}</b>
+                    </div>
+                    <div class="rip-level">
+                        {{ `Lvl: ${selfProperties.ripPayload.schema.inner.lvl}${selfProperties.ripPayload.schema.inner.profession}` }}
+                    </div>
+                    <div v-if="selfProperties.ripPayload.schema.inner.reason" class="rip-reason">
+                        {{ `${String(selfProperties.ripPayload.schema.inner.gender).toLowerCase() === 'f' ? 'Zabita' : 'Zabity'} przez: ${selfProperties.ripPayload.schema.inner.reason}` }}
+                    </div>
+                    <div v-if="selfProperties.ripPayload.schema.inner.description" class="rip-description">
+                        {{ selfProperties.ripPayload.schema.inner.description }}
+                    </div>
+                </div>
+            </template>
+            <template v-if="selfProperties.petPayload">
+                <div class="inner text-sharpen">
+                    <div class="pet-name">
+                        <b>{{ selfProperties.petPayload.schema.inner.name }}</b>
+                    </div>
+                    <div class="pet-owner">
+                        {{ `Właściciel: ${selfProperties.petPayload.schema.inner.ownerName}` }}
+                    </div>
                 </div>
             </template>
             <template v-if="selfProperties.htmlPayload">

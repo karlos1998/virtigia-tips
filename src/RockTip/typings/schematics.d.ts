@@ -112,6 +112,22 @@ export declare type OtherSchema = {
         name: string
     }
 };
+export declare type RipSchema = {
+    inner: {
+        nick: string,
+        lvl: number,
+        profession: Profession,
+        gender: "f" | "m" | "F" | "M",
+        reason?: string | null,
+        description?: string | null,
+    }
+};
+export declare type PetSchema = {
+    inner: {
+        name: string,
+        ownerName: string,
+    }
+};
 export declare type HtmlSchema = {
     inner: {
         content: string

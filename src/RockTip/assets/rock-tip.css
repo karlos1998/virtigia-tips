@@ -109,6 +109,18 @@
     color: var(--rockTip-other--color-role);
 }
 
+.rockTip[data-type='rip'] > .tip-wrapper > .inner > .rip-title,
+.rockTip[data-type='rip'] > .tip-wrapper > .inner > .rip-level,
+.rockTip[data-type='rip'] > .tip-wrapper > .inner > .rip-reason,
+.rockTip[data-type='pet'] > .tip-wrapper > .inner > .pet-name,
+.rockTip[data-type='pet'] > .tip-wrapper > .inner > .pet-owner {
+    text-align: center;
+}
+
+.rockTip[data-type='rip'] > .tip-wrapper > .inner > .rip-description {
+    margin-top: 0.25rem;
+}
+
 /**
 HTML
  */
@@ -417,4 +429,32 @@ Npc
 
 .rockTip[data-type='npc'] > .tip-wrapper > .inner > .level[advantage='low'] {
     color: var(--rockTip-npc--color-adventage-low);
+}
+
+/**
+RIP + PET
+ */
+
+.rockTip[data-type='pet'] {
+    background-image: var(--rockTip-npc--background-mask);
+}
+
+.rockTip[data-type='pet'] > .tip-wrapper > .corners > .leftTop {
+    background-image: var(--rockTip-npc--corner-left);
+}
+
+.rockTip[data-type='pet'] > .tip-wrapper > .corners > .rightBottom {
+    background-image: var(--rockTip-npc--corner-right);
+}
+
+.rockTip[data-type='rip'] {
+    background-image: var(--rockTip-item--background-mask);
+}
+
+.rockTip[data-type='rip'] > .tip-wrapper > .corners > .leftTop {
+    background-image: var(--rockTip-item--corner-left);
+}
+
+.rockTip[data-type='rip'] > .tip-wrapper > .corners > .rightBottom {
+    background-image: var(--rockTip-item--corner-right);
 }
