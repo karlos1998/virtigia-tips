@@ -126,6 +126,20 @@ export namespace Translations {
     const attrSigner = (value: string | number) => Math.sign(attrNumber(value)) === 1 ? attrPositive(value) : `${attrNumber(value)}`;
     const attrNumber = (value: string | number | boolean | object) => Number(value);
     const attrBox = (value: string | number) => `<span data-role="value">${value}</span>`;
+    const formatDateTime = (timestamp: number | string) => {
+        const date = new Date(Number(timestamp));
+        if (Number.isNaN(date.getTime())) {
+            return String(timestamp);
+        }
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${day}.${month}.${year} ${hours}:${minutes}`;
+    };
     export const attributes = {
         /* Limits */
         "needProfessions": (professionList: (keyof typeof professions)[]) => {
@@ -267,6 +281,20 @@ export namespace Translations {
         },
         "keyDescription": (mapName: string) => {
             return `Otwiera: ${mapName}`;
+        },
+        "hotelRoom": (data: {name?: string, rentedUntil?: number | string, expiresAt?: number | string}) => {
+            if (!data || typeof data !== 'object') {
+                return '';
+            }
+
+            const roomName = data.name || 'Pokój hotelowy';
+            const expiresAt = data.rentedUntil ?? data.expiresAt;
+
+            if (expiresAt == null) {
+                return `Klucz hotelowy: ${attrBox(roomName)}`;
+            }
+
+            return `Klucz hotelowy: ${attrBox(roomName)}<br>Wynajem do: ${attrBox(formatDateTime(expiresAt))}`;
         },
         "energyDestroy": (pointsData: string) => {
             return `Podczas obrony niszczy ${attrBox(attrPositive(attrNumber(pointsData)))} energii przeciwnika`;

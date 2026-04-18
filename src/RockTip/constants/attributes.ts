@@ -178,6 +178,7 @@ export namespace Attributes {
             {"priority": 1, "name": "frostDamage"},
             {"priority": 1, "name": "fireDamage"},
             {"priority": 1, "name": "keyDescription"},
+            {"priority": 1, "name": "hotelRoom"},
             {"priority": 1, "name": "shortenRevival"},
             {"priority": 1, "name": "healRemaining"},
             {"priority": 1, "name": "bagCapacity"},
@@ -285,4 +286,3 @@ export namespace Attributes {
         return result;
     }
 }
-

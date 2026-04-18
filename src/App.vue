@@ -105,6 +105,22 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       attributes: {"petSrc": "https://micc.garmory-cdn.cloud/obrazki/pets/premium/kot01-1.gif", "petActions": ["Miaucz"], "description": "Testowy zwierzak do celów demonstracyjnych"}
     }' :src="chainsaw" />
 
+    <img v-tip.item='{
+      name: "Klucz do pokoju",
+      price: 5,
+      currency: "dragonTear",
+      rarity: "common",
+      category: "keys",
+      attributes: {
+        "description": "Zajazd u Makiny",
+        "hotelRoom": {
+          "id": 3,
+          "name": "Zajazd u Makiny - pokój 2",
+          "rentedUntil": 1779065913854
+        }
+      }
+    }' :src="chainsaw" />
+
     <hr>
     <div>
       <span>Tip gracza (other):</span>
