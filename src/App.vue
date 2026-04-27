@@ -121,6 +121,20 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       }
     }' :src="chainsaw" />
 
+    <img v-tip.item='{
+      name: "Skórzana Sakwa",
+      price: 2500,
+      currency: "gold",
+      rarity: "unique",
+      category: "pouches",
+      attributes: {
+        "bagCapacity": 12,
+        "storableCategories": ["consumable", "keys", "quests", "golds"],
+        "needLevel": 40,
+        "description": "Lekka sakwa na drobiazgi i przedmioty użytkowe."
+      }
+    }' :src="chainsaw" />
+
     <hr>
     <div>
       <span>Tip gracza (other):</span>

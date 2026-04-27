@@ -114,7 +114,8 @@ export namespace Translations {
         "bags": "Torby",
         "backpacks": "Torby", //todo - udandaryzowac, raczej uzyc bags
         "staffs": "Laski",
-        "pets": "Zwierzaki"
+        "pets": "Zwierzaki",
+        "pouches": "Sakwy"
     };
 
     // const attrPositive = (value: string | number) => `+${attrNumber(value)}`;
@@ -481,6 +482,10 @@ export namespace Translations {
         "upgradeableCategories": (categoryList: (keyof typeof categories)[]) => {
             const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
             return `Ulepsza: ${categoryNames}`;
+        },
+        "storableCategories": (categoryList: (keyof typeof categories)[]) => {
+            const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
+            return `Pozwala przechowywać: ${categoryNames}`;
         },
         "reduceLevelRequirementCommon": (value: number) => {
             return `Obniża wymagania zwykłego o ${attrBox(attrNumber(value))}`

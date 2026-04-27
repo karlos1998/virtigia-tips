@@ -155,6 +155,7 @@ export namespace Attributes {
             {"priority": 3, "name": "percentageUpgradeHeroic"},
             {"priority": 3, "name": "percentageUpgradeLegendary"},
             {"priority": 3, "name": "upgradeableCategories"},
+            {"priority": 3, "name": "storableCategories"},
             {"priority": 3, "name": "reduceLevelRequirementCommon"},
             {"priority": 3, "name": "reduceLevelRequirementUnique"},
             {"priority": 3, "name": "reduceLevelRequirementHeroic"},
