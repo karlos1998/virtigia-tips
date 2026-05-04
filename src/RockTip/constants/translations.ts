@@ -535,10 +535,10 @@ export namespace Translations {
 
         /* Actions */
         "unbindsOwnerBound": () => {
-            return "Odwiązuje przedmiot związany z właścicielem";
+            return "Odwiązuje przedmiot związany z właścicielem i ustawia: wiąże po założeniu";
         },
         "unbindsPermanentlyBound": () => {
-            return "Odwiązuje przedmiot związany z właścicielem na stałe";
+            return "Odwiązuje przedmiot związany na stałe (i zwykły) oraz ustawia: wiąże po założeniu";
         },
         "combatFlee": () => {
             return "Pozwala na ucieczkę z walki";
