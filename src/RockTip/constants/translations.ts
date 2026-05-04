@@ -109,6 +109,7 @@ export namespace Translations {
         "wands": "Różdżki",
         "golds": "Złoto",
         "books": "Książki",
+        "musicBoxes": "Pozytywki",
         "orbs": "Orby magiczne",
         "keys": "Klucze",
         "bags": "Torby",
