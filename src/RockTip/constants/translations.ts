@@ -206,6 +206,9 @@ export namespace Translations {
         "healChanceAfterFight": ([chanceData, pointsData]: string[]) => {
             return `${attrBox(attrPercent(attrNumber(chanceData)))} szans na wyleczenie ${attrBox(attrNumber(pointsData))} obrażeń po walce`;
         },
+        "battleExperienceBonusPercent": (percentData: string) => {
+            return `Zwiększa doświadczenie za walkę o ${attrBox(attrPercent(attrNumber(percentData)))}`;
+        },
         "heal2TurnsReduction": (pointsData: string) => {
             return `Obniżenie leczenia turowego przeciwnika na 2 tury o ${attrBox(attrNumber(pointsData))}`;
         },
