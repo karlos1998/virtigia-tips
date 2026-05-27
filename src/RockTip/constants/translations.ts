@@ -549,6 +549,12 @@ export namespace Translations {
         "openAuction": () => {
             return "Wywołuje aukcję";
         },
+        "findHeroNpc": () => {
+            return "Lokalizuje Herosa odpowiadającego Twojej postaci";
+        },
+        "findDetailedHeroNpc": () => {
+            return "Lokalizuje Herosa odpowiadającego Twojej postaci z mapą, pozycją i czasem odrodzenia";
+        },
 
         /* Tags */
         "isNonStoreableInClanDeposit": () => {

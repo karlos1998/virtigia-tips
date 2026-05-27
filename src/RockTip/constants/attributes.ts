@@ -104,6 +104,8 @@ export namespace Attributes {
             {"priority": 1, "name": "useEmotion"},
             {"priority": 1, "name": "useOutfit"},
             {"priority": 1, "name": "npcLocate"},
+            {"priority": 1, "name": "findHeroNpc"},
+            {"priority": 1, "name": "findDetailedHeroNpc"},
             // {"priority": 1, "name": "playAudio"},
             {"priority": 1, "name": "openBook"},
             {"priority": 1, "name": "openMail"},
