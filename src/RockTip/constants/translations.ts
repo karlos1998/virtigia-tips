@@ -480,6 +480,15 @@ export namespace Translations {
         "percentageUpgradeLegendary": (value: number) => {
             return `Ulepszenie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
         },
+        "legendaryLootChanceBonusPercent": (value: number) => {
+            return `Zwiększa szansę na zdobycie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "heroicLootChanceBonusPercent": (value: number) => {
+            return `Zwiększa szansę na zdobycie przedmiotu heroicznego o ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "minimumLootChancePercent": (value: number) => {
+            return `Zmniejsza szansę na pusty łup do ${attrBox(attrPercent(attrNumber(value)))}`
+        },
         "upgradeableCategories": (categoryList: (keyof typeof categories)[]) => {
             const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
             return `Ulepsza: ${categoryNames}`;
