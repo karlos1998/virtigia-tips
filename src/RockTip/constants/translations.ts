@@ -555,6 +555,12 @@ export namespace Translations {
         "combatFlee": () => {
             return "Pozwala na ucieczkę z walki";
         },
+        "openDeposit": () => {
+            return "Wywołuje depozyt";
+        },
+        "openClanDeposit": () => {
+            return "Wywołuje depozyt klanowy";
+        },
         "openMail": () => {
             return "Wywołuje pocztę";
         },
