@@ -209,6 +209,9 @@ export namespace Translations {
         "battleExperienceBonusPercent": (percentData: string) => {
             return `Zwiększa doświadczenie za walkę o ${attrBox(attrPercent(attrNumber(percentData)))}`;
         },
+        "arrowPreservationChancePercent": (percentData: string) => {
+            return `${attrBox(attrPercent(attrNumber(percentData)))} szans na zachowanie strzały podczas ataku`;
+        },
         "heal2TurnsReduction": (pointsData: string) => {
             return `Obniżenie leczenia turowego przeciwnika na 2 tury o ${attrBox(attrNumber(pointsData))}`;
         },
