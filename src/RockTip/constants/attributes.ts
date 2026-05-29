@@ -125,6 +125,7 @@ export namespace Attributes {
             {"priority": 11, "name": "heroicLootChanceBonusPercent"},
             {"priority": 11, "name": "minimumLootChancePercent"},
             {"priority": 11, "name": "battleExperienceBonusPercent"},
+            {"priority": 11, "name": "questExperienceBonusPercent"},
             {"priority": 11, "name": "arrowPreservationChancePercent"},
             {"priority": 10, "name": "petActions"},
             {"priority": 10, "name": "attackSpeed"},

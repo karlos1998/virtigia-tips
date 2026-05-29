@@ -211,7 +211,14 @@ export namespace Translations {
             return `${attrBox(attrPercent(attrNumber(chanceData)))} szans na wyleczenie ${attrBox(attrNumber(pointsData))} obrażeń po walce`;
         },
         "battleExperienceBonusPercent": (percentData: string) => {
-            return `Zwiększa doświadczenie za walkę o ${attrBox(attrPercent(attrNumber(percentData)))}`;
+            const percent = attrNumber(percentData);
+            const direction = percent < 0 ? "Zmniejsza" : "Zwiększa";
+            return `${direction} doświadczenie za walkę o ${attrBox(attrPercent(Math.abs(percent)))}`;
+        },
+        "questExperienceBonusPercent": (percentData: string) => {
+            const percent = attrNumber(percentData);
+            const direction = percent < 0 ? "Zmniejsza" : "Zwiększa";
+            return `${direction} doświadczenie za questy o ${attrBox(attrPercent(Math.abs(percent)))}`;
         },
         "arrowPreservationChancePercent": (percentData: string) => {
             return `${attrBox(attrPercent(attrNumber(percentData)))} szans na zachowanie strzały podczas ataku`;
