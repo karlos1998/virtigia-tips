@@ -127,6 +127,10 @@ export namespace Translations {
     const attrPercent = (value: string | number) => `${value}%`;
     const attrSigner = (value: string | number) => Math.sign(attrNumber(value)) === 1 ? attrPositive(value) : `${attrNumber(value)}`;
     const attrNumber = (value: string | number | boolean | object) => Number(value);
+    const attrDecimalNumber = (value: string | number | boolean | object) => {
+        const num = attrNumber(value);
+        return Number.isFinite(num) ? Number(num.toFixed(3)).toString() : "0";
+    };
     const attrBox = (value: string | number) => `<span data-role="value">${value}</span>`;
     const formatDateTime = (timestamp: number | string) => {
         const date = new Date(Number(timestamp));
@@ -487,10 +491,10 @@ export namespace Translations {
             return `Ulepszenie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
         },
         "legendaryLootChanceBonusPercent": (value: number) => {
-            return `Zwiększa szansę na zdobycie przedmiotu legendarnego o ${attrBox(attrPercent(attrNumber(value)))}`
+            return `Zwiększa szansę na zdobycie przedmiotu legendarnego o ${attrBox(attrPercent(attrDecimalNumber(value)))}`
         },
         "heroicLootChanceBonusPercent": (value: number) => {
-            return `Zwiększa szansę na zdobycie przedmiotu heroicznego o ${attrBox(attrPercent(attrNumber(value)))}`
+            return `Zwiększa szansę na zdobycie przedmiotu heroicznego o ${attrBox(attrPercent(attrDecimalNumber(value)))}`
         },
         "minimumLootChancePercent": (value: number) => {
             return `Zmniejsza szansę na pusty łup do ${attrBox(attrPercent(attrNumber(value)))}`
