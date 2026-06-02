@@ -1,7 +1,7 @@
 import ToolTipDirective, { useToolTip } from "./tooltips/module";
 import RockTip from "./RockTip/components/rockTip.vue";
 import type {HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from './RockTip/typings/payloads';
-import { createApp } from 'vue';
+import { createApp, type App } from 'vue';
 
 export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload };
 
@@ -24,10 +24,13 @@ export function renderRockTipToHtml(
   // Create a temporary container
   const container = document.createElement('div');
   document.body.appendChild(container);
+  const { state } = useToolTip();
+  const previousState = { ...state.value };
+  let app: App<Element> | null = null;
 
   try {
     // Create app instance with RockTip component
-    const app = createApp(RockTip, {
+    app = createApp(RockTip, {
       heroLvl,
       heroProfession,
       baseSrc
@@ -35,9 +38,6 @@ export function renderRockTipToHtml(
 
     // Mount the app
     app.mount(container);
-
-    // Get the tooltip state
-    const { state } = useToolTip();
 
     // Reset all payloads
     state.value.npcPayload = false;
@@ -109,16 +109,14 @@ export function renderRockTipToHtml(
       }
     }
 
-    // Clean up
-    app.unmount();
-    document.body.removeChild(container);
-
     return html;
   } catch (error) {
-    // Clean up on error
+    throw error;
+  } finally {
+    app?.unmount();
     if (document.body.contains(container)) {
       document.body.removeChild(container);
     }
-    throw error;
+    Object.assign(state.value, previousState);
   }
 }
