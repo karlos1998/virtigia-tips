@@ -363,12 +363,21 @@ HTML
     color: var(--rockTip-item--color-description);
 }
 
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='description'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='isUnidentified'],
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='unidentified'],
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='unIdentified'] {
+    color: #ffc;
     font-style: italic;
+}
+
+.rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='description'] {
+    margin-top: 1em;
 }
 
 .rockTip[data-type='item'] > .tip-wrapper > .inner .attribute[data-stat='lootedWith'] {
     color: var(--rockTip-item--color-lootLog);
+    font-style: italic;
 }
 
 /**
