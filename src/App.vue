@@ -50,7 +50,7 @@ onMounted(() => {
         base-src='https://margatron.ovh/s3/eyJpdiI6ImdManJnVjMxZmFacU5JRnp6K0FjQmc9PSIsInZhbHVlIjoiTGpBb1hvSkU0aytRRjU2TmdXYjRLM0t1UEJmUk1nT2lQUmc4c05jUkNBd04veTRwS3k2S0hMd3RkTjJ2ZXM3bzMwK0dIa2VpdkJUT0VJZlNNelNpMEdYcHU4SlZ4cXZ1VER3eEYrODRHYjRQdUJwZU1SWFdLbmd6Q1czaGJvUEp3ZXpUWWpRcE1UMURRdE9DMUdqeW5NWnBweDJHYWlLQUVDZmZEOFZhdkk5eXZvcnRLai9kWktpM0d4My8rQzBJZHZWbHdHWDFOejQ0eGR4SFBpdWU1bWkwQzVvVTBDNjA4bVhOYzNLZklqcGloYi9TcTFFTHBOTlJXWUt1QjBtRXdrOFAza3dVUHRZU3VKc05tM1I0d0M2dEV0ZVVseXdsaWVDS2JBb1loOThOVDRTOUZ4d3ZITy9qSFcwT1VwS0RtS3dQZXhmN0lpaHN3UUt4c3dEQU11Q1BCVTNROTBrWVFTaHVmSHBiR2cyOXhTcDFLUTk5dXJYbEdkQklNS1NrblJQbHNxVU4rWFhpN2MxZzhOeFp0M1RnNGFMN1V5bVg5aFlzNlMrckl6Ty9Md2U4VXFZOENDK1JNQ0lVTmExYSIsIm1hYyI6IjczZTFkMmY0MjU2Y2E2ZDY3ZWUyYzg3NTVkYjBjN2Q4NThiZTg3MGFhY2ZmZTI1Y2M5Y2Y4NmQ4MWIxYTc5ZDUiLCJ0YWciOiIifQ=='
     />
 
-    <span v-tip="'TEST'">Zwykly tip tekstowy</span>
+    <span v-tip="'Moja postać'">Zwykly tip tekstowy</span>
 
     <hr>
     <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
@@ -230,6 +230,7 @@ onMounted(() => {
       <span>Tip peta (pet):</span>
       <span v-tip.pet="{
         name: 'Mruczek',
+        rarity: 'legendary',
         ownerName: 'Hrabia_Kamien'
       }" style="cursor: pointer; color: #8ff; font-weight: bold;">
         Pet Mruczek
@@ -240,7 +241,7 @@ onMounted(() => {
 
   <hr>
   <div>
-    <span>Test render tip html</span>
+    <span>Test render tip html </span>
     <span v-html="renderedAggressiveNpcHtml" />
     koniec.
   </div>
