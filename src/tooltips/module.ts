@@ -316,8 +316,8 @@ const setupGlobalMouseListeners = () => {
     return () => {
         document.removeEventListener('mousedown', handleMouseDown)
         document.removeEventListener('mouseup', handleMouseUp)
-        document.addEventListener('dragend', handleMouseUp)
-        document.addEventListener('drop', handleMouseUp)
+        document.removeEventListener('dragend', handleMouseUp)
+        document.removeEventListener('drop', handleMouseUp)
     }
 }
 

@@ -11,7 +11,7 @@ import chainsaw from "./assets/chainsaw2.gif?url";
 
 // @ts-ignore
 import smokczarny from "./assets/smokczarny.gif?url";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import type { Profession } from "./RockTip/typings/schematics";
 
 const staticPlayer = {
@@ -20,20 +20,6 @@ const staticPlayer = {
   profession: 'w' as Profession,
   clan: 'Virtigia Team',
 };
-
-const npcPayload: NpcPayload = {
-  schema: {
-    inner: {
-      name: 'Potulny Smok',
-      lvl: 666,
-      inGroup: false,
-      rank: 'TITAN',
-      isAggressive: false,
-    }
-  }
-}
-
-console.log('Rendered HTML:', renderRockTipToHtml(npcPayload, 500, 'w', '', true));
 
 // Test with different hero levels to see level color changes
 const aggressiveNpcPayload: NpcPayload = {
@@ -48,14 +34,11 @@ const aggressiveNpcPayload: NpcPayload = {
   }
 }
 
-// Test with hero level much higher than NPC (should be green for aggressive)
-console.log('High level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true));
+const renderedAggressiveNpcHtml = ref('');
 
-// Test with hero level much lower than NPC (should be red for aggressive)
-console.log('Low level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 300, 'w', '', true));
-
-// Test with hero level close to NPC (should be yellow for aggressive)
-console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiveNpcPayload, 660, 'w', '', true));
+onMounted(() => {
+  renderedAggressiveNpcHtml.value = renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true);
+});
 
 </script>
 
@@ -176,6 +159,58 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
       </span>
     </div>
 
+    <div>
+      <span>Tip wroga (other enemy):</span>
+      <span v-tip.other="{
+        name: 'Wrogi_Gracz',
+        level: 120,
+        profession: 't',
+        clan: 'Nieprzyjaciele',
+        relation: 'enemy'
+      }" style="cursor: pointer; color: #ff5555; font-weight: bold;">
+        Wrogi_Gracz (120t)
+      </span>
+    </div>
+
+    <div>
+      <span>Tip wrogiego klanu (other enemy clan):</span>
+      <span v-tip.other="{
+        name: 'Klanowy_Wrog',
+        level: 130,
+        profession: 'h',
+        clan: 'Wrogowie',
+        relation: 'enemy_clan'
+      }" style="cursor: pointer; color: #ff7777; font-weight: bold;">
+        Klanowy_Wrog (130h)
+      </span>
+    </div>
+
+    <div>
+      <span>Tip klanowicza (other clan member):</span>
+      <span v-tip.other="{
+        name: 'Klanowicz',
+        level: 140,
+        profession: 'p',
+        clan: 'Virtigia Team',
+        relation: 'clan_member'
+      }" style="cursor: pointer; color: #ffaa33; font-weight: bold;">
+        Klanowicz (140p)
+      </span>
+    </div>
+
+    <div>
+      <span>Tip sojusznika (other ally clan):</span>
+      <span v-tip.other="{
+        name: 'Sojusznik',
+        level: 150,
+        profession: 'b',
+        clan: 'Sprzymierzeni',
+        relation: 'ally_clan'
+      }" style="cursor: pointer; color: #ffcc55; font-weight: bold;">
+        Sojusznik (150b)
+      </span>
+    </div>
+
     <hr>
     <div>
       <span>Tip nagrobka (rip):</span>
@@ -206,7 +241,7 @@ console.log('Equal level hero vs aggressive NPC:', renderRockTipToHtml(aggressiv
   <hr>
   <div>
     <span>Test render tip html</span>
-    <span v-html="renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true)" />
+    <span v-html="renderedAggressiveNpcHtml" />
     koniec.
   </div>
 
