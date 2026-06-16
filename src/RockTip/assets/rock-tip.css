@@ -74,6 +74,18 @@
     background-image: var(--rockTip-color-green--background-mask) !important;
 }
 
+.rockTip[data-type='other'][data-color='enemy'] {
+    background-image:
+        linear-gradient(hsla(0, 75%, 24%, 0.72), hsla(0, 72%, 16%, 0.72)),
+        var(--rockTip-other--background-mask) !important;
+}
+
+.rockTip[data-type='other'][data-color='clan'] {
+    background-image:
+        linear-gradient(hsla(30, 86%, 32%, 0.68), hsla(28, 82%, 22%, 0.68)),
+        var(--rockTip-other--background-mask) !important;
+}
+
 .rockTip[data-type='other'] > .tip-wrapper > .corners > .leftTop {
     background-image: var(--rockTip-other--corner-left);
 }

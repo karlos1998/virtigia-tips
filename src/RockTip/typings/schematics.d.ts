@@ -78,6 +78,9 @@ ShO9KukHxab7dzwZ2ngYldAZQrLCDLE1xTCXtrd1xkqiO1Y=
 import { Translations } from "../constants/translations";
 
 export declare type Profession = "w" | "p" | "h" | "t" | "b" | "m"
+export declare type OtherRelation =
+    "friend" | "enemy" | "clan_member" | "ally_clan" | "enemy_clan" | "neutral" |
+    "FRIEND" | "ENEMY" | "CLAN_MEMBER" | "ALLY_CLAN" | "ENEMY_CLAN" | "NEUTRAL"
 
 export declare type ItemSchema = {
     position: {
@@ -107,7 +110,7 @@ export declare type OtherSchema = {
         blessing?: boolean,
         brotherhoodMember?: boolean,
         clan?: string,
-        relation?: "friend" | "enemy" | "neutral",
+        relation?: OtherRelation,
         role?: "Administrator" | "Mistrz Gry",
         name: string
     }

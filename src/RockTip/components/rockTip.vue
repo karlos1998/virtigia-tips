@@ -26,6 +26,20 @@ const selfProperties = state;
 
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
 
+function resolveOtherColor(relation?: string): string | undefined {
+    const normalizedRelation = relation?.toLowerCase();
+    if (normalizedRelation === 'friend') {
+        return 'friend';
+    }
+    if (normalizedRelation === 'enemy' || normalizedRelation === 'enemy_clan') {
+        return 'enemy';
+    }
+    if (normalizedRelation === 'clan_member' || normalizedRelation === 'ally_clan') {
+        return 'clan';
+    }
+    return undefined;
+}
+
 withDefaults(defineProps<TipProps>(), {
   heroLvl: 500,
   heroProfession: null,
@@ -59,8 +73,8 @@ withDefaults(defineProps<TipProps>(), {
         }
     })()"
          :data-color="(() => {
-           if (selfProperties.otherPayload && selfProperties.otherPayload.schema.inner.relation === 'friend') {
-             return 'friend';
+           if (selfProperties.otherPayload) {
+             return resolveOtherColor(selfProperties.otherPayload.schema.inner.relation) ?? selfProperties.target?.dataset.color;
            }
            return selfProperties.target?.dataset.color;
          })()"
