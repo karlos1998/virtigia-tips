@@ -34,8 +34,11 @@ function resolveOtherColor(relation?: string): string | undefined {
     if (normalizedRelation === 'enemy' || normalizedRelation === 'enemy_clan') {
         return 'enemy';
     }
-    if (normalizedRelation === 'clan_member' || normalizedRelation === 'ally_clan') {
+    if (normalizedRelation === 'clan_member') {
         return 'clan';
+    }
+    if (normalizedRelation === 'ally_clan') {
+        return 'ally';
     }
     return undefined;
 }
@@ -128,6 +131,11 @@ withDefaults(defineProps<TipProps>(), {
                 <div class="inner text-sharpen">
                     <div class="pet-name">
                         <b>{{ selfProperties.petPayload.schema.inner.name }}</b>
+                    </div>
+                    <div v-if="selfProperties.petPayload.schema.inner.rarity && selfProperties.petPayload.schema.inner.rarity != 'common'"
+                            class="pet-rarity"
+                            :data-type="selfProperties.petPayload.schema.inner.rarity">
+                        <i>{{ selfProperties.petPayload.schema.inner.rarity }}</i>
                     </div>
                     <div class="pet-owner">
                         {{ `Właściciel: ${selfProperties.petPayload.schema.inner.ownerName}` }}
