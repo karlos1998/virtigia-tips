@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import { useToolTip } from '@/tooltips/module.ts';
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, version, watch} from 'vue';
 import { priceFormatter } from '../utilities/priceFormatter';
 import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
@@ -24,7 +24,34 @@ onMounted(() => {
 
 const selfProperties = state;
 
+
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
+
+function resolveTroopColor(side?: string): string | undefined {
+    const normalizedSide = side?.toLowerCase();
+    switch(normalizedSide) {
+        case 'team': return 'team';
+        case 'opponent': return 'opponent';
+    }
+    return undefined;
+}
+
+function resolveAdvantageLevel(heroLvl, npcData){
+    const differenceLevel = heroLvl - npcData.lvl;
+    // Only apply level-based coloring if NPC is aggressive
+    if (npcData.isAggressive) {
+        if(differenceLevel > 13) {
+            return 'high';
+        }
+        if(differenceLevel < -13) {
+            return 'low';
+        }
+        return 'equal';
+    } else {
+        // For non-aggressive NPCs, always show yellow (equal)
+        return 'equal';
+    }
+}
 
 function resolveOtherColor(relation?: string): string | undefined {
     const normalizedRelation = relation?.toLowerCase();
@@ -45,6 +72,7 @@ function resolveOtherColor(relation?: string): string | undefined {
 
 withDefaults(defineProps<TipProps>(), {
   heroLvl: 500,
+  tipVersion: '',
   heroProfession: null,
   baseSrc: ''
 })
@@ -74,10 +102,17 @@ withDefaults(defineProps<TipProps>(), {
         if(selfProperties.npcPayload) {
             return 'npc';
         }
+        if(selfProperties.troopPayload) {
+            return 'troop';
+        }
     })()"
+         :data-version="tipVersion";
          :data-color="(() => {
            if (selfProperties.otherPayload) {
              return resolveOtherColor(selfProperties.otherPayload.schema.inner.relation) ?? selfProperties.target?.dataset.color;
+           }
+           if (selfProperties.troopPayload) {
+             return resolveTroopColor(selfProperties.troopPayload.schema.inner.side) ?? selfProperties.target?.dataset.color;
            }
            return selfProperties.target?.dataset.color;
          })()"
@@ -90,10 +125,18 @@ withDefaults(defineProps<TipProps>(), {
             <template v-if="selfProperties.otherPayload">
                 <div class="inner text-sharpen">
                     <div class="nickname" :class="{ 'crimson-brotherhood': selfProperties.otherPayload.schema.inner.brotherhoodMember }">
-                        <b>{{ selfProperties.otherPayload.schema.inner.name }}
-                            {{ `(${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession})`
-                            }}</b>
+                        <b>{{ selfProperties.otherPayload.schema.inner.name }}</b>
                     </div>
+                    <template v-if="tipVersion != 'legacy'">
+                        <div class="level">
+                            <span>Lvl: ({{ `${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession}` }})</span>
+                        </div>
+                    </template>
+                    <template v-if="tipVersion == 'legacy'">
+                        <div class="level">
+                            <span>Lvl: {{ `${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession}` }}</span>
+                        </div>
+                    </template>
                     <template v-if="selfProperties.otherPayload.schema.inner.blessing">
                         <div class="blessing">
                             <span>Błogosławieństwo</span>
@@ -109,6 +152,29 @@ withDefaults(defineProps<TipProps>(), {
                             <span>{{ selfProperties.otherPayload.schema.inner.role }}</span>
                         </div>
                     </template>
+                </div>
+            </template>
+            <template v-if="selfProperties.troopPayload">
+                <div class="inner text-sharpen" style="text-align: center; color: gold;">
+                    <div class="name">
+                        <b>{{ selfProperties.troopPayload.schema.inner.name }}</b>
+                    </div>
+                    <div class="level">
+                        Lvl: ({{ selfProperties.troopPayload.schema.inner.lvl }}{{ selfProperties.troopPayload.schema.inner.profession }})
+                    </div>
+                    <div class="health">
+                        Życie: {{ Math.round(selfProperties.troopPayload.schema.inner.currentHp/selfProperties.troopPayload.schema.inner.maxHp * 1000)/10 }}%
+                    </div>
+                    <div class="armor">
+                        Pancerz: {{ selfProperties.troopPayload.schema.inner.ac }}
+                    </div>
+                    <div class="resistance" style="display: flex;">
+                        Odp.: 
+                        <div style="color: red">{{ selfProperties.troopPayload.schema.inner.fireRes }}</div>/
+                        <div style="color: yellow">{{ selfProperties.troopPayload.schema.inner.lightRes }}</div>/
+                        <div style="color: lightblue">{{ selfProperties.troopPayload.schema.inner.iceRes }}</div>/
+                        <div style="color: green">{{ selfProperties.troopPayload.schema.inner.poisonRes }}</div>
+                    </div>
                 </div>
             </template>
             <template v-if="selfProperties.ripPayload">
@@ -302,6 +368,11 @@ withDefaults(defineProps<TipProps>(), {
                     <div class="name">
                         <b>{{ selfProperties.npcPayload.schema.inner.name }}</b>
                     </div>
+                    <template v-if="tipVersion == 'legacy'">
+                        <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
+                            <span>{{ `Lvl: ${selfProperties.npcPayload.schema.inner.lvl}${selfProperties.npcPayload.schema.inner.inGroup ? " (grp)" : ""}` }}</span>
+                        </div>
+                    </template>
                     <template v-if="selfProperties.npcPayload.schema.inner.rank">
                         <div class="rank">
                             <template v-if="selfProperties.npcPayload.schema.inner.rank === 'ELITE'">
@@ -321,27 +392,11 @@ withDefaults(defineProps<TipProps>(), {
                             </template>
                         </div>
                     </template>
-                    <div class="level" :advantage="(() => {
-                    const differenceLevel = heroLvl - selfProperties.npcPayload.schema.inner.lvl;
-                    // Only apply level-based coloring if NPC is aggressive
-                    if (selfProperties.npcPayload.schema.inner.isAggressive) {
-                        if(differenceLevel > 13) {
-                            return 'high';
-                        }
-                        if(differenceLevel < -13) {
-                            return 'low';
-                        }
-                        return 'equal';
-                    } else {
-                        // For non-aggressive NPCs, always show yellow (equal)
-                        return 'equal';
-                    }
-                })()">
-                        <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl` }}</span>
-                    </div>
-                  <div class="group" v-if="selfProperties.npcPayload.schema.inner.inGroup">
-                    W grupie
-                  </div>
+                    <template v-if="tipVersion != 'legacy'">
+                        <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
+                            <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl${selfProperties.npcPayload.schema.inner.inGroup ? ", grp" : ""}` }}</span>
+                        </div>
+                    </template>
                 </div>
             </template>
         </div>

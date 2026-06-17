@@ -1,6 +1,6 @@
 import ToolTipDirective, { useToolTip } from "./tooltips/module";
 import RockTip from "./RockTip/components/rockTip.vue";
-import type {HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from './RockTip/typings/payloads';
+import type {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from './RockTip/typings/payloads';
 import { createApp, type App } from 'vue';
 
 export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload };
@@ -15,7 +15,7 @@ export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPay
  * @returns HTML string of the rendered tooltip
  */
 export function renderRockTipToHtml(
-  payload: NpcPayload | ItemPayload | HtmlPayload | OtherPayload | RipPayload | PetPayload,
+  payload: NpcPayload | TroopPayload | ItemPayload | HtmlPayload | OtherPayload | RipPayload | PetPayload,
   heroLvl: number = 500,
   heroProfession: string | null = null,
   baseSrc: string = '',
@@ -41,6 +41,7 @@ export function renderRockTipToHtml(
 
     // Reset all payloads
     state.value.npcPayload = false;
+    state.value.troopPayload = false;
     state.value.itemPayload = false;
     state.value.htmlPayload = false;
     state.value.otherPayload = false;
@@ -55,6 +56,13 @@ export function renderRockTipToHtml(
     ) {
       // This is an NPC payload
       state.value.npcPayload = payload as NpcPayload;
+    } else if (
+      'schema' in payload &&
+      'inner' in payload.schema &&
+      'name' in payload.schema.inner
+    ) {
+      // This is an Troop payload
+      state.value.troopPayload = payload as TroopPayload;
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&

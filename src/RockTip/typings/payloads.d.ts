@@ -1,4 +1,4 @@
-import type { ItemSchema, OtherSchema, HtmlSchema, NpcSchema, RipSchema, PetSchema } from "./schematics";
+import type { ItemSchema, OtherSchema, HtmlSchema, TroopSchema, NpcSchema, RipSchema, PetSchema } from "./schematics";
 
 export declare type ItemPayload = {
     schema: ItemSchema
@@ -8,6 +8,9 @@ export declare type OtherPayload = {
 };
 export declare type HtmlPayload = {
     schema: HtmlSchema
+};
+export declare type TroopPayload = {
+    schema: TroopSchema
 };
 export declare type NpcPayload = {
     schema: NpcSchema

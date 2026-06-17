@@ -1,5 +1,5 @@
 import {DirectiveBinding, nextTick, ref, onMounted, onUnmounted} from 'vue'
-import {HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from '../RockTip/typings/payloads';
+import {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from '../RockTip/typings/payloads';
 // import {useHeroStore} from "../stores/hero.store";
 
 type TipDirection = 'top' | 'bottom' | 'left' | 'right'
@@ -12,6 +12,7 @@ interface ToolTipState {
     otherPayload: OtherPayload | false,
     itemPayload: ItemPayload | false,
     htmlPayload: HtmlPayload | false,
+    troopPayload: TroopPayload | false,
     npcPayload: NpcPayload | false,
     ripPayload: RipPayload | false,
     petPayload: PetPayload | false,
@@ -27,6 +28,7 @@ const state = ref<ToolTipState>({
     otherPayload: false,
     itemPayload: false,
     htmlPayload: false,
+    troopPayload: false,
     npcPayload: false,
     ripPayload: false,
     petPayload: false,
@@ -172,6 +174,7 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
     };
 
     delete el.dataset.npc;
+    delete el.dataset.troop;
     delete el.dataset.item;
     delete el.dataset.other;
     delete el.dataset.html;
@@ -180,6 +183,8 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
 
     if (binding.modifiers.npc) {
         el.dataset.npc = JSON.stringify(data)
+    } else if (binding.modifiers.troop) {
+        el.dataset.troop = JSON.stringify(data)
     } else if (binding.modifiers.item) {
         el.dataset.item = JSON.stringify(data)
     } else if (binding.modifiers.other) {
@@ -203,6 +208,7 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
     state.value.target = el
     state.value.opened = true
 
+    state.value.troopPayload = el.dataset.troop ? JSON.parse(el.dataset.troop) : false
     state.value.npcPayload = el.dataset.npc ? JSON.parse(el.dataset.npc) : false
     state.value.itemPayload = el.dataset.item ? JSON.parse(el.dataset.item) : false
     state.value.otherPayload = el.dataset.other ? JSON.parse(el.dataset.other) : false

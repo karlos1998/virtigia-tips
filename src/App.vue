@@ -47,29 +47,13 @@ onMounted(() => {
     <RockTip
         :hero-lvl="500"
         :hero-profession="'w'"
+        :tipVersion="'legacy'"
         base-src='https://margatron.ovh/s3/eyJpdiI6ImdManJnVjMxZmFacU5JRnp6K0FjQmc9PSIsInZhbHVlIjoiTGpBb1hvSkU0aytRRjU2TmdXYjRLM0t1UEJmUk1nT2lQUmc4c05jUkNBd04veTRwS3k2S0hMd3RkTjJ2ZXM3bzMwK0dIa2VpdkJUT0VJZlNNelNpMEdYcHU4SlZ4cXZ1VER3eEYrODRHYjRQdUJwZU1SWFdLbmd6Q1czaGJvUEp3ZXpUWWpRcE1UMURRdE9DMUdqeW5NWnBweDJHYWlLQUVDZmZEOFZhdkk5eXZvcnRLai9kWktpM0d4My8rQzBJZHZWbHdHWDFOejQ0eGR4SFBpdWU1bWkwQzVvVTBDNjA4bVhOYzNLZklqcGloYi9TcTFFTHBOTlJXWUt1QjBtRXdrOFAza3dVUHRZU3VKc05tM1I0d0M2dEV0ZVVseXdsaWVDS2JBb1loOThOVDRTOUZ4d3ZITy9qSFcwT1VwS0RtS3dQZXhmN0lpaHN3UUt4c3dEQU11Q1BCVTNROTBrWVFTaHVmSHBiR2cyOXhTcDFLUTk5dXJYbEdkQklNS1NrblJQbHNxVU4rWFhpN2MxZzhOeFp0M1RnNGFMN1V5bVg5aFlzNlMrckl6Ty9Md2U4VXFZOENDK1JNQ0lVTmExYSIsIm1hYyI6IjczZTFkMmY0MjU2Y2E2ZDY3ZWUyYzg3NTVkYjBjN2Q4NThiZTg3MGFhY2ZmZTI1Y2M5Y2Y4NmQ4MWIxYTc5ZDUiLCJ0YWciOiIifQ=='
     />
 
     <span v-tip="'Moja postać'">Zwykly tip tekstowy</span>
 
     <hr>
-    <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
-    <hr>
-
-    <img v-tip.npc="{
-      name: 'Potulny Smok',
-      lvl: 666,
-      rank: 'TITAN',
-      isAggressive: false,
-    }" :src="smokczarny" />
-
-    <img v-tip.npc="{
-      name: 'Agresywny Smok',
-      lvl: 666,
-      rank: 'TITAN',
-      isAggressive: true,
-    }" :src="smokczarny" />
-
     <img v-tip.item='{
       name: "Piła",
       price: 777,
@@ -117,6 +101,45 @@ onMounted(() => {
         "description": "Lekka sakwa na drobiazgi i przedmioty użytkowe."
       }
     }' :src="chainsaw" />
+
+    <hr>
+    <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
+    <hr>
+    <img v-tip.npc="{
+      name: 'Potulny Smok',
+      lvl: 666,
+      rank: 'ELITE',
+      isAggressive: false,
+    }" :src="smokczarny" />
+
+    <img v-tip.npc="{
+      name: 'Potulny Smok',
+      lvl: 666,
+      rank: 'ELITE_II',
+      isAggressive: false,
+      inGroup: true,
+    }" :src="smokczarny" />
+
+    <img v-tip.npc="{
+      name: 'Potulny Smok',
+      lvl: 666,
+      rank: 'ELITE_III',
+      isAggressive: false,
+    }" :src="smokczarny" />
+
+    <img v-tip.npc="{
+      name: 'Potulny Smok',
+      lvl: 666,
+      rank: 'HERO',
+      isAggressive: false,
+    }" :src="smokczarny" />
+
+    <img v-tip.npc="{
+      name: 'Agresywny Smok',
+      lvl: 666,
+      rank: 'TITAN',
+      isAggressive: true,
+    }" :src="smokczarny" />
 
     <hr>
     <div>
@@ -208,6 +231,43 @@ onMounted(() => {
         relation: 'ally_clan'
       }" style="cursor: pointer; color: #ffcc55; font-weight: bold;">
         Sojusznik (150b)
+      </span>
+    </div>
+
+    <div>
+      <span>Tip troop 1 (troop team):</span>
+      <span v-tip.troop="{
+        name: 'Ronnie Radke',
+        lvl: 83,
+        profession: 't',
+        currentHp: 1000,
+        maxHp: 1600,
+        ac: 192,
+        fireRes: 10,
+        iceRes: 29,
+        lightRes: 27,
+        poisonRes: 40,
+        side: 'team',
+      }">
+        Ronnie Radke (83t)
+      </span>
+    </div>
+    <div>
+      <span>Tip troop 2 (troop opponent):</span>
+      <span v-tip.troop="{
+        name: 'Razulag Oklash',
+        lvl: 47,
+        profession: 'm',
+        currentHp: 40,
+        maxHp: 60,
+        ac: 43,
+        fireRes: 10,
+        iceRes: 0,
+        lightRes: 20,
+        poisonRes: 40,
+        side: 'opponent',
+      }">
+        Razulag Oklash (47m)
       </span>
     </div>
 
