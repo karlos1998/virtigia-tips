@@ -168,6 +168,5 @@ export declare type NpcSchema = {
 export declare type TipProps = {
     heroProfession: Profession | null,
     heroLvl: number
-    baseSrc: string
-    tipVersion: string
+    tipVersion: 'legacy' | 'retro'
 }
