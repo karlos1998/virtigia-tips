@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import { getCurrentInstance, reactive } from "vue";
 
-import type { ItemPayload, OtherPayload, NpcPayload, HtmlPayload } from "../typings/payloads";
+import type { ItemPayload, OtherPayload, TroopPayload, NpcPayload, HtmlPayload } from "../typings/payloads";
 import detectMount from "../components/detectMount.vue";
 import rockTip from "../components/rockTip.vue";
 
 const selfProperties = defineProps<{
     otherPayload?: OtherPayload,
     itemPayload?: ItemPayload,
-    htmlPayload?: HtmlPayload
+    htmlPayload?: HtmlPayload,
+    troopPayload?: TroopPayload,
     npcPayload?: NpcPayload,
     direction: "bottom" | "right" | "left" | "top",
 }>();

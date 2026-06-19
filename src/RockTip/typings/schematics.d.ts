@@ -128,6 +128,7 @@ export declare type RipSchema = {
 export declare type PetSchema = {
     inner: {
         name: string,
+        rarity: string,
         ownerName: string,
     }
 };
@@ -136,6 +137,21 @@ export declare type HtmlSchema = {
         content: string
     }
 };
+export declare type TroopSchema = {
+    inner: {
+        name: string,
+        lvl: number,
+        profession: Profession,
+        ac: number,
+        currentHp: number,
+        maxHp: number,
+        fireRes: number,
+        iceRes: number,
+        lightRes: number,
+        poisonRes: number,
+        side: string,
+    }
+}
 export declare type NpcSchema = {
     inner: {
         lvl: number,
@@ -153,4 +169,5 @@ export declare type TipProps = {
     heroProfession: Profession | null,
     heroLvl: number
     baseSrc: string
+    tipVersion: string
 }
