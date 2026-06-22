@@ -1,5 +1,5 @@
 import {DirectiveBinding, nextTick, ref, onMounted, onUnmounted} from 'vue'
-import {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from '../RockTip/typings/payloads';
+import {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, PetPayload, RipPayload, GatePayload} from '../RockTip/typings/payloads';
 // import {useHeroStore} from "../stores/hero.store";
 
 type TipDirection = 'top' | 'bottom' | 'left' | 'right'
@@ -16,6 +16,7 @@ interface ToolTipState {
     npcPayload: NpcPayload | false,
     ripPayload: RipPayload | false,
     petPayload: PetPayload | false,
+    gatePayload: GatePayload | false,
     positionX: number
     positionY: number
     element: HTMLElement | null
@@ -32,6 +33,7 @@ const state = ref<ToolTipState>({
     npcPayload: false,
     ripPayload: false,
     petPayload: false,
+    gatePayload: false,
     positionX: -9999,
     positionY: -9999,
     element: null,
@@ -180,6 +182,7 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
     delete el.dataset.html;
     delete el.dataset.rip;
     delete el.dataset.pet;
+    delete el.dataset.gate;
 
     if (binding.modifiers.npc) {
         el.dataset.npc = JSON.stringify(data)
@@ -193,6 +196,8 @@ const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
         el.dataset.rip = JSON.stringify(data)
     } else if (binding.modifiers.pet) {
         el.dataset.pet = JSON.stringify(data)
+    } else if (binding.modifiers.gate) {
+        el.dataset.gate = JSON.stringify(data)
     } else {
         el.dataset.html = binding.value
         el.dataset.color = binding.modifiers.green ? 'green' : '';
@@ -208,6 +213,7 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
     state.value.target = el
     state.value.opened = true
 
+    state.value.gatePayload = el.dataset.gate ? JSON.parse(el.dataset.gate) : false
     state.value.troopPayload = el.dataset.troop ? JSON.parse(el.dataset.troop) : false
     state.value.npcPayload = el.dataset.npc ? JSON.parse(el.dataset.npc) : false
     state.value.itemPayload = el.dataset.item ? JSON.parse(el.dataset.item) : false
@@ -299,7 +305,8 @@ const setupGlobalMouseListeners = () => {
                 // Find the closest element with a tooltip (v-tip directive)
                 let currentElement: HTMLElement | null = elementUnderMouse
                 while (currentElement) {
-                    if (currentElement.dataset.npc || currentElement.dataset.item || 
+                    if (currentElement.dataset.troop || currentElement.dataset.gate ||
+                        currentElement.dataset.npc || currentElement.dataset.item || 
                         currentElement.dataset.other || currentElement.dataset.html ||
                         currentElement.dataset.rip || currentElement.dataset.pet) {
                         // Found an element with a tooltip, trigger it

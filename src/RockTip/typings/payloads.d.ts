@@ -1,4 +1,4 @@
-import type { ItemSchema, OtherSchema, HtmlSchema, TroopSchema, NpcSchema, RipSchema, PetSchema } from "./schematics";
+import type { ItemSchema, OtherSchema, HtmlSchema, TroopSchema, NpcSchema, RipSchema, PetSchema, GateSchema } from "./schematics";
 
 export declare type ItemPayload = {
     schema: ItemSchema
@@ -21,3 +21,6 @@ export declare type RipPayload = {
 export declare type PetPayload = {
     schema: PetSchema
 };
+export declare type GatePayload = {
+    schema: GateSchema
+}

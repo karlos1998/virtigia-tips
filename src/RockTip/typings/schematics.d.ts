@@ -125,6 +125,14 @@ export declare type RipSchema = {
         description?: string | null,
     }
 };
+export declare type GateSchema = {
+    inner: {
+        name: string,
+        levelCapTop: number;
+        levelCapBottom: number;
+        locked: boolean;
+    }
+}
 export declare type PetSchema = {
     inner: {
         name: string,
