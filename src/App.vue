@@ -11,8 +11,10 @@ import chainsaw from "./assets/chainsaw2.gif?url";
 
 // @ts-ignore
 import smokczarny from "./assets/smokczarny.gif?url";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import type { Profession } from "./RockTip/typings/schematics";
+
+type TipVersion = 'retro' | 'legacy';
 
 const staticPlayer = {
   name: 'Hrabia_Kamien',
@@ -35,28 +37,35 @@ const aggressiveNpcPayload: NpcPayload = {
 }
 
 const renderedAggressiveNpcHtml = ref('');
-
-onMounted(() => {
-  renderedAggressiveNpcHtml.value = renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', '', true);
+const tipVersion = ref<TipVersion>('retro');
+const isLegacyTipVersion = computed({
+  get: () => tipVersion.value === 'legacy',
+  set: (enabled: boolean) => {
+    tipVersion.value = enabled ? 'legacy' : 'retro';
+  },
 });
 
-const tipVersion = ref('retro');
+onMounted(() => {
+  renderedAggressiveNpcHtml.value = renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', true);
+});
+
 
 </script>
 
 <template>
   <div id="app">
+    <label class="tip-version-switch">
+      <span>retro</span>
+      <input v-model="isLegacyTipVersion" type="checkbox">
+      <span>legacy</span>
+    </label>
+    <br/>
+
     <RockTip
         :hero-lvl="500"
         :hero-profession="'w'"
-        :tipVersion="tipVersion"
-        base-src='https://margatron.ovh/s3/eyJpdiI6ImdManJnVjMxZmFacU5JRnp6K0FjQmc9PSIsInZhbHVlIjoiTGpBb1hvSkU0aytRRjU2TmdXYjRLM0t1UEJmUk1nT2lQUmc4c05jUkNBd04veTRwS3k2S0hMd3RkTjJ2ZXM3bzMwK0dIa2VpdkJUT0VJZlNNelNpMEdYcHU4SlZ4cXZ1VER3eEYrODRHYjRQdUJwZU1SWFdLbmd6Q1czaGJvUEp3ZXpUWWpRcE1UMURRdE9DMUdqeW5NWnBweDJHYWlLQUVDZmZEOFZhdkk5eXZvcnRLai9kWktpM0d4My8rQzBJZHZWbHdHWDFOejQ0eGR4SFBpdWU1bWkwQzVvVTBDNjA4bVhOYzNLZklqcGloYi9TcTFFTHBOTlJXWUt1QjBtRXdrOFAza3dVUHRZU3VKc05tM1I0d0M2dEV0ZVVseXdsaWVDS2JBb1loOThOVDRTOUZ4d3ZITy9qSFcwT1VwS0RtS3dQZXhmN0lpaHN3UUt4c3dEQU11Q1BCVTNROTBrWVFTaHVmSHBiR2cyOXhTcDFLUTk5dXJYbEdkQklNS1NrblJQbHNxVU4rWFhpN2MxZzhOeFp0M1RnNGFMN1V5bVg5aFlzNlMrckl6Ty9Md2U4VXFZOENDK1JNQ0lVTmExYSIsIm1hYyI6IjczZTFkMmY0MjU2Y2E2ZDY3ZWUyYzg3NTVkYjBjN2Q4NThiZTg3MGFhY2ZmZTI1Y2M5Y2Y4NmQ4MWIxYTc5ZDUiLCJ0YWciOiIifQ=='
+        :tip-version="tipVersion"
     />
-    <div>
-      <button v-on:click="
-        tipVersion == 'retro' ? tipVersion = 'legacy' : tipVersion = 'retro'
-      ">Zmień tryb</button><p>Obecny tryb: {{tipVersion}}</p>
-    </div>
 
 
     <span v-tip="'Moja postać'">Zwykly tip tekstowy</span>
@@ -352,5 +361,48 @@ const tipVersion = ref('retro');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   margin-top: 20px;
+}
+
+.tip-version-switch {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.tip-version-switch input {
+  appearance: none;
+  background: #2f343a;
+  border: 1px solid #777;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 22px;
+  margin: 0;
+  position: relative;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  width: 42px;
+}
+
+.tip-version-switch input::before {
+  background: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  transition: transform 0.15s ease;
+  width: 16px;
+}
+
+.tip-version-switch input:checked {
+  background: #5a7cff;
+  border-color: #5a7cff;
+}
+
+.tip-version-switch input:checked::before {
+  transform: translateX(20px);
 }
 </style>

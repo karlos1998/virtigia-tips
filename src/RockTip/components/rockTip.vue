@@ -77,9 +77,8 @@ function resolveOtherColor(relation?: string): string | undefined {
 
 withDefaults(defineProps<TipProps>(), {
   heroLvl: 500,
-  tipVersion: '',
+  tipVersion: 'retro',
   heroProfession: null,
-  baseSrc: ''
 })
 
 </script>

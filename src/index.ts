@@ -10,7 +10,6 @@ export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPay
  * @param payload - The payload data (npc, item, html, or other)
  * @param heroLvl - Hero level (default: 500)
  * @param heroProfession - Hero profession (default: null)
- * @param baseSrc - Base source URL for images
  * @param innerOnly - If true, returns only the inner content without the outer rockTip div (default: false)
  * @returns HTML string of the rendered tooltip
  */
@@ -18,7 +17,6 @@ export function renderRockTipToHtml(
   payload: NpcPayload | TroopPayload | ItemPayload | HtmlPayload | OtherPayload | RipPayload | PetPayload,
   heroLvl: number = 500,
   heroProfession: string | null = null,
-  baseSrc: string = '',
   innerOnly: boolean = false
 ): string {
   // Create a temporary container
@@ -32,8 +30,7 @@ export function renderRockTipToHtml(
     // Create app instance with RockTip component
     app = createApp(RockTip, {
       heroLvl,
-      heroProfession,
-      baseSrc
+      heroProfession
     });
 
     // Mount the app
