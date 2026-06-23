@@ -146,13 +146,19 @@
     --rockTip-other--color-role: hsl(150deg, 100%, 50%);
 }
 
-    .rockTip[data-type='other'][data-version='legacy']{
-        background-image: none;
-        background:#036;
-        border:1px solid #777;
-        color:white;    
-        font:10px Verdana;
-    }
+.rockTip[data-type='other'][data-version='legacy']{
+    background-image: none;
+    background:#036;
+    border:1px solid #777;
+    color:white;    
+    font:10px Verdana;
+}
+
+.rockTip[data-type='other'] .wanted{
+    color:#f00;
+    font-weight: bold;
+}
+
 .rockTip[data-type='other'][data-version='legacy'][data-color='enemy']{
     background-color: #700;
 }
@@ -522,7 +528,11 @@ Npc
     
     --rockTip-npc--color-adventage-high: hsl(120deg, 100%, 40%);
     --rockTip-npc--color-adventage-low: hsl(0deg, 100%, 50%);
-    --rockTip-npc--color-level: hsl(50deg, 100%, 50%);
+    /*--rockTip-npc--color-level: hsl(50deg, 100%, 50%);*/
+    --rockTip-npc--color-level-low: #888;
+    --rockTip-npc--color-level: #ff0;
+    --rockTip-npc--color-level-high: #f50;  
+
     --rockTip-npc--color-rank: hsl(30deg, 100%, 50%);
 
     --rockTip-npc--color-rank-elite: #2af;
@@ -591,6 +601,21 @@ Npc
 }
 
 .rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank {
+    color: var(--rockTip-npc--color-rank-default);
+}
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank[rank='ELITE'] {
+    color: var(--rockTip-npc--color-rank-elite);
+}
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank[rank='ELITE_II'] {
+    color: var(--rockTip-npc--color-rank-elite2);
+}
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank[rank='ELITE_III'] {
+    color: var(--rockTip-npc--color-rank-elite3);
+}
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank[rank='HERO'] {
+    color: var(--rockTip-npc--color-rank-elite);
+}
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .rank[rank='TITAN'] {
     color: var(--rockTip-npc--color-rank);
 }
 
@@ -599,11 +624,11 @@ Npc
 }
 
 .rockTip[data-type='npc'] > .tip-wrapper > .inner > .level[advantage='high'] {
-    color: var(--rockTip-npc--color-adventage-high);
+    color: var(--rockTip-npc--color-level-low);
 }
 
 .rockTip[data-type='npc'] > .tip-wrapper > .inner > .level[advantage='low'] {
-    color: var(--rockTip-npc--color-adventage-low);
+    color: var(--rockTip-npc--color-level-high);
 }
 
 /**

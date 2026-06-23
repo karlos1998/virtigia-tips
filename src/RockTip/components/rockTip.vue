@@ -37,15 +37,11 @@ function resolveTroopColor(side?: string): string | undefined {
 }
 
 function resolveAdvantageLevel(heroLvl, npcData){
-    const differenceLevel = heroLvl - npcData.lvl;
+    const differenceLevel = npcData.lvl - heroLvl;
     // Only apply level-based coloring if NPC is aggressive
     if (npcData.isAggressive) {
-        if(differenceLevel > 13) {
-            return 'high';
-        }
-        if(differenceLevel < -13) {
-            return 'low';
-        }
+        if(differenceLevel < -13) return 'high';
+        else if (differenceLevel > 10) return 'low'
         return 'equal';
     } else {
         // For non-aggressive NPCs, always show yellow (equal)
@@ -139,6 +135,11 @@ withDefaults(defineProps<TipProps>(), {
                     <div class="nickname" :class="{ 'crimson-brotherhood': selfProperties.otherPayload.schema.inner.brotherhoodMember }">
                         <b>{{ selfProperties.otherPayload.schema.inner.name }}</b>
                     </div>
+                    <template v-if="selfProperties.otherPayload.schema.inner.wanted">
+                        <div class="wanted">
+                            Poszukiwany listem gończym
+                        </div>
+                    </template>
                     <template v-if="tipVersion != 'legacy'">
                         <div class="level">
                             <span>Lvl: ({{ `${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession}` }})</span>
@@ -386,7 +387,7 @@ withDefaults(defineProps<TipProps>(), {
                         </div>
                     </template>
                     <template v-if="selfProperties.npcPayload.schema.inner.rank">
-                        <div class="rank">
+                        <div class="rank" :rank="selfProperties.npcPayload.schema.inner.rank">
                             <template v-if="selfProperties.npcPayload.schema.inner.rank === 'ELITE'">
                                 <i>elita</i>
                             </template>

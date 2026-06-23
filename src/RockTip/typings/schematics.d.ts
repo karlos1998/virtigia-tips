@@ -112,7 +112,8 @@ export declare type OtherSchema = {
         clan?: string,
         relation?: OtherRelation,
         role?: "Administrator" | "Mistrz Gry",
-        name: string
+        name: string,
+        wanted: boolean,
     }
 };
 export declare type RipSchema = {

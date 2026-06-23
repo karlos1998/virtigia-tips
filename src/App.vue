@@ -123,17 +123,17 @@ const tipVersion = ref('retro');
     <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
     <hr>
     <img v-tip.npc="{
-      name: 'Potulny Smok',
-      lvl: 666,
+      name: 'Agresywny Smok',
+      lvl: 10,
       rank: 'ELITE',
-      isAggressive: false,
+      isAggressive: true,
     }" :src="smokczarny" />
 
     <img v-tip.npc="{
-      name: 'Potulny Smok',
-      lvl: 666,
+      name: 'Agresywny Smok',
+      lvl: 500,
       rank: 'ELITE_II',
-      isAggressive: false,
+      isAggressive: true,
       inGroup: true,
     }" :src="smokczarny" />
 
@@ -159,6 +159,17 @@ const tipVersion = ref('retro');
     }" :src="smokczarny" />
 
     <hr>
+    <div>
+      <span>Tip listu gończego (other):</span>
+      <span v-tip.other="{
+        name: 'Endriu',
+        level: 81,
+        profession: 'w',
+        wanted: true,
+      }" style="cursor: pointer; color: #00ff00; font-weight: bold;">
+        Endriu (81w)
+      </span>
+    </div>
     <div>
       <span>Tip gracza (other):</span>
       <span v-tip.other="{
