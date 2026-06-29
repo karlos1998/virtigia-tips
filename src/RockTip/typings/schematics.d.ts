@@ -112,7 +112,8 @@ export declare type OtherSchema = {
         clan?: string,
         relation?: OtherRelation,
         role?: "Administrator" | "Mistrz Gry",
-        name: string
+        name: string,
+        wanted: boolean,
     }
 };
 export declare type RipSchema = {
@@ -125,6 +126,14 @@ export declare type RipSchema = {
         description?: string | null,
     }
 };
+export declare type GateSchema = {
+    inner: {
+        name: string,
+        levelCapTop: number;
+        levelCapBottom: number;
+        locked: boolean;
+    }
+}
 export declare type PetSchema = {
     inner: {
         name: string,

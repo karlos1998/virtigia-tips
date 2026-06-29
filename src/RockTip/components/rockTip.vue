@@ -37,21 +37,26 @@ function resolveTroopColor(side?: string): string | undefined {
 }
 
 function resolveAdvantageLevel(heroLvl, npcData){
-    const differenceLevel = heroLvl - npcData.lvl;
+    const differenceLevel = npcData.lvl - heroLvl;
     // Only apply level-based coloring if NPC is aggressive
     if (npcData.isAggressive) {
-        if(differenceLevel > 13) {
-            return 'high';
-        }
-        if(differenceLevel < -13) {
-            return 'low';
-        }
+        if(differenceLevel < -13) return 'high';
+        else if (differenceLevel > 10) return 'low'
         return 'equal';
     } else {
         // For non-aggressive NPCs, always show yellow (equal)
         return 'equal';
     }
 }
+
+const rarities = {
+    "legendary": "legendarny",
+    "artefact": "artefakt",
+    "heroic": "heroiczny",
+    "unique": "unikatowy",
+    "common": "pospolity",
+    "upgraded": "ulepszony",
+};
 
 function resolveOtherColor(relation?: string): string | undefined {
     const normalizedRelation = relation?.toLowerCase();
@@ -104,6 +109,9 @@ withDefaults(defineProps<TipProps>(), {
         if(selfProperties.troopPayload) {
             return 'troop';
         }
+        if(selfProperties.gatePayload) {
+            return 'gate';
+        }
     })()"
          :data-version="tipVersion";
          :data-color="(() => {
@@ -126,6 +134,11 @@ withDefaults(defineProps<TipProps>(), {
                     <div class="nickname" :class="{ 'crimson-brotherhood': selfProperties.otherPayload.schema.inner.brotherhoodMember }">
                         <b>{{ selfProperties.otherPayload.schema.inner.name }}</b>
                     </div>
+                    <template v-if="selfProperties.otherPayload.schema.inner.wanted">
+                        <div class="wanted">
+                            Poszukiwany listem gończym
+                        </div>
+                    </template>
                     <template v-if="tipVersion != 'legacy'">
                         <div class="level">
                             <span>Lvl: ({{ `${selfProperties.otherPayload.schema.inner.level}${selfProperties.otherPayload.schema.inner.profession}` }})</span>
@@ -154,7 +167,7 @@ withDefaults(defineProps<TipProps>(), {
                 </div>
             </template>
             <template v-if="selfProperties.troopPayload">
-                <div class="inner text-sharpen" style="text-align: center; color: gold;">
+                <div class="inner text-sharpen" >
                     <div class="name">
                         <b>{{ selfProperties.troopPayload.schema.inner.name }}</b>
                     </div>
@@ -167,7 +180,7 @@ withDefaults(defineProps<TipProps>(), {
                     <div class="armor">
                         Pancerz: {{ selfProperties.troopPayload.schema.inner.ac }}
                     </div>
-                    <div class="resistance" style="display: flex;">
+                    <div class="resistance" style="justify-content: center; display: flex;">
                         Odp.: 
                         <div style="color: red">{{ selfProperties.troopPayload.schema.inner.fireRes }}</div>/
                         <div style="color: yellow">{{ selfProperties.troopPayload.schema.inner.lightRes }}</div>/
@@ -200,7 +213,7 @@ withDefaults(defineProps<TipProps>(), {
                     <div v-if="selfProperties.petPayload.schema.inner.rarity && selfProperties.petPayload.schema.inner.rarity != 'common'"
                             class="pet-rarity"
                             :data-type="selfProperties.petPayload.schema.inner.rarity">
-                        <i>{{ selfProperties.petPayload.schema.inner.rarity }}</i>
+                        <i>{{ rarities[selfProperties.petPayload.schema.inner.rarity] }}</i>
                     </div>
                     <div class="pet-owner">
                         {{ `Właściciel: ${selfProperties.petPayload.schema.inner.ownerName}` }}
@@ -231,21 +244,21 @@ withDefaults(defineProps<TipProps>(), {
                             <span> *</span>
                         </div>
                       <div
-                          v-if="selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent"
+                          v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent"
                           class="upgrade-percent"
                       >
                         <span
                             v-html="Translations.attributes.upgradedByPercent(selfProperties.itemPayload.schema.inner.attributes.upgradedByPercent)"></span>
                       </div>
                       <div
-                          v-if="selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement"
+                          v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement"
                           class="reduced-level-requirement"
                       >
                         <span
                             v-html="Translations.attributes.reducedLevelRequirement(selfProperties.itemPayload.schema.inner.attributes.reducedLevelRequirement)"></span>
                       </div>
                         <!-- Display outfit image if useOutfit attribute exists -->
-                        <div v-if="selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.attributes.useOutfit && selfProperties.itemPayload.schema.inner.attributes.useOutfit.src" 
                              class="outfit-image" 
                              :style="{
                                 backgroundImage: `url(${selfProperties.itemPayload.schema.inner.attributes.useOutfit.src})`,
@@ -265,7 +278,7 @@ withDefaults(defineProps<TipProps>(), {
                             <b v-else>{{ `Nieznany typ: ${selfProperties.itemPayload.schema.inner.category || '-'}`
                                 }}</b>
                         </div>
-                        <div class="bonuses">
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.category != 'renewable'" class="bonuses">
 <!--                            <template v-if="itemOrders?.tags.isUnidentified">-->
 <!--                                <div class="attribute text-center" :data-stat="'unidentified'">-->
 <!--                                    Przedmiot niezidentyfikowany-->
@@ -285,7 +298,7 @@ withDefaults(defineProps<TipProps>(), {
                                 </div>
                             </template>
                         </div>
-                        <div class="actions">
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.category != 'renewable'" class="actions">
                             <template v-for="currentStat of itemOrders?.actions">
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
@@ -296,7 +309,7 @@ withDefaults(defineProps<TipProps>(), {
                                 </div>
                             </template>
                         </div>
-                        <div class="tags">
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.category != 'renewable'" class="tags">
                             <template v-for="currentStat of itemOrders?.tags">
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
@@ -307,7 +320,7 @@ withDefaults(defineProps<TipProps>(), {
                                 </div>
                             </template>
                         </div>
-                        <div class="requires">
+                        <div v-if="selfProperties.itemPayload.schema.inner.attributes && selfProperties.itemPayload.schema.inner.category != 'renewable'" class="requires">
                             <template v-for="currentStat of itemOrders?.limits">
                                 <div
                                     v-if="(() => {
@@ -354,7 +367,7 @@ withDefaults(defineProps<TipProps>(), {
                         </div>
                     </div>
                     <div class="footer">
-                        <div class="price" v-if="priceFormatter(selfProperties.itemPayload.schema.inner.price) != '0'">
+                        <div class="price" v-if="selfProperties.itemPayload.schema.inner.price && priceFormatter(selfProperties.itemPayload.schema.inner.price) != '0'">
                             <span>{{ `Wartość: ${priceFormatter(selfProperties.itemPayload.schema.inner.price)}`
                                 }}</span>
                             <div :data-type="selfProperties.itemPayload.schema.inner.currency" />
@@ -373,7 +386,7 @@ withDefaults(defineProps<TipProps>(), {
                         </div>
                     </template>
                     <template v-if="selfProperties.npcPayload.schema.inner.rank">
-                        <div class="rank">
+                        <div class="rank" :rank="selfProperties.npcPayload.schema.inner.rank">
                             <template v-if="selfProperties.npcPayload.schema.inner.rank === 'ELITE'">
                                 <i>elita</i>
                             </template>
@@ -396,6 +409,25 @@ withDefaults(defineProps<TipProps>(), {
                             <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl${selfProperties.npcPayload.schema.inner.inGroup ? ", grp" : ""}` }}</span>
                         </div>
                     </template>
+                </div>
+            </template>
+            <template v-if="selfProperties.gatePayload">
+                <div class="inner text-sharpen">
+                    <div class="name">
+                        {{ selfProperties.gatePayload.schema.inner.name }}
+                    </div>
+                    <div v-if="selfProperties.gatePayload.schema.inner.levelCapTop && selfProperties.gatePayload.schema.inner.levelCapBottom">
+                        Przejście dostępne od {{ selfProperties.gatePayload.schema.inner.levelCapBottom }} do {{ selfProperties.gatePayload.schema.inner.levelCapTop }} poziomu
+                    </div>
+                    <div v-else-if="selfProperties.gatePayload.schema.inner.levelCapTop">
+                        Przejście dostępne do {{ selfProperties.gatePayload.schema.inner.levelCapTop }} poziomu
+                    </div>
+                    <div v-else-if="selfProperties.gatePayload.schema.inner.levelCapBottom">
+                        Przejście dostępne od {{ selfProperties.gatePayload.schema.inner.levelCapBottom }} poziomu
+                    </div>
+                    <div v-if="selfProperties.gatePayload.schema.inner.locked">
+                        (Wymaga klucza)
+                    </div>
                 </div>
             </template>
         </div>

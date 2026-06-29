@@ -49,6 +49,7 @@ onMounted(() => {
   renderedAggressiveNpcHtml.value = renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', true);
 });
 
+
 </script>
 
 <template>
@@ -58,12 +59,14 @@ onMounted(() => {
       <input v-model="isLegacyTipVersion" type="checkbox">
       <span>legacy</span>
     </label>
+    <br/>
 
     <RockTip
         :hero-lvl="500"
         :hero-profession="'w'"
         :tip-version="tipVersion"
     />
+
 
     <span v-tip="'Moja postać'">Zwykly tip tekstowy</span>
 
@@ -101,7 +104,6 @@ onMounted(() => {
         }
       }
     }' :src="chainsaw" />
-
     <img v-tip.item='{
       name: "Skórzana Sakwa",
       price: 2500,
@@ -116,21 +118,31 @@ onMounted(() => {
       }
     }' :src="chainsaw" />
 
+    <img v-tip.item='{
+      name: "Rumianek",
+      category: "renewable",
+      attributes: {
+        "bagCapacity": 12,
+        "storableCategories": ["consumable", "keys", "quests", "golds"],
+        "needLevel": 40,
+        "description": "Lekka sakwa na drobiazgi i przedmioty użytkowe."
+      }
+    }' :src="chainsaw" />
     <hr>
     <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
     <hr>
     <img v-tip.npc="{
-      name: 'Potulny Smok',
-      lvl: 666,
+      name: 'Agresywny Smok',
+      lvl: 10,
       rank: 'ELITE',
-      isAggressive: false,
+      isAggressive: true,
     }" :src="smokczarny" />
 
     <img v-tip.npc="{
-      name: 'Potulny Smok',
-      lvl: 666,
+      name: 'Agresywny Smok',
+      lvl: 500,
       rank: 'ELITE_II',
-      isAggressive: false,
+      isAggressive: true,
       inGroup: true,
     }" :src="smokczarny" />
 
@@ -156,6 +168,17 @@ onMounted(() => {
     }" :src="smokczarny" />
 
     <hr>
+    <div>
+      <span>Tip listu gończego (other):</span>
+      <span v-tip.other="{
+        name: 'Endriu',
+        level: 81,
+        profession: 'w',
+        wanted: true,
+      }" style="cursor: pointer; color: #00ff00; font-weight: bold;">
+        Endriu (81w)
+      </span>
+    </div>
     <div>
       <span>Tip gracza (other):</span>
       <span v-tip.other="{
@@ -304,10 +327,22 @@ onMounted(() => {
       <span>Tip peta (pet):</span>
       <span v-tip.pet="{
         name: 'Mruczek',
-        rarity: 'legendary',
+        rarity: 'artefact',
         ownerName: 'Hrabia_Kamien'
       }" style="cursor: pointer; color: #8ff; font-weight: bold;">
         Pet Mruczek
+      </span>
+    </div>
+
+    <div>
+      <span>Tip przejścia (gate):</span>
+      <span v-tip.gate="{
+        name: 'Biblioteka Andarum',
+        levelCapTop: 93,
+        levelCapBottom: 83,
+        locked: true,
+      }">
+        Biblioteka Andarum
       </span>
     </div>
 
