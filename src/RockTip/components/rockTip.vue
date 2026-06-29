@@ -27,6 +27,14 @@ const selfProperties = state;
 
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
 
+type ItemAttributes = Record<string, any>;
+type AttributeTranslation = (value: any, attributes?: ItemAttributes) => string | undefined;
+const attributeTranslations = Translations.attributes as Record<string, AttributeTranslation>;
+
+function renderItemAttribute(attributeName: string, attributes: ItemAttributes): string {
+    return attributeTranslations[attributeName]?.(attributes[attributeName], attributes) ?? '';
+}
+
 function resolveTroopColor(side?: string): string | undefined {
     const normalizedSide = side?.toLowerCase();
     switch(normalizedSide) {
@@ -287,12 +295,8 @@ withDefaults(defineProps<TipProps>(), {
                             <template v-for="currentStat of itemOrders?.bonuses">
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
-                                    v-if="Translations.attributes[currentStat] && currentStat !== 'petSrc'"
-                                    v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
-                                />
-                                <span
-                                    v-else-if="currentStat === 'petSrc'"
-                                    v-html="Translations.attributes.petSrc(selfProperties.itemPayload.schema.inner.attributes[currentStat], selfProperties.itemPayload.schema.inner.attributes)"
+                                    v-if="Translations.attributes[currentStat]"
+                                    v-html="renderItemAttribute(currentStat, selfProperties.itemPayload.schema.inner.attributes)"
                                 />
                                     <div v-else><b>Nieznany stat: {{ currentStat }}</b></div>
                                 </div>
@@ -303,7 +307,7 @@ withDefaults(defineProps<TipProps>(), {
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
                                     v-if="Translations.attributes[currentStat]"
-                                    v-html="`${Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])}`"
+                                    v-html="renderItemAttribute(currentStat, selfProperties.itemPayload.schema.inner.attributes)"
                                 />
                                     <div v-else><b>Nieznana akcja: {{ currentStat }}</b></div>
                                 </div>
@@ -314,7 +318,7 @@ withDefaults(defineProps<TipProps>(), {
                                 <div class="attribute" :data-stat="currentStat">
                                 <span
                                     v-if="Translations.attributes[currentStat]"
-                                    v-html="Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])"
+                                    v-html="renderItemAttribute(currentStat, selfProperties.itemPayload.schema.inner.attributes)"
                                 />
                                     <div v-else><b>Nieznany tag: {{ currentStat }}</b></div>
                                 </div>
@@ -355,7 +359,7 @@ withDefaults(defineProps<TipProps>(), {
                             })()">
                                 <span
                                     v-if="Translations.attributes[currentStat]"
-                                    v-html="Translations.attributes[currentStat].apply(null, [selfProperties.itemPayload.schema.inner.attributes[currentStat]])"
+                                    v-html="renderItemAttribute(currentStat, selfProperties.itemPayload.schema.inner.attributes)"
                                 />
 <!--                                    <span-->
 <!--                                        v-else-->

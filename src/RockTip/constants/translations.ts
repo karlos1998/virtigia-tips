@@ -448,8 +448,9 @@ export namespace Translations {
         "strength": (pointsData: string) => {
             return `Siła ${attrBox(attrPositive(attrNumber(pointsData)))}`;
         },
-        "quantity": (quantityData: string) => {
-            return `Ilość: ${attrBox(attrNumber(quantityData))}`;
+        "quantity": (quantityData: string, attributes?: { canSplit?: boolean }) => {
+            const splitInfo = attributes?.canSplit ? " (Można dzielić)" : "";
+            return `Ilość: ${attrBox(attrNumber(quantityData))}${splitInfo}`;
         },
         "agility": (pointsData: string) => {
             return `Zręczność ${attrBox(attrSigner(pointsData))}`;

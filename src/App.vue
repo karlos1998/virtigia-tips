@@ -72,6 +72,19 @@ onMounted(() => {
 
     <hr>
     <img v-tip.item='{
+      name: "Paczka rumianku",
+      price: 50,
+      currency: "gold",
+      rarity: "common",
+      category: "consumable",
+      attributes: {
+        "quantity": 5,
+        "canSplit": true,
+        "description": "Przykładowy przedmiot ze stosem możliwym do podzielenia."
+      }
+    }' :src="chainsaw" />
+
+    <img v-tip.item='{
       name: "Piła",
       price: 777,
       currency: "honor",
