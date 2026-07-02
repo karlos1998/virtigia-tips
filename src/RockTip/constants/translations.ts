@@ -117,6 +117,7 @@ export namespace Translations {
         "staffs": "Laski",
         "pets": "Zwierzaki",
         "pouches": "Sakwy",
+        "lootChests": "Kuferki",
         "pet": "Maskotki"
     };
 
