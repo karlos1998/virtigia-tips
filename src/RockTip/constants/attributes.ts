@@ -94,7 +94,7 @@ export namespace Attributes {
             {"priority": 1, "name": "incrementDraconite"},
             {"priority": 1, "name": "incrementFatigue"},
             {"priority": 1, "name": "incrementStamina"},
-            {"priority": 1, "name": "previewLootbox"},
+            // {"priority": 1, "name": "previewLootbox"},
             {"priority": 1, "name": "combatSelfHeal"},
             {"priority": 1, "name": "incrementGold"},
             {"priority": 1, "name": "openDeposit"},

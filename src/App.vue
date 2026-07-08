@@ -75,6 +75,19 @@ onMounted(() => {
 
     <hr>
     <img v-tip.item='{
+      name: "Paczka rumianku",
+      price: 50,
+      currency: "gold",
+      rarity: "common",
+      category: "consumable",
+      attributes: {
+        "quantity": 5,
+        "canSplit": true,
+        "description": "Przykładowy przedmiot ze stosem możliwym do podzielenia."
+      }
+    }' :src="chainsaw" />
+
+    <img v-tip.item='{
       name: "Piła",
       price: 777,
       currency: "honor",
@@ -150,7 +163,8 @@ onMounted(() => {
       rarity: "upgraded",
       category: "pet",
       attributes: {
-        "quantity": [1,true],
+        "quantity": 1,
+        "canSplit": false,
         "maxQuantity": 4,
         "isPermanentlyBounded": true,
         "petSrc": "https://micc.garmory-cdn.cloud/obrazki/pets/premium/kot01-1.gif", "petActions": ["Miaucz"], "description": "Testowy zwierzak do celów demonstracyjnych"}

@@ -117,6 +117,7 @@ export namespace Translations {
         "staffs": "Laski",
         "pets": "Zwierzaki",
         "pouches": "Sakwy",
+        "lootChests": "Kuferki",
         "pet": "Maskotki"
     };
 
@@ -260,18 +261,10 @@ export namespace Translations {
         "maxQuantity": (maximumCount: string) => {
             return `Maksimum ${attrBox(attrNumber(maximumCount))} sztuk razem`;
         },
-        "canSplit": (value: number) => {
-            switch(value){
-                case 1:
-                    return `Mozna dzielić`;
-                case 2:
-                    return `Nie można dzielić`;
-                default:
-                    return ``;
-            }
-        },
-        "quantity": (quantityData: string) => {
-            return `Ilość: ${attrBox(attrNumber(quantityData))}`;
+        "canSplit": () => {},
+        "quantity": (quantityData: string, attributes?: { canSplit?: boolean }) => {
+            const splitInfo = attributes?.canSplit ? " (Można dzielić)" : " (Nie można dzielić)";
+            return `Ilość: ${attrBox(attrNumber(quantityData))}${splitInfo}`;
         },
         "upgradedByPercent": (currentLevel: string) => {
             return `* ulepszenie ${attrBox(attrNumber(currentLevel))}% *`;
