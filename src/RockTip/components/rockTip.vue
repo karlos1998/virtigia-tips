@@ -121,7 +121,7 @@ withDefaults(defineProps<TipProps>(), {
             return 'gate';
         }
     })()"
-         :data-version="tipVersion";
+         :data-version="tipVersion"
          :data-color="(() => {
            if (selfProperties.otherPayload) {
              return resolveOtherColor(selfProperties.otherPayload.schema.inner.relation) ?? selfProperties.target?.dataset.color;
