@@ -115,11 +115,11 @@ export namespace Attributes {
             {"priority": 1, "name": "unbindsPermanentlyBound"},
         ],
         "bonuses": [
-            {"priority": 12, "name": "maxQuantity"},
             {"priority": 12, "name": "quantity"},
+            {"priority": 12, "name": "canSplit"},
+            {"priority": 12, "name": "maxQuantity"},
             {"priority": 11, "name": "legendaryBon"},
             {"priority": 11, "name": "lootedWith"},
-            {"priority": 11, "name": "description"},
             {"priority": 11, "name": "petSrc"},
             {"priority": 11, "name": "legendaryLootChanceBonusPercent"},
             {"priority": 11, "name": "heroicLootChanceBonusPercent"},
@@ -211,6 +211,9 @@ export namespace Attributes {
             {"priority": 1, "name": "needLevel"},
         ],
         "tags": [
+            
+            {"priority": 1, "name": "description"},
+            {"priority": 1, "name": "upgradedWith"},
             {"priority": 2, "name": "isNonStoreableInClanDeposit"},
             {"priority": 1, "name": "isBindPermanentlyAfterBuy"},
             {"priority": 2, "name": "isNonStoreableInDeposit"},

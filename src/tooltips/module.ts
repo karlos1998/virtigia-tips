@@ -41,6 +41,8 @@ const state = ref<ToolTipState>({
     direction: 'top',
 })
 
+
+
 const reposition = (tipDirection?: TipDirection) => {
     if (!state.value.element || !state.value.target) {
         return
@@ -51,7 +53,9 @@ const reposition = (tipDirection?: TipDirection) => {
         tipDirection = state.value.direction
     }
 
-    state.value.direction = tipDirection
+    const fallbackDirection = chooseFallbackSide()
+    tipDirection = fallbackDirection
+
     let position = getTipPositionByDirection(tipDirection)!
     const height = tip.getBoundingClientRect().height
     const width = tip.getBoundingClientRect().width
@@ -147,6 +151,31 @@ const getTipPositionByDirection = (direction: TipDirection) => {
             }
     }
 }
+
+const chooseFallbackSide = () => {
+    const target = state.value.target!
+    const tip = state.value.element!
+    const rect = target.getBoundingClientRect()
+    const tipRect = tip.getBoundingClientRect()
+    
+
+    const spaceTop = rect.top
+    const spaceBottom = window.innerHeight - rect.bottom
+    const spaceLeft = rect.left
+    const spaceRight = window.innerWidth - rect.right
+
+    const tipH = tipRect.height
+    const tipW = tipRect.width
+
+    // Jeśli top i bottom się nie mieszczą → fallback na boki
+    if (spaceTop < tipH && spaceBottom < tipH) {
+        return spaceLeft > spaceRight ? 'left' : 'right'
+    }
+
+    // W przeciwnym razie NIE zmieniaj kierunku
+    return state.value.direction
+}
+
 
 
 const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {

@@ -260,8 +260,21 @@ export namespace Translations {
         "maxQuantity": (maximumCount: string) => {
             return `Maksimum ${attrBox(attrNumber(maximumCount))} sztuk razem`;
         },
+        "canSplit": (value: number) => {
+            switch(value){
+                case 1:
+                    return `Mozna dzielić`;
+                case 2:
+                    return `Nie można dzielić`;
+                default:
+                    return ``;
+            }
+        },
+        "quantity": (quantityData: string) => {
+            return `Ilość: ${attrBox(attrNumber(quantityData))}`;
+        },
         "upgradedByPercent": (currentLevel: string) => {
-            return `* ulepszono ${attrBox(attrNumber(currentLevel))}% *`;
+            return `* ulepszenie ${attrBox(attrNumber(currentLevel))}% *`;
         },
         "poisonResistance": (percentData: string) => {
             return `Odporność na truciznę ${attrBox(attrPercent(attrSigner(percentData)))}`
@@ -397,59 +410,11 @@ export namespace Translations {
             const lootHumanDate = `${lootDate.getDate()}/${lootDate.getMonth() + 1}/${lootDate.getFullYear()}`;
             return `W dniu ${lootHumanDate} został(a) pokonany(a) ${npcName} przez ${looterName} ${(typeof groupInfo == 'string' ? attrNumber(groupInfo) > 1 : groupInfo.length > 0) ? ( groupInfo.length == 1 ? "wraz z kompanem" : "wraz z drużyną") : ""}`;
         },
-        "teleportTo": ([__mapId__, posX, posY, mapName]: string[]) => {
-            return `Teleportuje gracza na mape:<br>${mapName} (${posX},${posY})`
-        },
-        "cooldownTime": ([resetSeconds, resetTimestamp]: string[]) => {
-            const timeSeed = new Date().getTime();
-            const timelimitId = `tl-${timeSeed}`;
-            const timelimitNodes = [
-                `<span role="renewTime">Można używać co ${attrBox(attrNumber(resetSeconds))} minut</span>`,
-                `<span role="usageStatus">Gotowy do użycia</span>`
-            ];
-
-            const getRemainingTime = () => resetTimestamp ? Math.floor(attrNumber(resetTimestamp) - new Date().getTime() / 1000) : 0;
-            function secondsToTime(count: number) {
-                const hours = Math.floor(count / 3600).toString().padStart(2,'0');
-                const minutes = Math.floor(count % 3600 / 60).toString().padStart(2,'0');
-                const seconds = Math.floor(count % 60).toString().padStart(2,'0');
-                return `${hours}:${minutes}:${seconds}`;
-            };
-
-            (function countdownLogic(tryCount: number = 0) {
-                const rootElement = document.querySelector(`span[role='${timelimitId}']`);
-                if(!rootElement) {
-                    return requestAnimationFrame(() => countdownLogic(tryCount + 1));
-                };
-                if(tryCount >= 30) {
-                    return false;
-                };
-                const remainingTime = getRemainingTime();
-                const usageStatus = rootElement.querySelector("[role='usageStatus']");
-                if(remainingTime <= 0) {
-                    // @ts-ignore
-                    usageStatus.textContent = "Gotowy do użycia!";
-                    return true;
-                } else {
-                    // @ts-ignore
-                    usageStatus.innerHTML = `Nie można używać przez ${secondsToTime(remainingTime)}`;
-                    return requestAnimationFrame(() => countdownLogic(0));
-                };
-            })();
-
-            return `<span role="${timelimitId}">${timelimitNodes.join('<br>')}</span>`;
-        },
-        "expiresAt": (timestampData: string) => {
-            return `Skraca czas nieprzytomności o ${attrBox(attrSigner(timestampData))} min`;
-        },
         "intellect": (pointsData: string) => {
             return `Intelekt ${attrBox(attrSigner(pointsData))}`;
         },
         "strength": (pointsData: string) => {
             return `Siła ${attrBox(attrPositive(attrNumber(pointsData)))}`;
-        },
-        "quantity": (quantityData: string) => {
-            return `Ilość: ${attrBox(attrNumber(quantityData))}`;
         },
         "agility": (pointsData: string) => {
             return `Zręczność ${attrBox(attrSigner(pointsData))}`;
@@ -506,6 +471,52 @@ export namespace Translations {
         },
         "minimumLootChancePercent": (value: number) => {
             return `Zmniejsza szansę na pusty łup do ${attrBox(attrPercent(attrNumber(value)))}`
+        },
+        "expiresAt": (timestampData: string) => {
+            return `Skraca czas nieprzytomności o ${attrBox(attrSigner(timestampData))} min`;
+        },
+        
+        "teleportTo": ([__mapId__, posX, posY, mapName]: string[]) => {
+            return `Teleportuje gracza na mape:<br>${mapName} (${posX},${posY})`
+        },
+        "cooldownTime": ([resetSeconds, resetTimestamp]: string[]) => {
+            const timeSeed = new Date().getTime();
+            const timelimitId = `tl-${timeSeed}`;
+            const timelimitNodes = [
+                `<span role="renewTime">Można używać co ${attrBox(attrNumber(resetSeconds))} minut</span>`,
+                `<span role="usageStatus">Gotowy do użycia</span>`
+            ];
+
+            const getRemainingTime = () => resetTimestamp ? Math.floor(attrNumber(resetTimestamp) - new Date().getTime() / 1000) : 0;
+            function secondsToTime(count: number) {
+                const hours = Math.floor(count / 3600).toString().padStart(2,'0');
+                const minutes = Math.floor(count % 3600 / 60).toString().padStart(2,'0');
+                const seconds = Math.floor(count % 60).toString().padStart(2,'0');
+                return `${hours}:${minutes}:${seconds}`;
+            };
+
+            (function countdownLogic(tryCount: number = 0) {
+                const rootElement = document.querySelector(`span[role='${timelimitId}']`);
+                if(!rootElement) {
+                    return requestAnimationFrame(() => countdownLogic(tryCount + 1));
+                };
+                if(tryCount >= 30) {
+                    return false;
+                };
+                const remainingTime = getRemainingTime();
+                const usageStatus = rootElement.querySelector("[role='usageStatus']");
+                if(remainingTime <= 0) {
+                    // @ts-ignore
+                    usageStatus.textContent = "Gotowy do użycia!";
+                    return true;
+                } else {
+                    // @ts-ignore
+                    usageStatus.innerHTML = `Nie można używać przez ${secondsToTime(remainingTime)}`;
+                    return requestAnimationFrame(() => countdownLogic(0));
+                };
+            })();
+
+            return `<span role="${timelimitId}">${timelimitNodes.join('<br>')}</span>`;
         },
         "upgradeableCategories": (categoryList: (keyof typeof categories)[]) => {
             const categoryNames = categoryList.map((categoryKey: keyof typeof categories) => categories[categoryKey]).join(", ");
@@ -590,6 +601,9 @@ export namespace Translations {
         },
 
         /* Tags */
+        "upgradedWith": (data: {name: string, value: number}) => {
+            return `Ulepszony o ${attrBox(attrPercent(attrNumber(data.value)))} przez ${data.name}`;
+        },
         "isNonStoreableInClanDeposit": () => {
             return "Przedmiotu nie można przechowywać w depozycie klanowym";
         },
