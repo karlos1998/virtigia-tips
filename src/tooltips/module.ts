@@ -41,6 +41,8 @@ const state = ref<ToolTipState>({
     direction: 'top',
 })
 
+
+
 const reposition = (tipDirection?: TipDirection) => {
     if (!state.value.element || !state.value.target) {
         return
@@ -51,7 +53,9 @@ const reposition = (tipDirection?: TipDirection) => {
         tipDirection = state.value.direction
     }
 
-    state.value.direction = tipDirection
+    const fallbackDirection = chooseFallbackSide()
+    tipDirection = fallbackDirection
+
     let position = getTipPositionByDirection(tipDirection)!
     const height = tip.getBoundingClientRect().height
     const width = tip.getBoundingClientRect().width
@@ -147,6 +151,29 @@ const getTipPositionByDirection = (direction: TipDirection) => {
             }
     }
 }
+
+const chooseFallbackSide = () => {
+    const target = state.value.target!
+    const tip = state.value.element!
+    const rect = target.getBoundingClientRect()
+    const tipRect = tip.getBoundingClientRect()
+    
+
+    const spaceTop = rect.top
+    const spaceBottom = window.innerHeight - rect.bottom
+    const spaceLeft = rect.left
+    const spaceRight = window.innerWidth - rect.right
+
+    const tipH = tipRect.height
+    const tipW = tipRect.width
+
+    if (spaceTop < tipH && spaceBottom < tipH) {
+        return spaceLeft > spaceRight ? 'left' : 'right'
+    }
+
+    return state.value.direction
+}
+
 
 
 const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
@@ -247,8 +274,12 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
 
 const triggerOut = (el: HTMLElement, event?: Event) => {
     const mouseEvent = event as MouseEvent | undefined
-    /** @ts-ignore */
-    if (event && el.contains(mouseEvent.toElement)) {
+
+    if (state.value.element && state.value.element.matches(':hover')) {
+        return
+    }
+
+    if (mouseEvent && el.contains(mouseEvent.relatedTarget as Node)) {
         return
     }
 
@@ -257,6 +288,7 @@ const triggerOut = (el: HTMLElement, event?: Event) => {
     state.value.positionY = -9999
     state.value.target = null
 }
+
 
 const ToolTipDirective = {
     mounted(el: HTMLElement, binding: DirectiveBinding) {
@@ -278,7 +310,23 @@ const ToolTipDirective = {
 
 const setToolTipElement = (el: HTMLElement) => {
     state.value.element = el
+
+    el.addEventListener('mouseenter', () => {
+        state.value.opened = true
+    })
+
+    el.addEventListener('mouseleave', () => {
+        if (state.value.target && state.value.target.matches(':hover')) {
+            return
+        }
+
+        state.value.opened = false
+        state.value.positionX = -9999
+        state.value.positionY = -9999
+        state.value.target = null
+    })
 }
+
 
 export default ToolTipDirective
 // Set up global event listeners for mouse button press
