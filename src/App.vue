@@ -141,6 +141,15 @@ onMounted(() => {
         "description": "Lekka sakwa na drobiazgi i przedmioty użytkowe."
       }
     }' :src="chainsaw" />
+
+    <img v-tip.item='{
+      name: "test niszczenia many i energii",
+      category: "blessings",
+      attributes: {
+        "energyDestroy": 50,
+        "enemyManaReduction": 50,
+      }
+    }' :src="chainsaw" />
     <hr>
     <span v-tip.html.green="'TEST'">Zielony tip dla postow na forum</span>
     <hr>

@@ -241,7 +241,7 @@ export namespace Translations {
             return `Dodaje ${attrBox(attrPositive(attrPercent(attrNumber(percentData))))} punktów wymaganych do ulepszenia przedmiotu`;
         },
         "enemyManaReduction": (pointsData: string) => {
-            return `Podczas obrony redukuje mane przeciwnika o ${attrBox(attrSigner(pointsData))} punkty`;
+            return `Podczas obrony redukuje mane przeciwnika o ${attrBox(pointsData)} punkty`;
         },
         "physicalAbsorption": (pointsData: string) => {
             return `Absorbuje do ${attrBox(attrNumber(pointsData))} obrażeń fizycznych`;
@@ -318,7 +318,7 @@ export namespace Translations {
             return `Klucz hotelowy: ${attrBox(roomName)}<br>Wynajem do: ${attrBox(formatDateTime(expiresAt))}`;
         },
         "energyDestroy": (pointsData: string) => {
-            return `Podczas obrony niszczy ${attrBox(attrPositive(attrNumber(pointsData)))} energii przeciwnika`;
+            return `Podczas obrony niszczy ${attrBox(attrNumber(pointsData))} energii przeciwnika`;
         },
         "healRemaining": (remainingData: string) => {
             return `Pełne leczenie, pozostało ${attrBox(attrNumber(remainingData))} punktów uleczania.`;
