@@ -274,12 +274,8 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
 
 const triggerOut = (el: HTMLElement, event?: Event) => {
     const mouseEvent = event as MouseEvent | undefined
-
-    if (state.value.element && state.value.element.matches(':hover')) {
-        return
-    }
-
-    if (mouseEvent && el.contains(mouseEvent.relatedTarget as Node)) {
+    /** @ts-ignore */
+    if (event && el.contains(mouseEvent.toElement)) {
         return
     }
 
@@ -288,7 +284,6 @@ const triggerOut = (el: HTMLElement, event?: Event) => {
     state.value.positionY = -9999
     state.value.target = null
 }
-
 
 const ToolTipDirective = {
     mounted(el: HTMLElement, binding: DirectiveBinding) {
@@ -310,23 +305,7 @@ const ToolTipDirective = {
 
 const setToolTipElement = (el: HTMLElement) => {
     state.value.element = el
-
-    el.addEventListener('mouseenter', () => {
-        state.value.opened = true
-    })
-
-    el.addEventListener('mouseleave', () => {
-        if (state.value.target && state.value.target.matches(':hover')) {
-            return
-        }
-
-        state.value.opened = false
-        state.value.positionX = -9999
-        state.value.positionY = -9999
-        state.value.target = null
-    })
 }
-
 
 export default ToolTipDirective
 // Set up global event listeners for mouse button press
