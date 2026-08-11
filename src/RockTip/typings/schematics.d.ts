@@ -75,27 +75,25 @@ ShO9KukHxab7dzwZ2ngYldAZQrLCDLE1xTCXtrd1xkqiO1Y=
 =krDL
 -----END PGP PUBLIC KEY BLOCK-----
 */
-import { Translations } from "../constants/translations";
-
 export declare type Profession = "w" | "p" | "h" | "t" | "b" | "m"
 export declare type OtherRelation =
     "friend" | "enemy" | "clan_member" | "ally_clan" | "enemy_clan" | "neutral" |
     "FRIEND" | "ENEMY" | "CLAN_MEMBER" | "ALLY_CLAN" | "ENEMY_CLAN" | "NEUTRAL"
 
 export declare type ItemSchema = {
-    position: {
+    position?: {
         y: number,
         x: number
     },
     inner: {
-        attributes: Record<keyof typeof Translations.attributes | string, any>,
-        category: keyof typeof Translations.categories,
-        currency: "dragonTear" | "honor" | "gold",
-        rarity: keyof typeof Translations.rarities,
-        price: number,
-        src: string,
+        attributes: Record<string, any>,
+        category: string,
+        currency?: string,
+        rarity?: string,
+        price?: number,
+        src?: string,
         name: string,
-        id: number
+        id: string | number
     },
     // hero: {
     //     profession: keyof typeof Translations.professions,
@@ -178,4 +176,12 @@ export declare type TipProps = {
     heroProfession: Profession | null,
     heroLvl: number
     tipVersion: 'legacy' | 'retro'
+}
+
+export declare type ItemTipContentProps = {
+    item: ItemSchema['inner'],
+    heroProfession?: string | null,
+    heroLvl?: number,
+    showId?: boolean,
+    showTitle?: boolean,
 }

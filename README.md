@@ -15,7 +15,21 @@ Pakiet jest używany między innymi przez `virtigia-game-client`, `virtigia-map-
 | RIP tips | tooltipy grobów/martwych postaci |
 | HTML tips | bezpieczne renderowanie własnej treści |
 | Vue directive | łatwe podpinanie tooltipów do elementów UI |
+| Item content | bezstanowy komponent `ItemTipContent` do modali i paneli szczegółów |
 | Renderer testowy | render tooltipa do HTML przez `renderRockTipToHtml` |
+
+## Treść Przedmiotu Bez Tooltipa
+
+`ItemTipContent` renderuje same statystyki przedmiotu bez pozycjonowania, hovera i globalnego stanu tooltipa. Dzięki temu może być używany w mobilnych modalach, panelach administracyjnych i innych stałych widokach.
+
+```vue
+<ItemTipContent
+  :item="item"
+  :hero-lvl="heroLevel"
+  :hero-profession="heroProfession"
+  :show-title="false"
+/>
+```
 
 ## Atrybuty Przedmiotów
 
@@ -168,4 +182,3 @@ npm run preview
 | `virtigia-map-editor` | podglądy itemów i NPC w edytorze |
 | `virtigia-world-admin` | podglądy danych świata |
 | `virtigia-engine` | implementacja części atrybutów widocznych w tooltipach |
-

@@ -361,8 +361,11 @@ const setupGlobalMouseListeners = () => {
     }
 }
 
-// Set up global listeners when module is imported
-setupGlobalMouseListeners()
+// Set up global listeners only in a browser. Consumers can import the
+// stateless item content component during SSR or tests without a DOM.
+if (typeof document !== 'undefined') {
+    setupGlobalMouseListeners()
+}
 
 export const useToolTip = () => {
     return {

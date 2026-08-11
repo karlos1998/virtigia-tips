@@ -1,9 +1,24 @@
 import ToolTipDirective, { useToolTip } from "./tooltips/module";
 import RockTip from "./RockTip/components/rockTip.vue";
+import ItemTipContent from "./RockTip/components/itemTipContent.vue";
 import type {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, PetPayload, RipPayload} from './RockTip/typings/payloads';
+import type {ItemSchema, ItemTipContentProps} from './RockTip/typings/schematics';
 import { createApp, type App } from 'vue';
 
-export { ToolTipDirective, RockTip, useToolTip, HtmlPayload, ItemPayload, NpcPayload, OtherPayload, PetPayload, RipPayload };
+export {
+  ToolTipDirective,
+  RockTip,
+  ItemTipContent,
+  useToolTip,
+  HtmlPayload,
+  ItemPayload,
+  NpcPayload,
+  OtherPayload,
+  PetPayload,
+  RipPayload,
+  ItemSchema,
+  ItemTipContentProps,
+};
 
 /**
  * Renders a RockTip component to HTML for testing purposes
@@ -27,15 +42,6 @@ export function renderRockTipToHtml(
   let app: App<Element> | null = null;
 
   try {
-    // Create app instance with RockTip component
-    app = createApp(RockTip, {
-      heroLvl,
-      heroProfession
-    });
-
-    // Mount the app
-    app.mount(container);
-
     // Reset all payloads
     state.value.npcPayload = false;
     state.value.troopPayload = false;
@@ -44,29 +50,28 @@ export function renderRockTipToHtml(
     state.value.otherPayload = false;
     state.value.ripPayload = false;
     state.value.petPayload = false;
+    state.value.gatePayload = false;
 
     // Set the appropriate payload based on type
     if (
       'schema' in payload &&
       'inner' in payload.schema &&
-      'lvl' in payload.schema.inner
-    ) {
-      // This is an NPC payload
-      state.value.npcPayload = payload as NpcPayload;
-    } else if (
-      'schema' in payload &&
-      'inner' in payload.schema &&
-      'name' in payload.schema.inner
-    ) {
-      // This is an Troop payload
-      state.value.troopPayload = payload as TroopPayload;
-    } else if (
-      'schema' in payload &&
-      'inner' in payload.schema &&
       'attributes' in payload.schema.inner
     ) {
-      // This is an item payload
       state.value.itemPayload = payload as ItemPayload;
+    } else if (
+      'schema' in payload &&
+      'inner' in payload.schema &&
+      'ownerName' in payload.schema.inner
+    ) {
+      state.value.petPayload = payload as PetPayload;
+    } else if (
+      'schema' in payload &&
+      'inner' in payload.schema &&
+      'nick' in payload.schema.inner &&
+      'lvl' in payload.schema.inner
+    ) {
+      state.value.ripPayload = payload as RipPayload;
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&
@@ -77,18 +82,16 @@ export function renderRockTipToHtml(
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&
-      'nick' in payload.schema.inner &&
-      'lvl' in payload.schema.inner
+      'currentHp' in payload.schema.inner &&
+      'maxHp' in payload.schema.inner
     ) {
-      // This is a RIP payload
-      state.value.ripPayload = payload as RipPayload;
+      state.value.troopPayload = payload as TroopPayload;
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&
-      'ownerName' in payload.schema.inner
+      'lvl' in payload.schema.inner
     ) {
-      // This is a pet payload
-      state.value.petPayload = payload as PetPayload;
+      state.value.npcPayload = payload as NpcPayload;
     } else if (
       'schema' in payload &&
       'inner' in payload.schema &&
@@ -102,6 +105,14 @@ export function renderRockTipToHtml(
     state.value.opened = true;
     state.value.positionX = 0;
     state.value.positionY = 0;
+
+    // Populate the shared state before mounting so the synchronous renderer
+    // captures the first complete render instead of an empty pre-update frame.
+    app = createApp(RockTip, {
+      heroLvl,
+      heroProfession
+    });
+    app.mount(container);
 
     // Get the HTML content
     let html = container.innerHTML;
