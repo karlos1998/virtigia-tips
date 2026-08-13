@@ -563,8 +563,12 @@ Npc
     color:#fa2;
 }
 
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .name{
+    flex-direction: column;
+    text-align: center;
+}
+
 .rockTip[data-type='npc'][data-version='legacy'] > .tip-wrapper > .inner > .name{
-    text-align:center;
     color:#fa2;
 }
 

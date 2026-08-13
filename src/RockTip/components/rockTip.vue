@@ -382,9 +382,10 @@ withDefaults(defineProps<TipProps>(), {
             <template v-if="selfProperties.npcPayload">
                 <div class="inner text-sharpen">
                     <div class="name">
-                        <b>{{ selfProperties.npcPayload.schema.inner.name }}</b>
+                        <b v-if="selfProperties.npcPayload.schema.inner.name.includes('\n')" v-for="textContent in selfProperties.npcPayload.schema.inner.name.split('\n')" v-text="textContent"/>
+                        <b v-else>{{ selfProperties.npcPayload.schema.inner.name }}</b>
                     </div>
-                    <template v-if="tipVersion == 'legacy'">
+                    <template v-if="tipVersion == 'legacy' && selfProperties.npcPayload.schema.inner.lvl && selfProperties.npcPayload.schema.inner.lvl != 0">
                         <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
                             <span>{{ `Lvl: ${selfProperties.npcPayload.schema.inner.lvl}${selfProperties.npcPayload.schema.inner.inGroup ? " (grp)" : ""}` }}</span>
                         </div>
@@ -408,7 +409,7 @@ withDefaults(defineProps<TipProps>(), {
                             </template>
                         </div>
                     </template>
-                    <template v-if="tipVersion != 'legacy'">
+                    <template v-if="tipVersion != 'legacy' && selfProperties.npcPayload.schema.inner.lvl && selfProperties.npcPayload.schema.inner.lvl != 0">
                         <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
                             <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl${selfProperties.npcPayload.schema.inner.inGroup ? ", grp" : ""}` }}</span>
                         </div>
