@@ -249,6 +249,11 @@ onMounted(() => {
         </tr>
       </tbody></table></div><button data-v-ab641444="" id="loots_button" data-vrt-id="desktop.loots.button.confirm"></button><div data-v-ab641444="" id="loots_counter">14</div><div data-v-ab641444="" id="loots_bag">Miejsca w torbie:<br data-v-ab641444="">31</div></div>
     <hr>
+    
+    <img v-tip.npc="{
+      name: 'Północ-Werbin\nPołudnie-Mythar\nZachód-Wioska Łowców',
+    }" :src="chainsaw"/>
+    
     <img v-tip.npc="{
       name: 'Agresywny Smok',
       lvl: 10,
