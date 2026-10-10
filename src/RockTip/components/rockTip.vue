@@ -384,7 +384,7 @@ withDefaults(defineProps<TipProps>(), {
                     <div class="name">
                         <b>{{ selfProperties.npcPayload.schema.inner.name }}</b>
                     </div>
-                    <template v-if="tipVersion == 'legacy'">
+                    <template v-if="tipVersion == 'legacy' && selfProperties.npcPayload.schema.inner.lvl >= 1">
                         <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
                             <span>{{ `Lvl: ${selfProperties.npcPayload.schema.inner.lvl}${selfProperties.npcPayload.schema.inner.inGroup ? " (grp)" : ""}` }}</span>
                         </div>
@@ -408,7 +408,7 @@ withDefaults(defineProps<TipProps>(), {
                             </template>
                         </div>
                     </template>
-                    <template v-if="tipVersion != 'legacy'">
+                    <template v-if="tipVersion != 'legacy' && selfProperties.npcPayload.schema.inner.lvl >= 1">
                         <div class="level" :advantage="(resolveAdvantageLevel(heroLvl, selfProperties.npcPayload.schema.inner))">
                             <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl${selfProperties.npcPayload.schema.inner.inGroup ? ", grp" : ""}` }}</span>
                         </div>
