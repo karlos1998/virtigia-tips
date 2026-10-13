@@ -393,7 +393,7 @@ HTML
     color: var(--rockTip-item--rarity-heroic);
 }
 
-.rockTip[data-type='pet'] > .tip-wrapper > .inner > .pet-rarity[data-type='heroic'] > i,
+.rockTip[data-type='pet'] > .tip-wrapper > .inner > .pet-rarity[data-type='unique'] > i,
 .rockTip[data-type='item'] > .tip-wrapper > .inner > .header > .rarity[data-type='unique'] {
     color: var(--rockTip-item--rarity-unique);
 }
