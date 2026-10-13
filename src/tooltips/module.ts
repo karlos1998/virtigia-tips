@@ -273,9 +273,15 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
 }
 
 const triggerOut = (el: HTMLElement, event?: Event) => {
+    // Only the element that opened the tip may close it. Otherwise a late "out" from another
+    // source (e.g. the map canvas under a battle window) hides a tip the cursor is still on.
+    if (state.value.target && state.value.target !== el) {
+        return
+    }
+
     const mouseEvent = event as MouseEvent | undefined
-    /** @ts-ignore */
-    if (event && el.contains(mouseEvent.toElement)) {
+    const nextElement = (mouseEvent?.relatedTarget ?? null) as Node | null
+    if (event && nextElement && el.contains(nextElement)) {
         return
     }
 
@@ -290,6 +296,11 @@ const ToolTipDirective = {
         updateDataset(el, binding)
 
         el.addEventListener('mouseenter', async (event: Event) => {
+            // The pressed flag is cleared only by a mouseup reaching the document; if that was lost
+            // (released outside the window, native menu...) every tip stayed blocked until the next click.
+            if ((event as MouseEvent).buttons === 0) {
+                isMouseButtonPressed.value = false
+            }
             await triggerEnter(el, binding)
         }, {passive: true})
         el.addEventListener('mouseout', (event: Event) => {

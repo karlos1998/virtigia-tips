@@ -294,7 +294,7 @@ export namespace Translations {
             return `Obrażenia fizyczne ${attrBox(minimumDamage)} - ${attrBox(maximumDamage)}`;
         },
         "shortenRevival": (minData: string) => {
-            return `Skraca czas nieprzytomności o ${attrBox(attrSigner(minData))} min`;
+            return `Skraca czas nieprzytomności o ${attrBox(attrNumber(minData))} min`;
         },
         "criticalChance": (percentData: string) => {
             return `Cios krytyczny ${attrBox(attrPercent(attrSigner(percentData)))}`;
