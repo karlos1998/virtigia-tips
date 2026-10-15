@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import { useToolTip } from '@/tooltips/module.ts';
-import {computed, onMounted, ref, version, watch} from 'vue';
+import {computed, onMounted, onUnmounted, ref, version, watch} from 'vue';
 import { priceFormatter } from '../utilities/priceFormatter';
 import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
@@ -8,7 +8,7 @@ import {useToolTip} from "../../tooltips/module";
 import ItemTipContent from './itemTipContent.vue';
 import {TipProps} from "../typings/schematics";
 
-const { state, setToolTipElement } = useToolTip();
+const { state, setToolTipElement, reposition } = useToolTip();
 
 const position = computed(() => ({
     x: state.value.positionX,
@@ -17,10 +17,24 @@ const position = computed(() => ({
 
 const element = ref<HTMLElement | null>(null);
 
+let resizeObserver: ResizeObserver | undefined;
+const refreshPosition = () => { if (state.value.opened) reposition(); };
 onMounted(() => {
     if (element.value) {
         setToolTipElement(element.value);
+        if (typeof ResizeObserver !== 'undefined') {
+            resizeObserver = new ResizeObserver(refreshPosition);
+            resizeObserver.observe(element.value);
+        }
     }
+    window.addEventListener('resize', refreshPosition);
+    window.addEventListener('scroll', refreshPosition, true);
+});
+onUnmounted(() => {
+    resizeObserver?.disconnect();
+    if (state.value.element === element.value) setToolTipElement(null);
+    window.removeEventListener('resize', refreshPosition);
+    window.removeEventListener('scroll', refreshPosition, true);
 });
 
 const selfProperties = state;
@@ -94,6 +108,7 @@ withDefaults(defineProps<TipProps>(), {
 
 <template>
     <div class="rockTip" :style="{
+            pointerEvents: 'none',
             left: position.x + 'px',
             top: position.y + 'px',
         }" :data-type="(() => {

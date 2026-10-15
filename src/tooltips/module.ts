@@ -43,138 +43,44 @@ const state = ref<ToolTipState>({
 
 
 
-const reposition = (tipDirection?: TipDirection) => {
-    if (!state.value.element || !state.value.target) {
-        return
+const reposition = (tipDirection: TipDirection = state.value.direction) => {
+    if (!state.value.element || !state.value.target) return
+    const rect = state.value.target.getBoundingClientRect()
+    const bounds = state.value.target.dataset.targetBounds?.split(',').map(Number)
+    const [x, y, targetWidth, targetHeight] = bounds?.length === 4 && bounds.every(Number.isFinite) && bounds[2] >= 0 && bounds[3] >= 0
+        ? bounds : [rect.left, rect.top, rect.width, rect.height]
+    const {width, height} = state.value.element.getBoundingClientRect()
+    const padding = 6, gap = 4
+    const viewportWidth = window.innerWidth, viewportHeight = window.innerHeight
+    const clamp = (value: number, size: number, viewport: number) =>
+        Math.max(padding, Math.min(value, viewport - size - padding))
+    const centerX = x + targetWidth / 2 - width / 2
+    const centerY = y + targetHeight / 2 - height / 2
+    // Clamp only across the chosen side first, preserving the gap from the source.
+    const candidates = {
+        top: {left: clamp(centerX, width, viewportWidth), top: y - height - gap},
+        bottom: {left: clamp(centerX, width, viewportWidth), top: y + targetHeight + gap},
+        left: {left: x - width - gap, top: clamp(centerY, height, viewportHeight)},
+        right: {left: x + targetWidth + gap, top: clamp(centerY, height, viewportHeight)},
     }
-    const tip = state.value.element
-
-    if (!tipDirection) {
-        tipDirection = state.value.direction
-    }
-
-    const fallbackDirection = chooseFallbackSide()
-    tipDirection = fallbackDirection
-
-    let position = getTipPositionByDirection(tipDirection)!
-    const height = tip.getBoundingClientRect().height
-    const width = tip.getBoundingClientRect().width
-    const windowHeight = window.innerHeight
-    const windowWidth = window.innerWidth
-
-    switch (tipDirection) {
-        case 'top':
-            if (position.top < 0) {
-                position = getTipPositionByDirection('bottom')!
-            }
-            if (position.left < 0) {
-                position.left = 0
-            }
-            if (position.left + width > windowWidth - 10) {
-                position.left = windowWidth - width
-            }
-            break
-        case 'bottom':
-            if (position.top + height > windowHeight - 10) {
-                position = getTipPositionByDirection('top')!
-            }
-            if (position.left < 0) {
-                position.left = 0
-            }
-            if (position.left + width > windowWidth - 10) {
-                position.left = windowWidth - width
-            }
-            break
-        case 'left':
-            if (position.left < 0) {
-                position = getTipPositionByDirection('right')!
-            }
-            if (position.top < 0) {
-                position.top = 0
-            }
-            if (position.top + height > windowHeight - 10) {
-                position.top = windowHeight - height
-            }
-            break
-        case 'right':
-            if (position.left + width > windowWidth - 10) {
-                position = getTipPositionByDirection('left')!
-            }
-            if (position.top < 0) {
-                position.top = 0
-            }
-            if (position.top + height > windowHeight - 10) {
-                position.top = windowHeight - height
-            }
+    const opposite = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const
+    const order = [...new Set<TipDirection>([tipDirection, opposite[tipDirection], 'left', 'right', 'top', 'bottom'])]
+    const fits = ({left, top}: {left: number, top: number}) => left >= padding && top >= padding &&
+        left + width <= viewportWidth - padding && top + height <= viewportHeight - padding
+    let position = order.map(side => candidates[side]).find(fits)
+    if (!position) {
+        // Oversized tips may not fit anywhere. Prefer the visible position that covers least of the source.
+        const overlap = ({left, top}: {left: number, top: number}) =>
+            Math.max(0, Math.min(left + width, x + targetWidth) - Math.max(left, x)) *
+            Math.max(0, Math.min(top + height, y + targetHeight) - Math.max(top, y))
+        position = order.map(side => ({
+            left: clamp(candidates[side].left, width, viewportWidth),
+            top: clamp(candidates[side].top, height, viewportHeight),
+        })).sort((a, b) => overlap(a) - overlap(b))[0]
     }
     state.value.positionX = position.left + window.scrollX
     state.value.positionY = position.top + window.scrollY
 }
-
-const getTipPositionByDirection = (direction: TipDirection) => {
-    const target = state.value.target!
-    const targetRect = target.getBoundingClientRect()
-    const tipRect = state.value.element!.getBoundingClientRect()
-    let position = { left: targetRect.left, top: targetRect.top }
-    let targetWidth = targetRect.width
-    let targetHeight = targetRect.height
-    const tipWidth = tipRect.width
-    const tipHeight = tipRect.height
-
-    if (target.dataset.targetBounds) {
-        const [x, y, w, h] = target.dataset.targetBounds.split(',').map(Number)
-        position = { left: x, top: y }
-        targetWidth = w
-        targetHeight = h
-    }
-
-    switch (direction) {
-        case 'top':
-            return {
-                left: position.left - tipWidth / 2 + targetWidth / 2,
-                top: position.top - tipHeight - 2
-            }
-        case 'bottom':
-            return {
-                left: position.left - tipWidth / 2 + targetWidth / 2,
-                top: position.top + targetHeight + 2
-            }
-        case 'left':
-            return {
-                left: position.left - tipWidth - 2,
-                top: position.top - tipHeight / 2 + targetHeight / 2
-            }
-        case 'right':
-            return {
-                left: position.left + targetWidth + 2,
-                top: position.top - tipHeight / 2 + targetHeight / 2
-            }
-    }
-}
-
-const chooseFallbackSide = () => {
-    const target = state.value.target!
-    const tip = state.value.element!
-    const rect = target.getBoundingClientRect()
-    const tipRect = tip.getBoundingClientRect()
-    
-
-    const spaceTop = rect.top
-    const spaceBottom = window.innerHeight - rect.bottom
-    const spaceLeft = rect.left
-    const spaceRight = window.innerWidth - rect.right
-
-    const tipH = tipRect.height
-    const tipW = tipRect.width
-
-    if (spaceTop < tipH && spaceBottom < tipH) {
-        return spaceLeft > spaceRight ? 'left' : 'right'
-    }
-
-    return state.value.direction
-}
-
-
 
 const updateDataset = (el: HTMLElement, binding: DirectiveBinding) => {
     // const heroStore = useHeroStore();
@@ -254,7 +160,7 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
             }
         }
     } : false
-    let tipDirection: TipDirection = state.value.direction
+    let tipDirection: TipDirection = binding ? 'top' : state.value.direction
     if (binding) {
         if (binding.modifiers.bottom) {
             tipDirection = 'bottom'
@@ -267,8 +173,9 @@ const triggerEnter = async (el: HTMLElement, binding?: DirectiveBinding) => {
         }
     }
 
+    state.value.direction = tipDirection
     await nextTick(() => {
-        reposition(tipDirection)
+        if (state.value.opened && state.value.target === el) reposition(tipDirection)
     })
 }
 
@@ -314,7 +221,7 @@ const ToolTipDirective = {
     },
 }
 
-const setToolTipElement = (el: HTMLElement) => {
+const setToolTipElement = (el: HTMLElement | null) => {
     state.value.element = el
 }
 
@@ -383,6 +290,7 @@ export const useToolTip = () => {
         state,
         setToolTipElement,
         triggerEnter,
-        triggerOut
+        triggerOut,
+        reposition
     }
 }
