@@ -18,9 +18,19 @@ const position = computed(() => ({
 const element = ref<HTMLElement | null>(null);
 
 let resizeObserver: ResizeObserver | undefined;
-const refreshPosition = () => { if (state.value.opened) reposition(); };
+let observedElement: HTMLElement | null = null;
+let positionFrame: number | undefined;
+const refreshPosition = () => {
+    if (!state.value.opened || positionFrame !== undefined) return;
+    // Never change layout inside ResizeObserver delivery. Coalesce size, scroll and resize events.
+    positionFrame = window.requestAnimationFrame(() => {
+        positionFrame = undefined;
+        if (state.value.opened) reposition();
+    });
+};
 onMounted(() => {
     if (element.value) {
+        observedElement = element.value;
         setToolTipElement(element.value);
         if (typeof ResizeObserver !== 'undefined') {
             resizeObserver = new ResizeObserver(refreshPosition);
@@ -32,7 +42,8 @@ onMounted(() => {
 });
 onUnmounted(() => {
     resizeObserver?.disconnect();
-    if (state.value.element === element.value) setToolTipElement(null);
+    if (positionFrame !== undefined) window.cancelAnimationFrame(positionFrame);
+    if (state.value.element === observedElement) setToolTipElement(null);
     window.removeEventListener('resize', refreshPosition);
     window.removeEventListener('scroll', refreshPosition, true);
 });
@@ -109,6 +120,7 @@ withDefaults(defineProps<TipProps>(), {
 <template>
     <div class="rockTip" :style="{
             pointerEvents: 'none',
+            width: 'max-content',
             left: position.x + 'px',
             top: position.y + 'px',
         }" :data-type="(() => {

@@ -58,6 +58,7 @@
     font-family: var(--rockTip-font);
     height: fit-content;
     width: fit-content;
+    max-width: calc(100vw - 12px);
     
     z-index:99999999;
 }
