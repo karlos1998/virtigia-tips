@@ -1,6 +1,6 @@
 {
   "name": "virtigia-tips",
-  "version": "1.0.73",
+  "version": "1.0.74",
   "type": "module",
   "main": "./dist/virtigia-tips.cjs.js",
   "module": "./dist/virtigia-tips.es.js",
@@ -13,13 +13,16 @@
     },
     "./style.css": "./dist/virtigia-tips.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "author": "Let's Code It",
   "license": "MIT",

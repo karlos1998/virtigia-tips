@@ -32,7 +32,8 @@ export function renderRockTipToHtml(
   payload: NpcPayload | TroopPayload | ItemPayload | HtmlPayload | OtherPayload | RipPayload | PetPayload,
   heroLvl: number = 500,
   heroProfession: string | null = null,
-  innerOnly: boolean = false
+  innerOnly: boolean = false,
+  tipVersion: 'retro' | 'legacy' | 'modern' = 'retro'
 ): string {
   // Create a temporary container
   const container = document.createElement('div');
@@ -110,6 +111,7 @@ export function renderRockTipToHtml(
     // captures the first complete render instead of an empty pre-update frame.
     app = createApp(RockTip, {
       heroLvl,
+      tipVersion,
       heroProfession
     });
     app.mount(container);

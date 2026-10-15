@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<ItemTipContentProps>(), {
     heroProfession: null,
     showId: false,
     showTitle: true,
+    tipVersion: 'retro',
 });
 
 const payload = computed<ItemPayload>(() => ({
@@ -65,11 +66,12 @@ function isLimitFulfilled(attributeName: string): boolean {
 </script>
 
 <template>
-    <div class="item-tip-content inner text-sharpen">
+    <div class="item-tip-content inner text-sharpen" :data-tip-version="tipVersion" :data-rarity="item.rarity">
         <div
             v-if="showTitle || item.attributes?.upgradedByPercent || item.attributes?.reducedLevelRequirement || item.attributes?.useOutfit?.src"
             class="header"
         >
+            <img v-if="tipVersion === 'modern' && showTitle && item.src" class="modern-tip-item-icon" :src="item.src" :alt="item.name" draggable="false" />
             <template v-if="showTitle">
                 <div v-if="showId">
                     <i>ID: {{ item.id }}</i>
@@ -255,3 +257,5 @@ function isLimitFulfilled(attributeName: string): boolean {
     gap: 0.25rem;
 }
 </style>
+
+<style src="../assets/modern-tip.css"></style>

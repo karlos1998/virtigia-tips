@@ -5,6 +5,7 @@ import { priceFormatter } from '../utilities/priceFormatter';
 import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
 import {useToolTip} from "../../tooltips/module";
+import ItemTipContent from './itemTipContent.vue';
 import {TipProps} from "../typings/schematics";
 
 const { state, setToolTipElement } = useToolTip();
@@ -232,7 +233,8 @@ withDefaults(defineProps<TipProps>(), {
                 <div class="inner text-sharpen" v-html="selfProperties.htmlPayload.schema.inner.content" />
             </template>
             <template v-if="selfProperties.itemPayload">
-                <div class="inner text-sharpen">
+                <ItemTipContent v-if="tipVersion === 'modern'" :item="selfProperties.itemPayload.schema.inner" :show-id="selfProperties.itemPayload.schema.showId" :hero-lvl="heroLvl" :hero-profession="heroProfession" tip-version="modern" />
+                <div v-else class="inner text-sharpen">
                     <div class="header">
                         <div v-if="selfProperties.itemPayload.schema.showId">
                             <i>ID: {{ selfProperties.itemPayload.schema.inner.id }}</i>

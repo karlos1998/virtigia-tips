@@ -1,0 +1,25 @@
+.rockTip[data-version='modern'][data-type] {
+    font:13px/16px Arial,sans-serif;color:#d6d6d6;background:#101010d9;
+    border:4px double #999;box-shadow:0 0 0 1px #171717,inset 0 0 0 1px #080808,0 3px 8px #0006;
+    box-sizing:border-box;max-width:min(360px,calc(100vw - 12px));padding:4px;text-align:left;text-shadow:none;
+    --rockTip-item--color-statValue:#ffd54d;--rockTip-item--color-fulfillOk:#ccc;--rockTip-item--color-fulfillErr:#ff655c;
+}
+.rockTip[data-version='modern']>.tip-wrapper{background:none;border:0;padding:0;font:inherit;color:inherit}
+.rockTip[data-version='modern']>.tip-wrapper>.corners{display:none}
+.rockTip[data-version='modern'] .text-sharpen{padding:3px;text-shadow:none}
+.rockTip[data-version='modern'] :is(.nickname,.name){font:700 13px/16px Arial,sans-serif;text-align:left}
+.item-tip-content[data-tip-version='modern']{font:13px/16px Arial,sans-serif;color:#d6d6d6;text-align:left;padding:3px;text-shadow:none;--rockTip-item--color-statValue:#ffd54d;--rockTip-item--color-fulfillOk:#ccc;--rockTip-item--color-fulfillErr:#ff655c}
+.item-tip-content[data-tip-version='modern']>.header{position:relative;min-height:36px;padding:3px 3px 6px 44px;border:1px solid #7778;background:#ffffff06;margin:0 0 4px;text-align:left}
+.item-tip-content[data-tip-version='modern']>.header:not(:has(.modern-tip-item-icon)){min-height:0;padding-left:3px}
+.item-tip-content[data-tip-version='modern'] .modern-tip-item-icon{position:absolute;left:4px;top:4px;width:32px;height:32px;object-fit:contain;image-rendering:pixelated;border:1px solid #999;background:#0004}
+.item-tip-content[data-tip-version='modern']>.header>.name{font:700 13px/16px Arial,sans-serif;margin:0;padding:0;text-align:left;color:#ddd}
+.item-tip-content[data-tip-version='modern']>.header>.rarity{font-size:11px;text-align:left;font-weight:400;margin:2px 0 0}
+.item-tip-content[data-tip-version='modern']>.header>.rarity[data-type='unique']{color:#d7be58}
+.item-tip-content[data-tip-version='modern']>.header>.rarity[data-type='heroic']{color:#69a7e8}
+.item-tip-content[data-tip-version='modern']>.header>.rarity[data-type='legendary']{color:#e3a449}
+.item-tip-content[data-tip-version='modern']>.struct{display:grid;gap:3px;padding:0}
+.item-tip-content[data-tip-version='modern'] .category{font-size:12px;color:#aaa}
+.item-tip-content[data-tip-version='modern'] :is(.bonuses,.actions,.tags,.requires):not(:empty){border:0;border-top:1px solid #7776;padding:4px 0 0;margin:2px 0 0}
+.item-tip-content[data-tip-version='modern'] .attribute{margin:0;padding:0;border:0}
+.item-tip-content[data-tip-version='modern']>.footer{margin-top:5px;padding-top:5px;border-top:1px solid #7778}
+.item-tip-content[data-tip-version='modern']>.footer>.price{justify-content:flex-end;font-weight:400}
