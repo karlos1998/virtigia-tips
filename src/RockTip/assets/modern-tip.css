@@ -23,3 +23,32 @@
 .item-tip-content[data-tip-version='modern'] .attribute{margin:0;padding:0;border:0}
 .item-tip-content[data-tip-version='modern']>.footer{margin-top:5px;padding-top:5px;border-top:1px solid #7778}
 .item-tip-content[data-tip-version='modern']>.footer>.price{justify-content:flex-end;font-weight:400}
+/* Modern rarity palette follows the item frames; retro and legacy remain unchanged. */
+.rockTip[data-version='modern'][data-rarity='unique']{--modern-rarity-color:#fffb00}
+.rockTip[data-version='modern'][data-rarity='heroic']{--modern-rarity-color:#38b8eb}
+.rockTip[data-version='modern'][data-rarity='legendary']{--modern-rarity-color:#ff8400}
+.rockTip[data-version='modern'][data-rarity='upgraded']{--modern-rarity-color:#ff59af}
+.rockTip[data-version='modern'][data-rarity='artefact']{--modern-rarity-color:#e84646}
+.rockTip[data-version='modern'][data-type='item']{border-color:var(--modern-rarity-color,#999)}
+.item-tip-content[data-tip-version='modern']>.header{align-items:stretch;justify-content:center;min-height:36px}
+.item-tip-content[data-tip-version='modern']>.header>.name{color:var(--modern-rarity-color,#aaa);font-weight:400}
+.item-tip-content[data-tip-version='modern'] .modern-item-quality>.rarity{color:var(--modern-rarity-color,#aaa);text-transform:capitalize}
+.item-tip-content[data-tip-version='modern'] .modern-item-quality .upgrade-percent{color:#ff59af}
+.item-tip-content[data-tip-version='modern'] .modern-item-quality .reduced-level-requirement{color:#9fac28}
+.item-tip-content[data-tip-version='modern'] .modern-missing-stats{border-top:1px solid #7776;padding-top:5px;color:#ff4747;font-style:italic}
+.item-tip-content[data-tip-version='modern'] .modern-missing-stats>div:first-child{margin-bottom:6px}
+.item-tip-content[data-tip-version='modern'] .modern-missing-stats [data-role='value']{color:inherit}
+.item-tip-content[data-tip-version='modern'] .modern-stat-difference.positive{color:#60f760}
+.item-tip-content[data-tip-version='modern'] .modern-stat-difference.negative{color:#ff4747}
+.item-tip-content[data-tip-version='modern'] .modern-stat-difference.mixed{color:#ffe45c}
+.rockTip[data-version='modern'] .modern-item-comparison-panel{--modern-rarity-color:#999;min-width:0;box-sizing:border-box;position:relative}
+.rockTip[data-version='modern'] .modern-item-comparison-panel[data-rarity='unique']{--modern-rarity-color:#fffb00}
+.rockTip[data-version='modern'] .modern-item-comparison-panel[data-rarity='heroic']{--modern-rarity-color:#38b8eb}
+.rockTip[data-version='modern'] .modern-item-comparison-panel[data-rarity='legendary']{--modern-rarity-color:#ff8400}
+.rockTip[data-version='modern'] .modern-item-comparison-panel[data-rarity='upgraded']{--modern-rarity-color:#ff59af}
+.rockTip[data-version='modern'] .modern-item-comparison-panel[data-rarity='artefact']{--modern-rarity-color:#e84646}
+.rockTip[data-version='modern'].modern-comparison{max-width:calc(100vw - 12px);border:0;padding:0;box-shadow:none;background:none}
+.rockTip[data-version='modern'].modern-comparison .modern-item-tip-pair{display:flex;align-items:flex-start;gap:10px;padding-top:30px}
+.rockTip[data-version='modern'].modern-comparison .modern-item-comparison-panel{width:min(350px,calc((100vw - 24px)/2));padding:4px;border:4px double var(--modern-rarity-color,#999);background:#101010d9;box-shadow:0 0 0 1px #171717,inset 0 0 0 1px #080808}
+.rockTip[data-version='modern'] .modern-equipped-label{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);padding:4px 10px;border:3px double #999;background:#101010e8;color:#d5cda6;font:13px/16px Arial,sans-serif;white-space:nowrap}
+@media(max-width:600px){.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']{font-size:11px;line-height:14px}.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']>.header{padding-left:3px;padding-top:39px}.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']>.header>.name{font-size:12px;line-height:14px}}

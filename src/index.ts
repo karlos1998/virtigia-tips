@@ -5,6 +5,8 @@ import type {HtmlPayload, ItemPayload, TroopPayload, NpcPayload, OtherPayload, P
 import type {ItemSchema, ItemTipContentProps} from './RockTip/typings/schematics';
 import { createApp, type App } from 'vue';
 
+export {findEquippedComparison, attributeDifference, missingComparisonStats} from "./RockTip/utilities/itemComparison";
+
 export {
   ToolTipDirective,
   RockTip,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import {attributeDifference, comparisonStats, missingComparisonStats} from '../utilities/itemComparison';
 import {Attributes} from '../constants/attributes';
 import {Translations} from '../constants/translations';
 import type {ItemPayload} from '../typings/payloads';
@@ -20,6 +21,19 @@ const payload = computed<ItemPayload>(() => ({
         showId: props.showId,
     },
 }));
+const comparableStats = computed(() => new Set(comparisonStats(props.item)));
+const missingStats = computed(() => props.tipVersion === 'modern' ? missingComparisonStats(props.item, props.comparisonItem) : []);
+function difference(stat: string) {
+    if (props.tipVersion !== 'modern' || !props.comparisonItem || !comparableStats.value.has(stat)) return undefined;
+    return attributeDifference(props.item.attributes[stat], props.comparisonItem.attributes[stat]);
+}
+function differenceText(stat: string, values: number[]) {
+    const value = Array.isArray(props.item.attributes[stat]) ? values : values[0];
+    const translated = renderItemAttribute(stat, {...props.item.attributes, [stat]: value});
+    const formatted = [...translated.matchAll(/<span data-role="value">([^<]+)<\/span>/g)].map(match => match[1]);
+    if (formatted.length === values.length) return formatted.map((text, index) => values[index] > 0 && !text.startsWith('+') ? '+' + text : text).join(' / ');
+    return values.map(number => (number > 0 ? '+' : '') + number).join(' / ');
+}
 const itemOrders = computed(() => Attributes.getOrdersList(payload.value));
 
 type ItemAttributes = Record<string, any>;
@@ -68,7 +82,7 @@ function isLimitFulfilled(attributeName: string): boolean {
 <template>
     <div class="item-tip-content inner text-sharpen" :data-tip-version="tipVersion" :data-rarity="item.rarity">
         <div
-            v-if="showTitle || item.attributes?.upgradedByPercent || item.attributes?.reducedLevelRequirement || item.attributes?.useOutfit?.src"
+            v-if="showTitle || (tipVersion !== 'modern' && (item.attributes?.upgradedByPercent || item.attributes?.reducedLevelRequirement)) || item.attributes?.useOutfit?.src"
             class="header"
         >
             <img v-if="tipVersion === 'modern' && showTitle && item.src" class="modern-tip-item-icon" :src="item.src" :alt="item.name" draggable="false" />
@@ -80,7 +94,7 @@ function isLimitFulfilled(attributeName: string): boolean {
                     <span>{{ item.name }}</span>
                 </div>
                 <div
-                    v-if="item.rarity && item.rarity !== 'common'"
+                    v-if="tipVersion !== 'modern' && item.rarity && item.rarity !== 'common'"
                     class="rarity"
                     :data-type="item.rarity"
                 >
@@ -90,10 +104,13 @@ function isLimitFulfilled(attributeName: string): boolean {
                 </div>
             </template>
 
-            <div v-if="item.attributes?.upgradedByPercent" class="upgrade-percent">
+            <div v-if="tipVersion === 'modern' && showTitle" class="category">
+                <span>Typ: {{ Translations.categories[item.category] ?? item.category }}</span>
+            </div>
+            <div v-if="tipVersion !== 'modern' && item.attributes?.upgradedByPercent" class="upgrade-percent">
                 <span v-html="Translations.attributes.upgradedByPercent(item.attributes.upgradedByPercent)" />
             </div>
-            <div v-if="item.attributes?.reducedLevelRequirement" class="reduced-level-requirement">
+            <div v-if="tipVersion !== 'modern' && item.attributes?.reducedLevelRequirement" class="reduced-level-requirement">
                 <span v-html="Translations.attributes.reducedLevelRequirement(item.attributes.reducedLevelRequirement)" />
             </div>
             <div
@@ -111,13 +128,18 @@ function isLimitFulfilled(attributeName: string): boolean {
         </div>
 
         <div class="struct">
-            <div class="category">
+            <div v-if="tipVersion !== 'modern' || !showTitle" class="category">
                 <span v-if="item.category && Translations.categories[item.category]">
                     Typ: {{ Translations.categories[item.category] }}
                 </span>
                 <b v-else>Nieznany typ: {{ item.category || '-' }}</b>
             </div>
 
+            <div v-if="tipVersion === 'modern'" class="modern-item-quality">
+                <div class="rarity" :data-type="item.rarity || 'common'">{{ Translations.rarities[item.rarity || 'common'] ?? item.rarity }}</div>
+                <div v-if="item.attributes?.upgradedByPercent" class="upgrade-percent" v-html="Translations.attributes.upgradedByPercent(item.attributes.upgradedByPercent)" />
+                <div v-if="item.attributes?.reducedLevelRequirement" class="reduced-level-requirement" v-html="Translations.attributes.reducedLevelRequirement(item.attributes.reducedLevelRequirement)" />
+            </div>
             <div v-if="item.attributes && item.category !== 'renewable'" class="bonuses">
                 <div v-for="currentStat of itemOrders.bonuses" :key="currentStat" class="attribute" :data-stat="currentStat">
                     <span
@@ -125,6 +147,7 @@ function isLimitFulfilled(attributeName: string): boolean {
                         v-html="renderItemAttribute(currentStat, item.attributes)"
                     />
                     <div v-else><b>Nieznany stat: {{ currentStat }}</b></div>
+                    <span v-if="difference(currentStat)" class="modern-stat-difference" :class="{positive: difference(currentStat)!.every(value => value >= 0), negative: difference(currentStat)!.every(value => value <= 0), mixed: difference(currentStat)!.some(value => value < 0) && difference(currentStat)!.some(value => value > 0)}"> ({{ differenceText(currentStat, difference(currentStat)!) }})</span>
                 </div>
             </div>
 
@@ -165,6 +188,10 @@ function isLimitFulfilled(attributeName: string): boolean {
             </div>
         </div>
 
+        <section v-if="missingStats.length" class="modern-missing-stats">
+            <div>Brakujące statystyki:</div>
+            <div v-for="stat in missingStats" :key="stat" :data-stat="stat" v-html="renderItemAttribute(stat, comparisonItem!.attributes)" />
+        </section>
         <div class="footer">
             <div v-if="item.price && priceFormatter(item.price) !== '0'" class="price">
                 <span>Wartość: {{ priceFormatter(item.price) }}</span>

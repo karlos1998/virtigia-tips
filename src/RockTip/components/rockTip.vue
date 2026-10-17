@@ -6,6 +6,7 @@ import { Translations } from '../constants/translations';
 import { Attributes } from '../constants/attributes';
 import {useToolTip} from "../../tooltips/module";
 import ItemTipContent from './itemTipContent.vue';
+import {findEquippedComparison} from '../utilities/itemComparison';
 import {TipProps} from "../typings/schematics";
 
 const { state, setToolTipElement, reposition } = useToolTip();
@@ -109,16 +110,18 @@ function resolveOtherColor(relation?: string): string | undefined {
     return undefined;
 }
 
-withDefaults(defineProps<TipProps>(), {
+const props = withDefaults(defineProps<TipProps>(), {
+  equippedItems: () => [],
   heroLvl: 500,
   tipVersion: 'retro',
   heroProfession: null,
 })
 
+const comparisonItem = computed(() => props.tipVersion === 'modern' && state.value.itemPayload ? findEquippedComparison(state.value.itemPayload.schema.inner, props.equippedItems) : undefined);
 </script>
 
 <template>
-    <div class="rockTip" :style="{
+    <div class="rockTip" :class="{'modern-comparison': !!comparisonItem}" :data-rarity="selfProperties.itemPayload ? selfProperties.itemPayload.schema.inner.rarity : undefined" :style="{
             pointerEvents: 'none',
             width: 'max-content',
             left: position.x + 'px',
@@ -260,7 +263,15 @@ withDefaults(defineProps<TipProps>(), {
                 <div class="inner text-sharpen" v-html="selfProperties.htmlPayload.schema.inner.content" />
             </template>
             <template v-if="selfProperties.itemPayload">
-                <ItemTipContent v-if="tipVersion === 'modern'" :item="selfProperties.itemPayload.schema.inner" :show-id="selfProperties.itemPayload.schema.showId" :hero-lvl="heroLvl" :hero-profession="heroProfession" tip-version="modern" />
+                <div v-if="tipVersion === 'modern'" class="modern-item-tip-pair">
+                    <section v-if="comparisonItem" class="modern-item-comparison-panel" :data-rarity="comparisonItem.rarity">
+                        <div class="modern-equipped-label">Wyposażony</div>
+                        <ItemTipContent :item="comparisonItem" :comparison-item="selfProperties.itemPayload.schema.inner" :hero-lvl="heroLvl" :hero-profession="heroProfession" tip-version="modern" />
+                    </section>
+                    <section class="modern-item-comparison-panel" :data-rarity="selfProperties.itemPayload.schema.inner.rarity">
+                        <ItemTipContent :item="selfProperties.itemPayload.schema.inner" :comparison-item="comparisonItem" :show-id="selfProperties.itemPayload.schema.showId" :hero-lvl="heroLvl" :hero-profession="heroProfession" tip-version="modern" />
+                    </section>
+                </div>
                 <div v-else class="inner text-sharpen">
                     <div class="header">
                         <div v-if="selfProperties.itemPayload.schema.showId">

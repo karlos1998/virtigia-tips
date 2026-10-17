@@ -173,6 +173,7 @@ export declare type NpcSchema = {
 };
 
 export declare type TipProps = {
+    equippedItems?: ItemSchema['inner'][],
     heroProfession: Profession | null,
     heroLvl: number
     tipVersion: 'legacy' | 'retro' | 'modern'
@@ -180,6 +181,7 @@ export declare type TipProps = {
 
 export declare type ItemTipContentProps = {
     item: ItemSchema['inner'],
+    comparisonItem?: ItemSchema['inner'],
     heroProfession?: string | null,
     heroLvl?: number,
     showId?: boolean,
