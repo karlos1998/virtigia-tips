@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import PlayingCardTipContent from './playingCardTipContent.vue';
 import {attributeDifference, comparisonStats, missingComparisonStats} from '../utilities/itemComparison';
 import {Attributes} from '../constants/attributes';
 import {Translations} from '../constants/translations';
@@ -34,7 +35,11 @@ function differenceText(stat: string, values: number[]) {
     if (formatted.length === values.length) return formatted.map((text, index) => values[index] > 0 && !text.startsWith('+') ? '+' + text : text).join(' / ');
     return values.map(number => (number > 0 ? '+' : '') + number).join(' / ');
 }
-const itemOrders = computed(() => Attributes.getOrdersList(payload.value));
+const itemOrders = computed(() => {
+    const orders = Attributes.getOrdersList(payload.value);
+    if (props.item.category === 'playingCards') orders.tags = orders.tags.filter(stat => stat !== 'description');
+    return orders;
+});
 
 type ItemAttributes = Record<string, any>;
 type AttributeTranslation = (value: any, attributes?: ItemAttributes) => string | undefined;
@@ -140,6 +145,7 @@ function isLimitFulfilled(attributeName: string): boolean {
                 <div v-if="item.attributes?.upgradedByPercent" class="upgrade-percent" v-html="Translations.attributes.upgradedByPercent(item.attributes.upgradedByPercent)" />
                 <div v-if="item.attributes?.reducedLevelRequirement" class="reduced-level-requirement" v-html="Translations.attributes.reducedLevelRequirement(item.attributes.reducedLevelRequirement)" />
             </div>
+            <PlayingCardTipContent v-if="item.category === 'playingCards'" :card="item.attributes?.playingCard" :description="item.attributes?.description" />
             <div v-if="item.attributes && item.category !== 'renewable'" class="bonuses">
                 <div v-for="currentStat of itemOrders.bonuses" :key="currentStat" class="attribute" :data-stat="currentStat">
                     <span

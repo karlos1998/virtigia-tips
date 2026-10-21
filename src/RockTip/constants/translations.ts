@@ -118,6 +118,7 @@ export namespace Translations {
         "pets": "Zwierzaki",
         "pouches": "Sakwy",
         "lootChests": "Kuferki",
+        "playingCards": "Karta do gry",
         "pet": "Maskotki"
     };
 
