@@ -272,6 +272,14 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                         <ItemTipContent :item="selfProperties.itemPayload.schema.inner" :comparison-item="comparisonItem" :show-id="selfProperties.itemPayload.schema.showId" :hero-lvl="heroLvl" :hero-profession="heroProfession" tip-version="modern" />
                     </section>
                 </div>
+                <ItemTipContent
+                    v-else-if="selfProperties.itemPayload.schema.inner.category === 'playingCards'"
+                    :item="selfProperties.itemPayload.schema.inner"
+                    :show-id="selfProperties.itemPayload.schema.showId"
+                    :hero-lvl="heroLvl"
+                    :hero-profession="heroProfession"
+                    :tip-version="tipVersion"
+                />
                 <div v-else class="inner text-sharpen">
                     <div class="header">
                         <div v-if="selfProperties.itemPayload.schema.showId">

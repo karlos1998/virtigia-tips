@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createSSRApp} from 'vue';
 import {renderToString} from '@vue/server-renderer';
-import {ItemTipContent} from '../dist/virtigia-tips.es.js';
+import {ItemTipContent, RockTip, useToolTip} from '../dist/virtigia-tips.es.js';
 
 const definition = {deck:'retro',kind:'unit',strength:6,hero:false,rows:['close'],abilities:['spy'],generatedOnly:false};
 const item = card => ({id:'playing-card',name:'Karta testowa',category:'playingCards',rarity:'common',attributes:{playingCard:{...definition,...card}}});
@@ -82,4 +82,28 @@ test('missing or malformed metadata does not break the item tooltip',async()=>{
 test('other item categories do not render card metadata',async()=>{
     const html=await render({...item(),category:'rings'});
     assert.doesNotMatch(html,/playing-card-tip|Talia:|Siła karty:/);
+});
+
+
+test('actual RockTip renders card details with its default and all explicit layouts', async () => {
+    const {state} = useToolTip();
+    const previousPayload = state.value.itemPayload;
+    const value = item({strength:5,rows:['siege'],abilities:['medic']});
+    value.attributes.description = 'Opis medyka.';
+    state.value.itemPayload = {schema:{inner:value,showId:true}};
+    try {
+        for (const props of [{},{tipVersion:'retro'},{tipVersion:'legacy'},{tipVersion:'modern'}]) {
+            const html = await renderToString(createSSRApp(RockTip,props));
+            assert.match(html,/Typ: Karta do gry/);
+            assert.match(html,/Talia:[\s\S]*Retro/);
+            assert.match(html,/Siła karty:[\s\S]*>5</);
+            assert.match(html,/Rząd:[\s\S]*Oblężenie/);
+            assert.match(html,/Medyk/);
+            assert.match(html,/Nie wskrzesza bohaterów ani kart specjalnych/);
+            assert.equal((html.match(/Opis medyka\./g)||[]).length,1);
+            assert.doesNotMatch(html,/Nieznany stat|Nieznany typ/);
+        }
+    } finally {
+        state.value.itemPayload = previousPayload;
+    }
 });
