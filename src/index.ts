@@ -1,3 +1,4 @@
+export { default as PlayingCardIcon } from './RockTip/components/PlayingCardIcon.vue';
 import ToolTipDirective, { useToolTip } from "./tooltips/module";
 import RockTip from "./RockTip/components/rockTip.vue";
 import ItemTipContent from "./RockTip/components/itemTipContent.vue";
