@@ -566,6 +566,9 @@ export namespace Translations {
         },
 
         /* Actions */
+        "removesUpgrade": () => {
+            return "Usuwa ulepszenie z wybranego przedmiotu";
+        },
         "unbindsOwnerBound": () => {
             return "Odwiązuje przedmiot związany z właścicielem";
         },

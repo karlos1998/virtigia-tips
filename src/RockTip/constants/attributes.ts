@@ -111,6 +111,7 @@ export namespace Attributes {
             {"priority": 1, "name": "openBook"},
             {"priority": 1, "name": "openMail"},
             {"priority": 1, "name": "usePet"},
+            {"priority": 1, "name": "removesUpgrade"},
             {"priority": 1, "name": "unbindsOwnerBound"},
             {"priority": 1, "name": "unbindsPermanentlyBound"},
         ],

@@ -58,3 +58,14 @@ test('modern scalar differences retain translated units and upgrade styles stay 
  const retro=await renderToString(createSSRApp(ItemTipContent,{item:{...item,attributes:{health:100}},comparisonItem:{...item,id:'other',attributes:{health:50}}}));
  assert.doesNotMatch(retro,/modern-stat-difference|modern-missing-stats/);
 });
+
+
+test('cleansing scroll explains its effect in modern and retro item tips', async () => {
+ for (const tipVersion of ['modern', 'retro']) {
+  const html = await renderToString(createSSRApp(ItemTipContent, {
+   item: {id: 'cleansing-scroll', name: 'Zwój Oczyszczenia', category: 'upgrades', rarity: 'common', attributes: {removesUpgrade: true}},
+   tipVersion
+  }));
+  assert.match(html, /Usuwa ulepszenie z wybranego przedmiotu/);
+ }
+});
