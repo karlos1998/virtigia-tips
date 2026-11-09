@@ -107,6 +107,9 @@ export declare type OtherSchema = {
         level?: number,
         blessing?: boolean,
         brotherhoodMember?: boolean,
+        isSelf?: boolean,
+        modernBrotherhoodMember?: boolean,
+        characterName?: string,
         clan?: string,
         relation?: OtherRelation,
         role?: "Administrator" | "Mistrz Gry",
@@ -173,6 +176,8 @@ export declare type NpcSchema = {
 };
 
 export declare type TipProps = {
+    heroBlessing?: boolean,
+    heroClan?: string,
     equippedItems?: ItemSchema['inner'][],
     heroProfession: Profession | null,
     heroLvl: number

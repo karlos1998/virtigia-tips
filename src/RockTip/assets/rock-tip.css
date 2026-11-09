@@ -725,3 +725,47 @@ RIP + PET + GATE
 .rockTip[data-type='other'][data-version='legacy'] > .tip-wrapper > .corners > .rightBottom {
     background-image: none;
 }
+.rockTip[data-version='modern'][data-type='other'] {
+    background: #171716ec;
+    color: #eadcc5;
+}
+.modern-character-tip {
+    min-width: 178px;
+    max-width: 250px;
+    text-align: center;
+    line-height: 1.35;
+}
+.modern-character-tip__role {
+    color: #efb65d;
+    margin-bottom: 4px;
+}
+.modern-character-tip__name {
+    padding: 3px 8px;
+    border: 1px solid #ffffff38;
+    border-radius: 2px;
+    background: #ffffff16;
+    overflow-wrap: anywhere;
+}
+.modern-character-tip__clan {
+    margin-top: 4px;
+    color: #d5bf74;
+}
+.modern-character-tip__statuses {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid #ffffff24;
+}
+.modern-character-tip__statuses span {
+    width: 17px;
+    height: 17px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    color: #e6bd65;
+    line-height: 17px;
+}
+.modern-character-tip__statuses .crimson {
+    color: #ef7964;
+}

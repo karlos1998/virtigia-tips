@@ -50,6 +50,7 @@ onUnmounted(() => {
 });
 
 const selfProperties = state;
+const character = computed(() => state.value.otherPayload?.schema?.inner);
 
 
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
@@ -168,7 +169,26 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                 <div class="leftTop" />
                 <div class="rightBottom" />
             </div>
-            <template v-if="selfProperties.otherPayload">
+            <template v-if="character && tipVersion === 'modern'">
+                <div class="inner modern-character-tip">
+                    <div v-if="character.isSelf || character.role" class="modern-character-tip__role">
+                        {{ [character.isSelf ? 'Twoja postać' : null, character.role].filter(Boolean).join(' · ') }}
+                    </div>
+                    <div class="modern-character-tip__name">
+                        {{ character.characterName ?? character.name }}
+                        <span v-if="character.level != null">({{ character.level }}{{ character.profession }})</span>
+                    </div>
+                    <div v-if="character.isSelf ? heroClan : character.clan" class="modern-character-tip__clan">
+                        {{ character.isSelf ? heroClan : character.clan }}
+                    </div>
+                    <div v-if="character.wanted || (character.modernBrotherhoodMember ?? character.brotherhoodMember) || (character.isSelf ? heroBlessing : character.blessing)" class="modern-character-tip__statuses">
+                        <span v-if="character.wanted" title="Poszukiwany listem gończym" aria-label="Poszukiwany listem gończym" role="img">!</span>
+                        <span v-if="character.isSelf ? heroBlessing : character.blessing" title="Aktywne błogosławieństwo" aria-label="Aktywne błogosławieństwo" role="img">✦</span>
+                        <span v-if="(character.modernBrotherhoodMember ?? character.brotherhoodMember)" class="crimson" title="Karmazynowe Bractwo" aria-label="Karmazynowe Bractwo" role="img">◆</span>
+                    </div>
+                </div>
+            </template>
+            <template v-else-if="selfProperties.otherPayload">
                 <div class="inner text-sharpen">
                     <div class="nickname" :class="{ 'crimson-brotherhood': selfProperties.otherPayload.schema.inner.brotherhoodMember }">
                         <b>{{ selfProperties.otherPayload.schema.inner.name }}</b>
