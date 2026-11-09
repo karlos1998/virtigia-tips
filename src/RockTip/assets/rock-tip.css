@@ -759,13 +759,18 @@ RIP + PET + GATE
     border-top: 1px solid #ffffff24;
 }
 .modern-character-tip__statuses span {
-    width: 17px;
-    height: 17px;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    color: #e6bd65;
-    line-height: 17px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('./character-status-sprite.png');
 }
-.modern-character-tip__statuses .crimson {
-    color: #ef7964;
+.modern-character-tip__statuses .blessing-icon {
+    background-position: -368px 281px;
+}
+.modern-character-tip__statuses .brotherhood-icon {
+    background-position: -348px 281px;
+}
+.modern-character-tip__statuses .wanted-icon {
+    height: 16px;
+    background-position: -387px -19px;
 }

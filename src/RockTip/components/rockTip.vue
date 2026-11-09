@@ -182,9 +182,9 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                         {{ character.isSelf ? heroClan : character.clan }}
                     </div>
                     <div v-if="character.wanted || (character.modernBrotherhoodMember ?? character.brotherhoodMember) || (character.isSelf ? heroBlessing : character.blessing)" class="modern-character-tip__statuses">
-                        <span v-if="character.wanted" title="Poszukiwany listem gończym" aria-label="Poszukiwany listem gończym" role="img">!</span>
-                        <span v-if="character.isSelf ? heroBlessing : character.blessing" title="Aktywne błogosławieństwo" aria-label="Aktywne błogosławieństwo" role="img">✦</span>
-                        <span v-if="(character.modernBrotherhoodMember ?? character.brotherhoodMember)" class="crimson" title="Karmazynowe Bractwo" aria-label="Karmazynowe Bractwo" role="img">◆</span>
+                        <span v-if="character.wanted" title="Poszukiwany listem gończym" aria-label="Poszukiwany listem gończym" class="wanted-icon" role="img" />
+                        <span v-if="character.isSelf ? heroBlessing : character.blessing" title="Aktywne błogosławieństwo" aria-label="Aktywne błogosławieństwo" class="blessing-icon" role="img" />
+                        <span v-if="(character.modernBrotherhoodMember ?? character.brotherhoodMember)" class="brotherhood-icon" title="Karmazynowe Bractwo" aria-label="Karmazynowe Bractwo" role="img" />
                     </div>
                 </div>
             </template>
