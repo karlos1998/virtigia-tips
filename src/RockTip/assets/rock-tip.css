@@ -758,7 +758,7 @@ RIP + PET + GATE
     padding-top: 4px;
     border-top: 1px solid #ffffff24;
 }
-.modern-character-tip__statuses span {
+.rockTip[data-version='modern'] .modern-character-tip__statuses span {
     display: inline-block;
     width: 20px;
     height: 20px;
