@@ -50,7 +50,23 @@ onUnmounted(() => {
 });
 
 const selfProperties = state;
-const character = computed(() => state.value.otherPayload?.schema?.inner);
+const character = computed(() => {
+    const other = state.value.otherPayload;
+    return other ? other.schema.inner : undefined;
+});
+const npcFinderName = ref<string>();
+watch(() => {
+    const npc = state.value.npcPayload;
+    return npc ? npc.schema.inner : undefined;
+}, (npc, _, onCleanup) => {
+    const remaining = (npc?.finderExpiresAt ?? 0) - Date.now();
+    npcFinderName.value = remaining > 0 ? npc?.finderName : undefined;
+    if (npcFinderName.value && typeof window !== 'undefined') {
+        const timeout = setTimeout(() => { npcFinderName.value = undefined; }, remaining);
+        onCleanup(() => clearTimeout(timeout));
+    }
+}, {immediate: true});
+
 
 
 const itemOrders = computed(() => state.value.itemPayload ? Attributes.getOrdersList(state.value.itemPayload) : null)
@@ -481,6 +497,9 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                             <span>{{ `${selfProperties.npcPayload.schema.inner.lvl} lvl${selfProperties.npcPayload.schema.inner.inGroup ? ", grp" : ""}` }}</span>
                         </div>
                     </template>
+                    <div v-if="npcFinderName" class="npc-finder">
+                        Znalazca: {{ npcFinderName }}
+                    </div>
                 </div>
             </template>
             <template v-if="selfProperties.gatePayload">

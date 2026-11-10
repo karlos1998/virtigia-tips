@@ -169,6 +169,8 @@ export declare type NpcSchema = {
         name: string
         inGroup: boolean
         isAggressive?: boolean
+        finderName?: string
+        finderExpiresAt?: number
     },
     // hero: {
     //     level: number

@@ -69,3 +69,18 @@ test('cleansing scroll explains its effect in modern and retro item tips', async
   assert.match(html, /Usuwa ulepszenie z wybranego przedmiotu/);
  }
 });
+
+test('NPC tooltip displays an active finder and hides an expired finder', async () => {
+ const {state} = useToolTip();
+ const inner = {name: 'Heros', rank: 'HERO', lvl: 80, finderName: 'Gracz <test>'};
+ try {
+  state.value.npcPayload = {schema: {inner: {...inner, finderExpiresAt: Date.now() + 60_000}}};
+  const active = await renderToString(createSSRApp(RockTip));
+  assert.match(active, /Znalazca: Gracz &lt;test&gt;/);
+  state.value.npcPayload = {schema: {inner: {...inner, finderExpiresAt: Date.now() - 1}}};
+  const expired = await renderToString(createSSRApp(RockTip));
+  assert.doesNotMatch(expired, /Znalazca:/);
+ } finally {
+  state.value.npcPayload = false;
+ }
+});
