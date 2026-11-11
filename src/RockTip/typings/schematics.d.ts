@@ -111,6 +111,8 @@ export declare type OtherSchema = {
         modernBrotherhoodMember?: boolean,
         characterName?: string,
         clan?: string,
+        /** Name of the Discord account linked to the player's portal account. */
+        discordName?: string | null,
         relation?: OtherRelation,
         role?: "Administrator" | "Mistrz Gry",
         name: string,

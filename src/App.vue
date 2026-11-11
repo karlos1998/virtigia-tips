@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import RockTip from "./RockTip/components/rockTip.vue";
-import { renderRockTipToHtml } from "./index";
+import { renderRockTipToHtml, discordTipHtml } from "./index";
 import type { NpcPayload } from "./RockTip/typings/payloads";
 
 // import './RockTip/styles/style.css'
@@ -17,7 +17,7 @@ import loots2 from "./assets/loots2.png?url";
 import {computed, onMounted, ref} from "vue";
 import type { Profession } from "./RockTip/typings/schematics";
 
-type TipVersion = 'retro' | 'legacy';
+type TipVersion = 'retro' | 'legacy' | 'modern';
 
 const staticPlayer = {
   name: 'Hrabia_Kamien',
@@ -48,6 +48,16 @@ const isLegacyTipVersion = computed({
   },
 });
 
+const heroWithFinder = {
+  name: 'Mroczny Patryk',
+  lvl: 35,
+  rank: 'HERO',
+  isAggressive: true,
+  finderName: 'Hrabia_Kamien',
+  finderExpiresAt: Date.now() + 60 * 60 * 1000,
+};
+const chatAuthorTip = '2026/11/11 14:05:12' + discordTipHtml('hrabia.kamien');
+
 onMounted(() => {
   renderedAggressiveNpcHtml.value = renderRockTipToHtml(aggressiveNpcPayload, 800, 'w', true);
 });
@@ -58,9 +68,12 @@ onMounted(() => {
 <template>
   <div id="app">
     <label class="tip-version-switch">
-      <span>retro</span>
-      <input v-model="isLegacyTipVersion" type="checkbox">
-      <span>legacy</span>
+      <span>Wersja tipów:</span>
+      <select v-model="tipVersion">
+        <option value="retro">retro</option>
+        <option value="legacy">legacy</option>
+        <option value="modern">modern</option>
+      </select>
     </label>
     <br/>
 
@@ -285,7 +298,13 @@ onMounted(() => {
       isAggressive: true,
     }" :src="smokczarny" />
 
+    <img v-tip.npc="heroWithFinder" :src="smokczarny" />
+
     <hr>
+    <div>
+      <span>Tip autora wiadomości na czacie (html + Discord):</span>
+      <span v-tip="chatAuthorTip" style="cursor: pointer; color: #ffd700;">«Hrabia_Kamien»</span>
+    </div>
     <div>
       <span>Tip listu gończego (other):</span>
       <span v-tip.other="{
@@ -305,7 +324,8 @@ onMounted(() => {
         profession: staticPlayer.profession,
         clan: staticPlayer.clan,
         blessing: true,
-        role: 'Mistrz Gry'
+        role: 'Mistrz Gry',
+        discordName: 'hrabia.kamien'
       }" style="cursor: pointer; color: #00ff00; font-weight: bold;">
         {{ staticPlayer.name }} ({{ staticPlayer.level }}{{ staticPlayer.profession }})
       </span>

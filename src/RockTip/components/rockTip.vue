@@ -197,6 +197,9 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                     <div v-if="character.isSelf ? heroClan : character.clan" class="modern-character-tip__clan">
                         {{ character.isSelf ? heroClan : character.clan }}
                     </div>
+                    <div v-if="character.discordName" class="tip-discord">
+                        <span class="tip-discord__label">Discord:</span> <span class="tip-discord__name">{{ character.discordName }}</span>
+                    </div>
                     <div v-if="character.wanted || (character.modernBrotherhoodMember ?? character.brotherhoodMember) || (character.isSelf ? heroBlessing : character.blessing)" class="modern-character-tip__statuses">
                         <span v-if="character.wanted" title="Poszukiwany listem gończym" aria-label="Poszukiwany listem gończym" class="wanted-icon" role="img" />
                         <span v-if="character.isSelf ? heroBlessing : character.blessing" title="Aktywne błogosławieństwo" aria-label="Aktywne błogosławieństwo" class="blessing-icon" role="img" />
@@ -239,6 +242,9 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                             <span>{{ selfProperties.otherPayload.schema.inner.role }}</span>
                         </div>
                     </template>
+                    <div v-if="selfProperties.otherPayload.schema.inner.discordName" class="tip-discord">
+                        <span class="tip-discord__label">Discord:</span> <span class="tip-discord__name">{{ selfProperties.otherPayload.schema.inner.discordName }}</span>
+                    </div>
                 </div>
             </template>
             <template v-if="selfProperties.troopPayload">
@@ -498,7 +504,8 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                         </div>
                     </template>
                     <div v-if="npcFinderName" class="npc-finder">
-                        Znalazca: {{ npcFinderName }}
+                        <span class="npc-finder__label">Znalazca</span>
+                        <span class="npc-finder__name">{{ npcFinderName }}</span>
                     </div>
                 </div>
             </template>

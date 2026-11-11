@@ -10,10 +10,10 @@ Pakiet jest używany między innymi przez `virtigia-game-client`, `virtigia-map-
 | --- | --- |
 | Item tips | nazwa, rzadkość, grafika, statystyki, bonusy, wymagania, tagi i akcje |
 | NPC tips | nazwa, poziom, profesja, ranga, grafika i podstawowe informacje |
-| Other tips | tooltipy postaci i innych graczy |
+| Other tips | tooltipy postaci i innych graczy, także z kontem Discord (`discordName`) |
 | Pet tips | tooltipy zwierzaków |
 | RIP tips | tooltipy grobów/martwych postaci |
-| HTML tips | bezpieczne renderowanie własnej treści |
+| HTML tips | bezpieczne renderowanie własnej treści; `discordTipHtml(name)` dodaje linię „Discord: …” np. do tipu autora wiadomości |
 | Vue directive | łatwe podpinanie tooltipów do elementów UI |
 | Item content | bezstanowy komponent `ItemTipContent` do modali i paneli szczegółów |
 | Renderer testowy | render tooltipa do HTML przez `renderRockTipToHtml` |

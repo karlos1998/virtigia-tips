@@ -774,3 +774,52 @@ RIP + PET + GATE
     height: 16px;
     background-position: -387px -19px;
 }
+
+/* Discord account of a player: character tips and chat author tips (discordTipHtml). */
+.rockTip .tip-discord {
+    display: block;
+    width: 100%;
+    margin-top: 3px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+.rockTip .tip-discord__label {
+    color: #b9bee8;
+}
+.rockTip .tip-discord__name {
+    color: #8e9cff;
+    font-weight: 700;
+}
+.rockTip[data-version='legacy'] .tip-discord__name {
+    color: #aab4ff;
+}
+.modern-character-tip .tip-discord {
+    margin-top: 4px;
+}
+
+/* Player who found a hero, shown on the hero's tip for a limited time. */
+.rockTip[data-type='npc'] > .tip-wrapper > .inner > .npc-finder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    width: 100%;
+    margin-top: 5px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 213, 120, 0.28);
+    text-align: center;
+}
+.rockTip[data-type='npc'] .npc-finder__label {
+    color: #c9a65b;
+    font: 700 9px/11px Georgia, 'Times New Roman', serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+.rockTip[data-type='npc'] .npc-finder__name {
+    color: #ffe08a;
+    font: italic 700 12px/15px Georgia, 'Times New Roman', serif;
+    overflow-wrap: anywhere;
+}
+.rockTip[data-version='modern'][data-type='npc'] > .tip-wrapper > .inner > .npc-finder {
+    border-top-color: #ffffff24;
+}

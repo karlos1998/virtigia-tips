@@ -76,11 +76,29 @@ test('NPC tooltip displays an active finder and hides an expired finder', async 
  try {
   state.value.npcPayload = {schema: {inner: {...inner, finderExpiresAt: Date.now() + 60_000}}};
   const active = await renderToString(createSSRApp(RockTip));
-  assert.match(active, /Znalazca: Gracz &lt;test&gt;/);
+  assert.match(active, /npc-finder__label">Znalazca<\/span><span class="npc-finder__name">Gracz &lt;test&gt;/);
   state.value.npcPayload = {schema: {inner: {...inner, finderExpiresAt: Date.now() - 1}}};
   const expired = await renderToString(createSSRApp(RockTip));
-  assert.doesNotMatch(expired, /Znalazca:/);
+  assert.doesNotMatch(expired, /Znalazca/);
  } finally {
   state.value.npcPayload = false;
  }
+});
+test('character tips show the linked Discord account in every tip version',async()=>{
+ const {state}=useToolTip();
+ state.value.otherPayload={schema:{inner:{name:'Gracz',level:50,profession:'w',wanted:false,discordName:'gracz<dc>'}}};
+ for(const tipVersion of ['modern','retro','legacy']){
+  const html=await renderToString(createSSRApp(RockTip,{tipVersion}));
+  assert.match(html,/class="tip-discord"/);assert.match(html,/Discord:/);assert.match(html,/gracz&lt;dc&gt;/);
+ }
+ state.value.otherPayload={schema:{inner:{name:'Gracz',level:50,profession:'w',wanted:false}}};
+ for(const tipVersion of ['modern','retro']){
+  assert.doesNotMatch(await renderToString(createSSRApp(RockTip,{tipVersion})),/tip-discord/);
+ }
+ state.value.otherPayload=false;
+});
+test('discordTipHtml escapes the name and is empty without a Discord account',async()=>{
+ const {discordTipHtml}=await import('../dist/virtigia-tips.es.js');
+ assert.match(discordTipHtml('a<b>'),/tip-discord__name">a&lt;b&gt;</);
+ assert.equal(discordTipHtml(null),'');assert.equal(discordTipHtml('  '),'');
 });
