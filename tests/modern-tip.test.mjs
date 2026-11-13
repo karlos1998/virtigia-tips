@@ -102,3 +102,18 @@ test('discordTipHtml escapes the name and is empty without a Discord account',as
  assert.match(discordTipHtml('a<b>'),/tip-discord__name">a&lt;b&gt;</);
  assert.equal(discordTipHtml(null),'');assert.equal(discordTipHtml('  '),'');
 });
+
+test('Classic and Modern show the wanted label only for wanted characters', async () => {
+ const {state} = useToolTip();
+ try {
+  for (const wanted of [true, false]) {
+   state.value.otherPayload = {schema: {inner: {name: 'Gracz', level: 50, profession: 'w', wanted}}};
+   for (const tipVersion of ['retro', 'modern']) {
+    const html = await renderToString(createSSRApp(RockTip, {tipVersion}));
+    assert.equal(html.includes('Poszukiwany listem gończym'), wanted);
+   }
+  }
+ } finally {
+  state.value.otherPayload = false;
+ }
+});

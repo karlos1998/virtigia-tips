@@ -157,8 +157,9 @@
 }
 
 .rockTip[data-type='other'] .wanted{
-    color:#f00;
+    color: #ff6262;
     font-weight: bold;
+    text-shadow: 0 0 6px #f44;
 }
 
 .rockTip[data-type='other'][data-version='legacy'][data-color='enemy']{
