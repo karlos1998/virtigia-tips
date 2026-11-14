@@ -100,6 +100,7 @@ export namespace Attributes {
             {"priority": 1, "name": "openDeposit"},
             {"priority": 1, "name": "openClanDeposit"},
             {"priority": 1, "name": "openAuction"},
+            {"priority": 1, "name": "openShop"},
             {"priority": 1, "name": "teleportTo"},
             {"priority": 1, "name": "combatFlee"},
             {"priority": 1, "name": "useEmotion"},

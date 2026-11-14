@@ -76,6 +76,8 @@ ShO9KukHxab7dzwZ2ngYldAZQrLCDLE1xTCXtrd1xkqiO1Y=
 -----END PGP PUBLIC KEY BLOCK-----
 */
 
+import {escapeTipHtml} from '../utilities/discordTip';
+
 export namespace Translations {
     export const professions = {
         "b": "Tancerz ostrzy",
@@ -586,6 +588,12 @@ export namespace Translations {
         },
         "openMail": () => {
             return "Wywołuje pocztę";
+        },
+        "openShop": (shop: {id: number; name: string}) => {
+            return `Wywołuje sklep: ${escapeTipHtml(String(shop?.name ?? ''))}`;
+        },
+        "combatSelfHeal": (percent: number) => {
+            return `Leczy ${Number(percent)}% punktów życia podczas walki. Można używać raz na walkę.`;
         },
         "openAuction": () => {
             return "Wywołuje aukcję";
