@@ -775,6 +775,21 @@ RIP + PET + GATE
     height: 16px;
     background-position: -387px -19px;
 }
+/* Active chat mute. Modern uses the status sprite (same slot as Margonem's .mute), Classic uses mute.gif. */
+.modern-character-tip__statuses .mute-icon {
+    background-position: -328px 281px;
+}
+.rockTip .tip-mute .mute-icon {
+    display: inline-block;
+    width: 25px;
+    height: 16px;
+    background: url('./mute.gif') no-repeat center;
+}
+.rockTip .tip-mute {
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;
+}
 
 /* Discord account of a player: character tips and chat author tips (discordTipHtml). */
 .rockTip .tip-discord {

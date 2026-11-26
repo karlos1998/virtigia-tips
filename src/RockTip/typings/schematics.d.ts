@@ -117,6 +117,8 @@ export declare type OtherSchema = {
         role?: "Administrator" | "Mistrz Gry",
         name: string,
         wanted: boolean,
+        /** Character has an active public chat mute. */
+        muted?: boolean,
     }
 };
 export declare type RipSchema = {

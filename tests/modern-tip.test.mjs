@@ -117,3 +117,30 @@ test('Classic and Modern show the wanted label only for wanted characters', asyn
   state.value.otherPayload = false;
  }
 });
+
+test('Classic and Modern show the chat mute icon only for muted characters', async () => {
+ const {state} = useToolTip();
+ try {
+  for (const muted of [true, false]) {
+   state.value.otherPayload = {schema: {inner: {name: 'Gracz', level: 50, profession: 'w', wanted: false, muted}}};
+   for (const tipVersion of ['modern', 'retro']) {
+    const html = await renderToString(createSSRApp(RockTip, {tipVersion}));
+    assert.equal(html.includes('mute-icon'), muted, `${tipVersion} muted=${muted}`);
+   }
+  }
+ } finally {
+  state.value.otherPayload = false;
+ }
+});
+
+test('Classic places the mute icon right after the role, before the Discord line (like Margonem)', async () => {
+ const {state} = useToolTip();
+ try {
+  state.value.otherPayload = {schema: {inner: {name: 'Gracz', level: 50, profession: 'w', wanted: false, muted: true, role: 'Mistrz Gry', discordName: 'dc'}}};
+  const html = await renderToString(createSSRApp(RockTip, {tipVersion: 'retro'}));
+  assert.ok(html.indexOf('class="role"') < html.indexOf('class="tip-mute"'));
+  assert.ok(html.indexOf('class="tip-mute"') < html.indexOf('class="tip-discord"'));
+ } finally {
+  state.value.otherPayload = false;
+ }
+});

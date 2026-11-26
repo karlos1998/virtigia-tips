@@ -201,9 +201,10 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                         <span class="tip-discord__label">Discord:</span> <span class="tip-discord__name">{{ character.discordName }}</span>
                     </div>
                     <div v-if="character.wanted" class="wanted">Poszukiwany listem gończym</div>
-                    <div v-if="character.wanted || (character.modernBrotherhoodMember ?? character.brotherhoodMember) || (character.isSelf ? heroBlessing : character.blessing)" class="modern-character-tip__statuses">
+                    <div v-if="character.wanted || character.muted || (character.modernBrotherhoodMember ?? character.brotherhoodMember) || (character.isSelf ? heroBlessing : character.blessing)" class="modern-character-tip__statuses">
                         <span v-if="character.wanted" class="wanted-icon" aria-hidden="true" />
                         <span v-if="character.isSelf ? heroBlessing : character.blessing" title="Aktywne błogosławieństwo" aria-label="Aktywne błogosławieństwo" class="blessing-icon" role="img" />
+                        <span v-if="character.muted" class="mute-icon" title="Wyciszony na czacie" aria-label="Wyciszony na czacie" role="img" />
                         <span v-if="(character.modernBrotherhoodMember ?? character.brotherhoodMember)" class="brotherhood-icon" title="Karmazynowe Bractwo" aria-label="Karmazynowe Bractwo" role="img" />
                     </div>
                 </div>
@@ -243,6 +244,9 @@ const comparisonItem = computed(() => props.tipVersion === 'modern' && state.val
                             <span>{{ selfProperties.otherPayload.schema.inner.role }}</span>
                         </div>
                     </template>
+                    <div v-if="selfProperties.otherPayload.schema.inner.muted" class="tip-mute">
+                        <span class="mute-icon" title="Wyciszony na czacie" aria-label="Wyciszony na czacie" role="img" />
+                    </div>
                     <div v-if="selfProperties.otherPayload.schema.inner.discordName" class="tip-discord">
                         <span class="tip-discord__label">Discord:</span> <span class="tip-discord__name">{{ selfProperties.otherPayload.schema.inner.discordName }}</span>
                     </div>
