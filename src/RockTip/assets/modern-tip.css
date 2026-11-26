@@ -2,13 +2,13 @@
     font:13px/16px Arial,sans-serif;color:#d6d6d6;background:#101010d9;
     border:4px double #999;box-shadow:0 0 0 1px #171717,inset 0 0 0 1px #080808,0 3px 8px #0006;
     box-sizing:border-box;max-width:min(360px,calc(100vw - 12px));padding:4px;text-align:left;text-shadow:none;
-    --rockTip-item--color-statValue:#ffd54d;--rockTip-item--color-fulfillOk:#ccc;--rockTip-item--color-fulfillErr:#ff655c;
+    --rockTip-item--color-statValue:#ffa500;--rockTip-item--color-fulfillOk:#d6d6d6;--rockTip-item--color-fulfillErr:#fe5555;
 }
 .rockTip[data-version='modern']>.tip-wrapper{background:none;border:0;padding:0;font:inherit;color:inherit}
 .rockTip[data-version='modern']>.tip-wrapper>.corners{display:none}
 .rockTip[data-version='modern'] .text-sharpen{padding:3px;text-shadow:none}
 .rockTip[data-version='modern'] :is(.nickname,.name){font:700 13px/16px Arial,sans-serif;text-align:left}
-.item-tip-content[data-tip-version='modern']{font:13px/16px Arial,sans-serif;color:#d6d6d6;text-align:left;padding:3px;text-shadow:none;--rockTip-item--color-statValue:#ffd54d;--rockTip-item--color-fulfillOk:#ccc;--rockTip-item--color-fulfillErr:#ff655c}
+.item-tip-content[data-tip-version='modern']{font:13px/16px Arial,sans-serif;color:#d6d6d6;text-align:left;padding:3px;text-shadow:none;--rockTip-item--color-statValue:#ffa500;--rockTip-item--color-fulfillOk:#d6d6d6;--rockTip-item--color-fulfillErr:#fe5555}
 .item-tip-content[data-tip-version='modern']>.header{position:relative;min-height:36px;padding:3px 3px 6px 44px;border:1px solid #7778;background:#ffffff06;margin:0 0 4px;text-align:left}
 .item-tip-content[data-tip-version='modern']>.header:not(:has(.modern-tip-item-icon)){min-height:0;padding-left:3px}
 .item-tip-content[data-tip-version='modern'] .modern-tip-item-icon{position:absolute;left:4px;top:4px;width:32px;height:32px;object-fit:contain;image-rendering:pixelated;border:1px solid #999;background:#0004}
@@ -52,3 +52,21 @@
 .rockTip[data-version='modern'].modern-comparison .modern-item-comparison-panel{width:min(350px,calc((100vw - 24px)/2));padding:4px;border:4px double var(--modern-rarity-color,#999);background:#101010d9;box-shadow:0 0 0 1px #171717,inset 0 0 0 1px #080808}
 .rockTip[data-version='modern'] .modern-equipped-label{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);padding:4px 10px;border:3px double #999;background:#101010e8;color:#d5cda6;font:13px/16px Arial,sans-serif;white-space:nowrap}
 @media(max-width:600px){.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']{font-size:11px;line-height:14px}.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']>.header{padding-left:3px;padding-top:39px}.rockTip[data-version='modern'].modern-comparison .item-tip-content[data-tip-version='modern']>.header>.name{font-size:12px;line-height:14px}}
+/* Margonem modern item sections: legendary bonus, loot info, description, then tags and requirements with the value. */
+.item-tip-content[data-tip-version='modern'] :is(.modern-legendary-bonus,.modern-looted-with,.modern-description){border-top:1px solid #7776;padding:4px 0 0;margin:2px 0 0}
+.item-tip-content[data-tip-version='modern'] .modern-legendary-bonus,.item-tip-content[data-tip-version='modern'] .modern-legendary-bonus [data-role='value']{color:#87f187}
+.item-tip-content[data-tip-version='modern'] .modern-looted-with{color:#0f0;font-style:italic}
+.item-tip-content[data-tip-version='modern'] .modern-description{color:#c3b78e;text-align:center}
+.item-tip-content[data-tip-version='modern'] .struct>.requires{position:relative}
+.item-tip-content[data-tip-version='modern'] .struct>.requires>.attribute{font-weight:400}
+.item-tip-content[data-tip-version='modern'] .struct>.requires>.attribute[data-fulfilling='false']{font-weight:700}
+/* Value sits on the level row like in Margonem; without a level row it gets its own line. */
+.item-tip-content[data-tip-version='modern'] .struct>.requires:has(.attribute[data-stat='needLevel']:not([style*='display: none'])) .modern-price{position:absolute;right:0;bottom:0}
+.item-tip-content[data-tip-version='modern'] .modern-price{display:flex;justify-content:flex-end;align-items:center;gap:.25rem;color:#d6d6d6;font-weight:400}
+/* Inside the tooltip the retro item rules are more specific; restate the Margonem modern colours there. */
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner .attribute[data-stat='legendaryBon'],
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner .attribute[data-stat='legendaryBon'] [data-role='value']{color:#87f187}
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner .attribute[data-stat='lootedWith']{color:#0f0;font-style:italic}
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner .attribute[data-stat='description']{color:#c3b78e;font-style:normal;font-weight:400;margin-top:0;text-align:center}
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner>.struct>.requires>.attribute{font-weight:400}
+.rockTip[data-version='modern'][data-type='item']>.tip-wrapper>.inner>.struct>.requires>.attribute[data-fulfilling='false']{font-weight:700}

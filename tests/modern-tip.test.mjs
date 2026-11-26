@@ -144,3 +144,29 @@ test('Classic places the mute icon right after the role, before the Discord line
   state.value.otherPayload = false;
  }
 });
+
+test('modern item tip puts legendary bonus, loot info and description in own sections like Margonem', async () => {
+ const previousDocument = globalThis.document;
+ globalThis.document = {createElement: () => { const box = {}; Object.defineProperty(box, 'innerHTML', {set(v) { box.value = v; }}); return box; }};
+ try {
+  const legendary = {id: 'ring', name: 'Kościany sygnet szamana', category: 'rings', rarity: 'legendary', price: 558890, currency: 'gold', attributes: {
+   criticalChance: 3, legendaryBon: ['angelTouchHealingChance', 7],
+   lootedWith: {looterName: 'Karlos', looterGender: 'm', groupInfo: ['x'], timestamp: 1789900000, npcName: 'Tezcatlipoca'},
+   description: 'Patrząc w zgasłe oczodoły', isPermanentlyBounded: true, needLevel: 258, needProfessions: ['b', 'h'],
+  }};
+  const modern = await renderToString(createSSRApp(ItemTipContent, {item: legendary, tipVersion: 'modern', heroLvl: 300, heroProfession: 'w'}));
+  const retro0 = await renderToString(createSSRApp(ItemTipContent, {item: legendary}));
+  const order = ['data-stat="criticalChance"', 'modern-legendary-bonus', 'modern-looted-with', 'modern-description', 'data-stat="isPermanentlyBounded"', 'data-stat="needProfessions"', 'modern-price'];
+  order.reduce((previous, marker) => { const at = modern.indexOf(marker); assert.ok(at > previous, marker); return at; }, -1);
+  assert.match(modern, /modern-looted-with[^>]*>W dniu \d{2}\.\d{2}\.2026 .*Tezcatlipoca przez Karlos/);
+  assert.match(retro0, /W dniu \d{1,2}\/\d{1,2}\/2026/);
+  assert.equal((modern.match(/data-stat="legendaryBon"/g) || []).length, 1);
+  assert.doesNotMatch(modern, /class="footer"/);
+
+  const retro = await renderToString(createSSRApp(ItemTipContent, {item: legendary}));
+  assert.doesNotMatch(retro, /modern-legendary-bonus|modern-looted-with|modern-description|modern-price/);
+  assert.match(retro, /class="footer"/);
+ } finally {
+  globalThis.document = previousDocument;
+ }
+});

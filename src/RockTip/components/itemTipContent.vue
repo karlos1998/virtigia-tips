@@ -41,6 +41,22 @@ const itemOrders = computed(() => {
     return orders;
 });
 
+/**
+ * Modern (Margonem "ni") splits some stats into their own sections: legendary bonus, who looted the item and the
+ * description. Retro and legacy keep the original single blocks.
+ */
+const MODERN_OWN_SECTION = new Set(['legendaryBon', 'lootedWith', 'description']);
+const isModern = computed(() => props.tipVersion === 'modern');
+const bonusStats = computed(() => isModern.value ? itemOrders.value.bonuses.filter(stat => !MODERN_OWN_SECTION.has(stat)) : itemOrders.value.bonuses);
+const tagStats = computed(() => isModern.value ? itemOrders.value.tags.filter(stat => !MODERN_OWN_SECTION.has(stat)) : itemOrders.value.tags);
+const modernSection = (stat: string) => isModern.value
+    && (itemOrders.value.bonuses.includes(stat) || itemOrders.value.tags.includes(stat))
+    && !!renderItemAttribute(stat, props.item.attributes ?? {});
+const hasPrice = computed(() => !!props.item.price && priceFormatter(props.item.price) !== '0');
+/** Margonem modern writes the loot date as 19.09.2025 (classic keeps 19/9/2025). */
+const modernLootedWith = computed(() => renderItemAttribute('lootedWith', props.item.attributes ?? {})
+    .replace(/W dniu (\d{1,2})\/(\d{1,2})\/(\d{4})/, (_, day, month, year) => `W dniu ${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`));
+
 type ItemAttributes = Record<string, any>;
 type AttributeTranslation = (value: any, attributes?: ItemAttributes) => string | undefined;
 const attributeTranslations = Translations.attributes as Record<string, AttributeTranslation>;
@@ -147,7 +163,7 @@ function isLimitFulfilled(attributeName: string): boolean {
             </div>
             <PlayingCardTipContent v-if="item.category === 'playingCards'" :card="item.attributes?.playingCard" :description="item.attributes?.description" />
             <div v-if="item.attributes && item.category !== 'renewable'" class="bonuses">
-                <div v-for="currentStat of itemOrders.bonuses" :key="currentStat" class="attribute" :data-stat="currentStat">
+                <div v-for="currentStat of bonusStats" :key="currentStat" class="attribute" :data-stat="currentStat">
                     <span
                         v-if="Translations.attributes[currentStat]"
                         v-html="renderItemAttribute(currentStat, item.attributes)"
@@ -167,8 +183,14 @@ function isLimitFulfilled(attributeName: string): boolean {
                 </div>
             </div>
 
+            <template v-if="isModern && item.attributes && item.category !== 'renewable'">
+                <div v-if="modernSection('legendaryBon')" class="modern-legendary-bonus attribute" data-stat="legendaryBon" v-html="renderItemAttribute('legendaryBon', item.attributes)" />
+                <div v-if="modernSection('lootedWith')" class="modern-looted-with attribute" data-stat="lootedWith" v-html="modernLootedWith" />
+                <div v-if="modernSection('description')" class="modern-description attribute" data-stat="description" v-html="renderItemAttribute('description', item.attributes)" />
+            </template>
+
             <div v-if="item.attributes && item.category !== 'renewable'" class="tags">
-                <div v-for="currentStat of itemOrders.tags" :key="currentStat" class="attribute" :data-stat="currentStat">
+                <div v-for="currentStat of tagStats" :key="currentStat" class="attribute" :data-stat="currentStat">
                     <span
                         v-if="Translations.attributes[currentStat]"
                         v-html="renderItemAttribute(currentStat, item.attributes)"
@@ -191,6 +213,10 @@ function isLimitFulfilled(attributeName: string): boolean {
                         v-html="renderItemAttribute(currentStat, item.attributes)"
                     />
                 </div>
+                <div v-if="isModern && hasPrice" class="modern-price">
+                    <span>Wartość: {{ priceFormatter(item.price) }}</span>
+                    <div v-if="item.currency" :data-type="item.currency" />
+                </div>
             </div>
         </div>
 
@@ -198,8 +224,8 @@ function isLimitFulfilled(attributeName: string): boolean {
             <div>Brakujące statystyki:</div>
             <div v-for="stat in missingStats" :key="stat" :data-stat="stat" v-html="renderItemAttribute(stat, comparisonItem!.attributes)" />
         </section>
-        <div class="footer">
-            <div v-if="item.price && priceFormatter(item.price) !== '0'" class="price">
+        <div v-if="!isModern" class="footer">
+            <div v-if="hasPrice" class="price">
                 <span>Wartość: {{ priceFormatter(item.price) }}</span>
                 <div v-if="item.currency" :data-type="item.currency" />
             </div>
