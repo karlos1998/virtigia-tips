@@ -18,3 +18,24 @@ test('consumable tooltips render the stored shop name and configured combat heal
         assert.match(html, /Leczy 15% punktów życia podczas walki. Można używać raz na walkę\./);
     }
 });
+
+test('emotion items describe their emotion instead of an unknown action', async () => {
+ const {ItemTipContent} = await import('../dist/virtigia-tips.es.js');
+ const {createSSRApp} = await import('vue');
+ const {renderToString} = await import('@vue/server-renderer');
+ for (const tipVersion of ['modern', 'retro']) {
+  const fireworks = await renderToString(createSSRApp(ItemTipContent, {
+   item: {id: 'fw', name: 'Fajerwerki', category: 'consumable', rarity: 'common', attributes: {useEmotion: 'fireworks', quantity: 10}},
+   tipVersion
+  }));
+  assert.match(fireworks, /Wyraża emocję: Fajerwerki/);
+  assert.doesNotMatch(fireworks, /Nieznana akcja/);
+
+  const rose = await renderToString(createSSRApp(ItemTipContent, {
+   item: {id: 'rose', name: 'Róża', category: 'consumable', rarity: 'common', attributes: {useEmotion: 'roza'}},
+   tipVersion
+  }));
+  assert.match(rose, /wobec innego gracza: Róża/);
+  assert.match(rose, /Przeciągnij przedmiot na gracza/);
+ }
+});

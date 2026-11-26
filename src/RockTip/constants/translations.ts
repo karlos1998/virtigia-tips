@@ -77,6 +77,7 @@ ShO9KukHxab7dzwZ2ngYldAZQrLCDLE1xTCXtrd1xkqiO1Y=
 */
 
 import {escapeTipHtml} from '../utilities/discordTip';
+import {describeItemEmotion} from './itemEmotions';
 
 export namespace Translations {
     export const professions = {
@@ -641,6 +642,9 @@ export namespace Translations {
         },
         "reducedLevelRequirement": (value: number) => {
             return `* obniżono wymagany lvl o ${attrBox(attrNumber(value))} *`;
+        },
+        "useEmotion": (emotion: string) => {
+            return describeItemEmotion(String(emotion));
         },
         "useOutfit": ({time, src}: {time: number, src: string}) => {
             return `Zmienia Twój wygląd postaci na ${time > 0 ? `${time} minut` : `stałe`}`;

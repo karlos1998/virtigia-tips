@@ -7,6 +7,8 @@ import type {ItemSchema, ItemTipContentProps} from './RockTip/typings/schematics
 import { createApp, type App } from 'vue';
 
 export {discordTipHtml, escapeTipHtml} from "./RockTip/utilities/discordTip";
+export {ITEM_EMOTIONS, describeItemEmotion} from "./RockTip/constants/itemEmotions";
+export type {ItemEmotionInfo} from "./RockTip/constants/itemEmotions";
 export {findEquippedComparison, attributeDifference, missingComparisonStats} from "./RockTip/utilities/itemComparison";
 
 export {
