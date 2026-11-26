@@ -29,6 +29,8 @@ test('emotion items describe their emotion instead of an unknown action', async 
    tipVersion
   }));
   assert.match(fireworks, /Wyraża emocję: Fajerwerki/);
+  assert.match(fireworks, /Użyj przedmiotu, aby pokazać ją nad swoją postacią/);
+  assert.doesNotMatch(fireworks, /Przeciągnij/);
   assert.doesNotMatch(fireworks, /Nieznana akcja/);
 
   const rose = await renderToString(createSSRApp(ItemTipContent, {
@@ -37,5 +39,6 @@ test('emotion items describe their emotion instead of an unknown action', async 
   }));
   assert.match(rose, /wobec innego gracza: Róża/);
   assert.match(rose, /Przeciągnij przedmiot na gracza/);
+  assert.doesNotMatch(rose, /nad swoją postacią/);
  }
 });

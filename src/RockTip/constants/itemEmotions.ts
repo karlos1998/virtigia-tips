@@ -83,5 +83,5 @@ export function describeItemEmotion(name: string): string {
     }
     return emotion.targeted
         ? `Wyraża emocję wobec innego gracza: ${emotion.label}<br><i>Przeciągnij przedmiot na gracza, aby go użyć</i>`
-        : `Wyraża emocję: ${emotion.label}`;
+        : `Wyraża emocję: ${emotion.label}<br><i>Użyj przedmiotu, aby pokazać ją nad swoją postacią</i>`;
 }
