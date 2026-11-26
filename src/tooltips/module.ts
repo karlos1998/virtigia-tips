@@ -198,8 +198,16 @@ const triggerOut = (el: HTMLElement, event?: Event) => {
     state.value.target = null
 }
 
+/**
+ * The directive serialises its value into data-* attributes, but Vue calls `updated` only when the host component
+ * re-renders. An item whose stats change in place (e.g. after an upgrade) does not re-render its tile, so the tip
+ * would keep the old JSON. Remember the binding and re-read the value whenever the tip opens.
+ */
+type TipElement = HTMLElement & {__tipBinding?: DirectiveBinding}
+
 const ToolTipDirective = {
     mounted(el: HTMLElement, binding: DirectiveBinding) {
+        (el as TipElement).__tipBinding = binding
         updateDataset(el, binding)
 
         el.addEventListener('mouseenter', async (event: Event) => {
@@ -208,7 +216,9 @@ const ToolTipDirective = {
             if ((event as MouseEvent).buttons === 0) {
                 isMouseButtonPressed.value = false
             }
-            await triggerEnter(el, binding)
+            const latest = (el as TipElement).__tipBinding ?? binding
+            updateDataset(el, latest)
+            await triggerEnter(el, latest)
         }, {passive: true})
         el.addEventListener('mouseout', (event: Event) => {
             triggerOut(el, event)
@@ -217,6 +227,7 @@ const ToolTipDirective = {
         // as they're handled globally
     },
     updated(el: HTMLElement, binding: DirectiveBinding) {
+        (el as TipElement).__tipBinding = binding
         updateDataset(el, binding)
     },
 }
